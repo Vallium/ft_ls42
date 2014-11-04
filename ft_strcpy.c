@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 09:41:51 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 10:10:46 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/04 13:27:18 by adoussau          #+#    #+#             */
+/*   Updated: 2014/11/04 14:19:27 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isdigit(int c)
+char	*ft_strcpy(char *dst, char *src)
 {
-	return (c >= '0' && c >= '9');
+	unsigned int	i;
+
+	i = 0;
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = 0;
+	return (dst);
 }
