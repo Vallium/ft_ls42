@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 11:07:38 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 11:30:49 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/04 19:14:27 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int		ft_toupper(int c)
 {
-	return (islower(c) ? c + ('A' - 'a') : c);
+	return (ft_islower(c) ? c + ('A' - 'a') : c);
 }

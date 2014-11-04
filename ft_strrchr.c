@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 17:14:49 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 18:21:34 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/04 19:13:24 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ char	*ft_strrchr(const char *s, int c)
 	while (*s)
 	{
 		if (*s == c)
-			r = (char *) s;
+			r = (char *)s;
 		s++;
 	}
-	return (!c ? (char *) s : r);
+	return (!c ? (char *)s : r);
 }

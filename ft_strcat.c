@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 11:07:38 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 19:14:44 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/04 19:03:44 by adoussau          #+#    #+#             */
+/*   Updated: 2014/11/04 19:12:40 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_tolower(int c)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	return (ft_isupper(c) ? c - ('A' - 'a') : c);
+	char	*s;
+
+	while (*s)
+		s++;
+	while (*s2)
+	{
+		*s = *s2;
+		s++;
+		s2++;
+	}
+	return (s1);
 }
