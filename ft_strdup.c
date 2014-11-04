@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 13:27:18 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 15:13:49 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/04 14:30:57 by adoussau          #+#    #+#             */
+/*   Updated: 2014/11/04 15:22:16 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcpy(char *dst, const char *src)
-{
-	unsigned int	i;
+#include "libft.h"
+#include <stdlib.h>
 
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = 0;
-	return (dst);
+char	*ft_strdup(const char *s1)
+{
+	char	*dst;
+	size_t	l;
+
+	l = ft_strlen(s1);
+	dst = (char *)malloc(sizeof(char) * l + sizeof(char));
+	if (!dst)
+		return (NULL);
+	return (ft_strcpy(dst, s1));
 }
