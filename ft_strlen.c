@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   islower.c                                          :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 10:57:30 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 11:02:46 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/04 12:13:30 by adoussau          #+#    #+#             */
+/*   Updated: 2014/11/04 12:41:07 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		islower(int c)
+#include <string.h>
+
+size_t		ft_strlen(const char *s)
 {
-	return (c >= 'a' && c <= 'z');
+	size_t		l;
+
+	l = 0;
+	while (*s++)
+		l++;
+	return (l);
 }
