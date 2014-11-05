@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 19:46:05 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 19:49:52 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/05 14:05:54 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char		*ft_strstr(char *str, char *to_find)
 {
 	int		i;
 
+	if (!*to_find)
+		return (str);
 	i = 0;
 	while (str[i])
 	{
