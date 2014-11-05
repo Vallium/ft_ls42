@@ -4,11 +4,10 @@ compiler:
   - gcc
 
 install:
-  - wget https://raw.githubusercontent.com/Nax/rubynette/master/rubynette.rb
   - git clone https://github.com/spectrenoir06/norminette.git
+  - sudo apt-get install rbx
 
 script:
-  - ruby rubynette.rb *.c *.h
   - ./norminette/norminette.rb *.c
   - make
   - ls -la
