@@ -18,7 +18,7 @@ script:
   - ##./norminette/norminette.rb *.c
   - make
   - cp libft.a libft-test/
-  - cp libft.h libft-test/unit_test/
+  - cp libft.h libft-test/
   - cd libft-test/unit_test/
   - make
   - ls -la
