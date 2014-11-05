@@ -16,7 +16,8 @@ CFLAGS = -Wall -Wextra -Werror
     
 all:
 	$(CC) -c *.c $(CFLAGS)
-     
+	ar -rv libft.a *.o
+
 #%o: %c
 #	$(CC) -c $^ -o $@ $(CFLAGS)
            
