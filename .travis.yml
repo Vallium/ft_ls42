@@ -16,6 +16,7 @@ script:
   - ##./norminette/norminette.rb *.c
   - make
   - curl http://pastebin.com/raw.php?i=p3BBP70K > main.c
+  - ls -ll
   - gcc libft.a -I . main.c
   - ./a.out
   - ls -la
