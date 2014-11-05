@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 11:04:26 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 19:32:34 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/05 14:22:52 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_strdup(const char *s1);
 size_t		ft_strlen(const char *s);
 char	*ft_strncpy(char *dst, const char *src, size_t n);
 char	*ft_strrchr(const char *s, int c);
-char		*ft_strstr(char *str, char *to_find);
+char		*ft_strstr(const char *str, const char *to_find);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strcat(char *s1, const char *s2);
 void	*ft_memmove(void *dst, const void *src, size_t len);
