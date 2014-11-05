@@ -9,4 +9,4 @@ install:
 script:
   - ruby rubynette.rb */*.c */*.h
   - make
-  - ll
+  - ls -la
