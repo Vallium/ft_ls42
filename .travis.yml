@@ -9,8 +9,6 @@ install:
 
 script:
   - ruby rubynette.rb *.c *.h
-  - ls
-  - ls norminette/
-  - ruby norminette/norminette *.c
+  - ./norminette/norminette.rb *.c
   - make
   - ls -la
