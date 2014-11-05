@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 19:03:44 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 19:12:40 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/05 13:56:51 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*ft_strcat(char *s1, const char *s2)
 {
 	char	*s;
 
+	s = s1;
 	while (*s)
 		s++;
 	while (*s2)
