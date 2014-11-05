@@ -11,6 +11,7 @@ install:
   - bundle install
   - ./configure
   - rake install
+  - cd ..
 
 script:
   - ./norminette/norminette.rb *.c
