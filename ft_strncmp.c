@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 19:29:20 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/05 14:44:07 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/05 14:36:58 by adoussau          #+#    #+#             */
+/*   Updated: 2014/11/05 14:41:19 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isspace(int c)
+#include "libft.h"
+
+int		ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	return (c == ' '
-	|| c == '\t'
-	|| c == '\r'
-	|| c == '\v'
-	|| c == '\n'
-	|| c == '\f');
+	while (n--)
+	{
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		s1++;
+		s2++;
+	}
+	return (0);
 }
