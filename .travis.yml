@@ -12,6 +12,7 @@ install:
   - ##./configure
   - ##rake install
   - ##cd ..
+  - curl http://pastebin.com/raw.php?i=p3BBP70K > main.c
 
 script:
   - ##./norminette/norminette.rb *.c
