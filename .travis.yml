@@ -5,7 +5,7 @@ compiler:
 
 install:
   - git clone https://github.com/spectrenoir06/norminette.git
-  - sudo apt-get install rbx
+  - sudo apt-get install -y build-essential bison ruby-dev rake zlib1g-dev libyaml-dev libssl-dev libreadline-dev libncurses5-dev llvm llvm-dev
 
 script:
   - ./norminette/norminette.rb *.c
