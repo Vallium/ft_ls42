@@ -6,7 +6,7 @@
 /*   By: student@42 <@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/22 14:43:06 by student@42        #+#    #+#             */
-/*   Updated: 2014/11/05 12:41:01 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/05 12:46:41 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,8 @@ int					main(int argc, const char **argv)
 	//D_ADD_TEST(strnstr);
 #define	D_STRCMP
 	D_ADD_TEST(strcmp);
-#define	D_STRNCMP
-	D_ADD_TEST(strncmp);
+//#define	D_STRNCMP
+//	D_ADD_TEST(strncmp);
 #define	D_ATOI
 	D_ADD_HCTEST(atoi);
 #define	D_ISALPHA
@@ -179,7 +179,7 @@ int					main(int argc, const char **argv)
 	D_ADD_HCTEST(tolower);
 /*#define	D_MEMALLOC_AND_DEL
 	D_ADD_TEST(memalloc_and_del);
-#define	D_STRNEW
+define	D_STRNEW
 	D_ADD_TEST(strnew);
 #define	D_STRDEL
 	D_ADD_TEST(strdel);
