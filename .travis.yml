@@ -5,8 +5,10 @@ compiler:
 
 install:
   - wget https://raw.githubusercontent.com/Nax/rubynette/master/rubynette.rb
+  - git clone https://github.com/spectrenoir06/norminette.git
 
 script:
   - ruby rubynette.rb */*.c */*.h
+  - norminette/norminette *.c
   - make
   - ls -la
