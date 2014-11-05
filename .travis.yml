@@ -8,7 +8,7 @@ install:
   - git clone https://github.com/spectrenoir06/norminette.git
 
 script:
-  - ruby rubynette.rb */*.c */*.h
-  - norminette/norminette *.c
+  - ruby rubynette.rb *.c *.h 
+  - ruby norminette/norminette *.c
   - make
   - ls -la
