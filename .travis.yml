@@ -1,0 +1,12 @@
+language: c
+
+compiler:
+  - gcc
+
+install:
+  - wget https://raw.githubusercontent.com/Nax/rubynette/master/rubynette.rb
+
+script:
+  - ruby rubynette.rb */*.c */*.h
+  - make
+  - ll
