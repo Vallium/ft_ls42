@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 11:04:26 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/06 14:21:05 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/06 14:49:12 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ size_t	ft_strlcat(char *s1, const char *s2, size_t n);
 void	*ft_memalloc(size_t size);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	ft_memdel(void **ap);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strnew(size_t size);
 
 #endif
