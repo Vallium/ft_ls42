@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/05 16:03:23 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/05 17:09:56 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/06 11:04:53 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ size_t	ft_strlcat(char *dest, const char *src, size_t n)
 	while (src[i] && n-- > 1)
 		*dest++ = src[i++];
 	*dest = 0;
-  return (buff);
+	return (buff);
 }
