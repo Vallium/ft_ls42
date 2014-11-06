@@ -4,19 +4,9 @@ compiler:
   - gcc
 
 install:
-  - ##git clone https://github.com/spectrenoir06/norminette.git
-  - ##git clone git://github.com/rubinius/rubinius.git
-  - ##sudo apt-get install -y build-essential bison ruby-dev rake zlib1g-dev libyaml-dev libssl-dev libreadline-dev libncurses5-dev llvm llvm-dev
-  - ##cd rubinius/
-  - ##bundle install
-  - ##./configure
-  - ##rake install
-  - ##cd ..
+  -
 script:
-  - ##./norminette/norminette.rb *.c
   - make
   - curl http://pastebin.com/raw.php?i=p3BBP70K > main.c
-  - ls -ll
   - gcc libft.a -I . main.c
   - ./a.out
-  - ls -la
