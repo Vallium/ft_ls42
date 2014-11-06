@@ -6,13 +6,15 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 17:28:17 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/06 17:42:33 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/06 17:42:11 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strequ(const char *s1, const char *s2)
+#include <string.h>
+
+int		ft_strnequ(const char *s1, const char *s2, size_t i)
 {
-	while (*s1 && *s2)
+	while (*s1 && *s2 && i--)
 		if (*s1++ != *s2++)
 			return (0);
 	return (1);
