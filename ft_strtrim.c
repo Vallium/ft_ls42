@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 18:35:32 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 14:43:54 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 17:10:00 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char			*ft_strtrim(char const *s)
 		return (NULL);
 	str = (char *)s;
 	start = 0;
-	end = 0;
 	while (space(*str++))
 		start++;
 	str--;
@@ -41,11 +40,8 @@ char			*ft_strtrim(char const *s)
 	if (!data)
 		return (NULL);
 	ret = data;
-	while (start <= end)
-	{
+	while (start++ <= end)
 		*data++ = *str++;
-		start++;
-	}
 	*data = 0;
 	return (ret);
 }

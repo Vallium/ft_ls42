@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 14:50:44 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 17:03:48 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 17:07:41 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int		count(int i)
 {
-	int		j;
+	int			j;
 
 	j = 0;
 	while (i /= 10)
@@ -22,11 +22,11 @@ static int		count(int i)
 	return (j + 1);
 }
 
-char		*ft_itoa(int i)
+char			*ft_itoa(int i)
 {
-	size_t	size;
-	char	*ret;
-	char	*str;
+	size_t		size;
+	char		*ret;
+	char		*str;
 
 	size = count(i);
 	ret = (char *)malloc(sizeof(char) * (size + (i < 0 ? 1 : 0) + 1));
@@ -34,10 +34,7 @@ char		*ft_itoa(int i)
 		return (NULL);
 	str = ret;
 	if (i == -2147483648)
-	{
-		ft_strcpy(str,"-2147483648");
-		return (ret);
-	}
+		return (ft_strcpy(str, "-2147483648"));
 	if (i < 0)
 	{
 		*str++ = '-';
@@ -51,5 +48,4 @@ char		*ft_itoa(int i)
 		i /= 10;
 	}
 	return (ret);
-
 }
