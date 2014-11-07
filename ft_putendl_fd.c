@@ -6,13 +6,13 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 18:11:25 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 18:14:30 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 18:57:17 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void	ft_putendl_fd(const char *,int fd)
+void	ft_putendl_fd(const char *s, int fd)
 {
 	while (*s)
 		write(fd, s++, 1);
