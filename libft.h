@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 11:04:26 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 14:59:26 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 17:44:55 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,9 @@ char	*ft_strtrim(char const *s);
 char	**ft_strsplit(char const *s, char c);
 char	*ft_strtrim(char const *s);
 char	*ft_itoa(int i);
+void	ft_putchar(char c);
+void	ft_putstr(const char s);
+void	ft_putendl(const char s);
+void	ft_putnbr(int i);
 
 #endif
