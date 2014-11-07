@@ -6,14 +6,17 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 14:58:48 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/06 15:00:54 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 12:24:06 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
+#include "libft.h"
 
 void	ft_strdel(char **as)
 {
-	free(*as);
-	*as = NULL;
+	if (as && *as)
+	{
+		free(*as);
+		*as = NULL;
+	}
 }

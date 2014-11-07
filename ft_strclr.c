@@ -6,12 +6,13 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 15:02:18 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/06 15:04:42 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 12:13:23 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 void	ft_strclr(char *s)
 {
-	while (*s)
+	if (s)
+		while (*s)
 		*s++ = 0;
 }
