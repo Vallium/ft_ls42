@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 14:50:44 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 15:31:15 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 15:58:33 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int		count(int i)
 	j = 0;
 	while (i /= 10)
 		j++;
+	printf("\n%i\n",i);
 	return (j + 1);
 }
 
@@ -40,11 +41,11 @@ char		*ft_itoa(int i)
 		*str++ = '-';
 		i = -i;
 	}
-	str += size + 1;
-	*(str) = 0;
+	str += size - 1;
+	*(str + 1) = 0;
 	while (size--)
 	{
-		printf("\n%i",i);
+		printf("%i\n",i%10);
 		*str-- = (char)(i % 10 + '0');
 		i /= 10;
 	}
