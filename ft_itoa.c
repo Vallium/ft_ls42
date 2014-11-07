@@ -6,12 +6,11 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 14:50:44 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 15:58:33 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 17:03:48 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static int		count(int i)
 {
@@ -20,13 +19,11 @@ static int		count(int i)
 	j = 0;
 	while (i /= 10)
 		j++;
-	printf("\n%i\n",i);
 	return (j + 1);
 }
 
 char		*ft_itoa(int i)
 {
-	printf("\nitoa(%i)\n",i);
 	size_t	size;
 	char	*ret;
 	char	*str;
@@ -36,6 +33,11 @@ char		*ft_itoa(int i)
 	if (!ret)
 		return (NULL);
 	str = ret;
+	if (i == -2147483648)
+	{
+		ft_strcpy(str,"-2147483648");
+		return (ret);
+	}
 	if (i < 0)
 	{
 		*str++ = '-';
@@ -45,7 +47,6 @@ char		*ft_itoa(int i)
 	*(str + 1) = 0;
 	while (size--)
 	{
-		printf("%i\n",i%10);
 		*str-- = (char)(i % 10 + '0');
 		i /= 10;
 	}
