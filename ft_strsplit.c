@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 10:23:10 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 11:46:20 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 13:51:35 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char		**ft_strsplit(const	char *s, char c)
 	char			*datatmp;
 	unsigned int	i;
 
+	if (!s)
+		return (NULL);
 	data = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
 	tab = (char **)malloc(sizeof(char *) * countwords(s, c));
 	datatmp = data;

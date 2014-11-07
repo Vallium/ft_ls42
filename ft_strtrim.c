@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 18:35:32 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/06 19:19:26 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 14:43:54 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,30 @@ char			*ft_strtrim(char const *s)
 	size_t		start;
 	size_t		end;
 	char		*str;
+	char		*data;
 	char		*ret;
 
+	if (!s)
+		return (NULL);
 	str = (char *)s;
 	start = 0;
 	end = 0;
-	while (space(*str))
+	while (space(*str++))
+		start++;
+	str--;
+	end = ft_strlen(s) - 1;
+	if (start != (end + 1))
+		while (space(s[end]))
+			end--;
+	data = (char *)malloc(sizeof(char) * (end - start + 1));
+	if (!data)
+		return (NULL);
+	ret = data;
+	while (start <= end)
 	{
-		*str++;
+		*data++ = *str++;
 		start++;
 	}
-	end = ft_strlen(s);
-	while (space(str[end]))
-		end--;
-	ret = (char *)malloc(sizeof(char) * (end - start + 1));
-	while (start++ <= end)
-		*ret++ = *str++;
-	*ret = 0;
+	*data = 0;
 	return (ret);
 }
