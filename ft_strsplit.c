@@ -6,25 +6,27 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 10:23:10 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 11:17:40 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 11:46:20 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int countwords(const char *s, char c)
+static int	countwords(const char *s, char c)
 {
 	int		i;
 
 	i = 0;
 	while (*s)
+	{
 		if (*s == c && *(s + 1) != c && *(s + 1))
 			i++;
 		s++;
+	}
 	return (i);
 }
 
-char	**ft_strsplit(const	char *s, char c)
+char		**ft_strsplit(const	char *s, char c)
 {
 	char			**tab;
 	char			*data;

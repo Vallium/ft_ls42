@@ -6,7 +6,7 @@
 #    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
-#    Updated: 2014/11/06 14:57:06 by adoussau         ###   ########.fr        #
+#    Updated: 2014/11/07 11:34:18 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ SRC		= ft_bzero.c ft_memset.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		ft_tolower.c ft_toupper.c ft_isprint.c ft_isascii.c \
 		ft_isdigit.c ft_isalnum.c ft_isalpha.c ft_isspace.c \
 		ft_memalloc.c ft_memdel.c \
-		ft_strnew.c 
+		ft_strnew.c ft_strclr.c ft_strdel.c ft_strequ.c ft_striter.c \
+		ft_striteri.c ft_strjoin.c ft_strmap.c ft_strmapi.c ft_strnequ.c \
+		ft_strsplit.c ft_strsub.c
 
 OBJ		= $(SRC:.c=.o)
 CC		= gcc
