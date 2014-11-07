@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 11:04:26 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/06 18:32:33 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/07 11:27:14 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,17 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	ft_memdel(void **ap);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strnew(size_t size);
+void	ft_strdel(char **as);
+void	ft_strclr(char *s);
+void	ft_striter(char *s, void (*f)(char *));
+void	ft_striteri(char *s, void (*f)(unsigned int, char *));
+char	*ft_strmap(char const *s, char (*f)(char));
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+int		ft_strequ(char const *s1, char const *s2);
+int		ft_strnequ(char const *s1, char const *s2, size_t n);
+char	*ft_strsub(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strtrim(char const *s);
+char	**ft_strsplit(char const *s, char c);
 
 #endif
