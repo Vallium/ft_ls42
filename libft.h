@@ -96,8 +96,8 @@ char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(int i);
 
 void				ft_putchar(char c);
-void				ft_putstr(const char s);
-void				ft_putendl(const char s);
+void				ft_putstr(const char s*);
+void				ft_putendl(const char s*);
 void				ft_putnbr(int i);
 
 void				ft_putchar_fd(char c, int fd);
