@@ -6,7 +6,7 @@
 #    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
-#    Updated: 2014/11/07 18:53:16 by adoussau         ###   ########.fr        #
+#    Updated: 2014/11/08 11:59:35 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ $(NAME): $(OBJ)
 %.o: %.c
 	@$(CC) -I . -o $@ -c $? $(FLAGS)
 
-.PHONY: clean fclean re
+.PHONY: clean fclean re test
 
 clean:
 	@rm -f $(OBJ)
@@ -50,7 +50,7 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 
-test: $(NAME)
+test: re $(NAME)
 	curl -s http://pastebin.com/raw.php?i=p3BBP70K > main.c
 	gcc libft.a -I . main.c
 	rm main.c
