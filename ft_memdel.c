@@ -6,11 +6,10 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 13:56:34 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 12:22:07 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/08 15:14:28 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
 #include "libft.h"
 
 void	ft_memdel(void **ap)

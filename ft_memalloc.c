@@ -6,12 +6,11 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 13:42:55 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/06 13:49:17 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/08 15:15:29 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "stdlib.h"
 
 void	*ft_memalloc(size_t size)
 {

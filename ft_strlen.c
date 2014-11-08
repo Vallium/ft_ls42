@@ -6,11 +6,11 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:13:30 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 12:41:07 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/08 15:12:20 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "libft.h"
 
 size_t		ft_strlen(const char *s)
 {
