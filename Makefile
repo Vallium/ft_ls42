@@ -6,7 +6,7 @@
 #    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
-#    Updated: 2014/11/08 11:59:35 by adoussau         ###   ########.fr        #
+#    Updated: 2014/11/08 17:05:46 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,8 @@ SRC		= ft_bzero.c ft_memset.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		ft_striteri.c ft_strjoin.c ft_strmap.c ft_strmapi.c ft_strnequ.c \
 		ft_strsplit.c ft_strsub.c ft_strtrim.c ft_itoa.c \
 		ft_putchar.c ft_putstr.c ft_putnbr.c ft_putendl.c \
-		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
-
+		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
+		ft_lstnew.c
 OBJ		= $(SRC:.c=.o)
 CC		= gcc
 FLAGS	= -Wall -Werror -Wextra

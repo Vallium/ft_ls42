@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 11:04:26 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/08 16:10:24 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/08 17:08:18 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct		s_list
 	size_t			content_size;
 	struct tlist	*next;
 }					t_list;
+
+t_list				*ft_lstnew(const void *content, size_t content_size);
 
 int					ft_isalpha(int c);
 int					ft_isalnum(int c);
