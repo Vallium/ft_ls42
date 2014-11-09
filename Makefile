@@ -6,7 +6,7 @@
 #    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
-#    Updated: 2014/11/09 19:21:39 by adoussau         ###   ########.fr        #
+#    Updated: 2014/11/09 20:20:03 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ $(NAME): $(OBJ)
 %.o: %.c
 	@$(CC) -I . -o $@ -c $? $(FLAGS)
 
-.PHONY: clean fclean re test test2
+.PHONY: clean fclean re test test2 testall
 
 clean:
 	@rm -f $(OBJ)
@@ -56,15 +56,15 @@ fclean: clean
 testall: test test2
 
 test: re $(NAME)
-	curl -s http://pastebin.com/raw.php?i=p3BBP70K > main.c
+	@curl -s http://pastebin.com/raw.php?i=p3BBP70K > main.c
 	gcc -I . main.c $(FBSD_addons) libft.a
-	rm main.c
+	@rm main.c
 	./a.out
 
 test2: re
-	curl http://pastebin.com/raw.php\?i\=KQRs4L2H > main.c
+	@curl http://pastebin.com/raw.php\?i\=KQRs4L2H > main.c
 	gcc -I . main.c $(FBSD_addons) libft.a
-	rm main.c
+	@rm main.c
 	./a.out
 
 re: fclean all
