@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 17:50:18 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/08 11:58:01 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/09 18:11:56 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	char	*str;
 	char	*ret;
 
-	if (!s)
+	if (!s || !(*s) || !len)
 		return (NULL);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)

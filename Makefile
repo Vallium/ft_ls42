@@ -6,7 +6,7 @@
 #    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
-#    Updated: 2014/11/08 19:41:25 by adoussau         ###   ########.fr        #
+#    Updated: 2014/11/09 18:33:18 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,9 @@ SRC		= ft_bzero.c ft_memset.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 OBJ		= $(SRC:.c=.o)
 CC		= gcc
 FLAGS	= -Wall -Werror -Wextra
-
+ifeq ($(SYSTEM),Linux)
+	FBSD_addons=strlcat.c strnstr.c
+endif
 
 all: $(NAME)
 
@@ -53,7 +55,7 @@ fclean: clean
 
 test: re $(NAME)
 	curl -s http://pastebin.com/raw.php?i=p3BBP70K > main.c
-	gcc libft.a -I . main.c
+	gcc -I . main.c $(FBSD_addons) libft.a
 	rm main.c
 	./a.out
 

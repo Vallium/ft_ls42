@@ -4,8 +4,7 @@ compiler:
   - gcc
 
 install:
-  - make
+
 script:
   - curl http://pastebin.com/raw.php?i=p3BBP70K > main.c
-  - gcc libft.a -I . main.c
-  - ./a.out
+  - make test
