@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 13:56:34 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/08 15:14:28 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/09 12:15:59 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_memdel(void **ap)
 {
-	if (*ap)
+	if (ap && *ap)
 	{
 		free(*ap);
 		*ap = NULL;
