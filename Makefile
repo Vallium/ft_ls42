@@ -6,7 +6,7 @@
 #    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
-#    Updated: 2014/11/09 20:21:28 by adoussau         ###   ########.fr        #
+#    Updated: 2014/11/09 20:50:59 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC		= ft_bzero.c ft_memset.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 OBJ		= $(SRC:.c=.o)
 CC		= gcc
 FLAGS	= -Wall -Werror -Wextra
+
 ifeq ($(SYSTEM),Linux)
 	FBSD_addons=strlcat.c strnstr.c
 endif
@@ -44,6 +45,10 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	@$(CC) -I . -o $@ -c $? $(FLAGS)
+
+dyn: 
+	@gcc -fPIC -Wall -Werror -Wextra -c $(SRC)
+	@gcc -fPIC -Werror -Wall -Wextra -shared -o libft.so $(OBJ)
 
 .PHONY: clean fclean re test test2 testall
 
