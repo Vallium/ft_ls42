@@ -6,7 +6,7 @@
 #    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
-#    Updated: 2014/11/09 19:02:25 by adoussau         ###   ########.fr        #
+#    Updated: 2014/11/09 19:21:39 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +45,15 @@ $(NAME): $(OBJ)
 %.o: %.c
 	@$(CC) -I . -o $@ -c $? $(FLAGS)
 
-.PHONY: clean fclean re test
+.PHONY: clean fclean re test test2
 
 clean:
 	@rm -f $(OBJ)
 
 fclean: clean
 	@rm -f $(NAME)
+
+testall: test test2
 
 test: re $(NAME)
 	curl -s http://pastebin.com/raw.php?i=p3BBP70K > main.c
