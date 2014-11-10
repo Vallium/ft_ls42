@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 19:46:05 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/10 16:49:07 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/10 18:18:19 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 
 	len_s2 = ft_strlen(s2);
 	if (!*s2)
-		return 	((char*)s1);
+		return ((char*)s1);
 	while (*s1 && len_s2 <= n--)
 	{
 		if (!ft_memcmp(s1++, s2, len_s2))
@@ -26,4 +26,3 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 	}
 	return (NULL);
 }
-

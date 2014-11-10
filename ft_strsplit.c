@@ -6,13 +6,13 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 10:23:10 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/10 16:19:03 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/10 18:23:16 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		wc(const char *s, char c)
+static int	wc(const char *s, char c)
 {
 	int		i;
 	int		j;
@@ -36,7 +36,7 @@ static int		wc(const char *s, char c)
 	return (j);
 }
 
-static int		wl(const char *s, int i, int j, char c)
+static int	wl(const char *s, int i, int j, char c)
 {
 	while (s[i] != c && s[i])
 	{
