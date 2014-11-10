@@ -6,32 +6,35 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 18:35:32 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/09 20:12:34 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/10 16:56:13 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static unsigned int		ft_sp(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n');
+}
+
 char	*ft_strtrim(const char *s)
 {
-	char		*tmp;
+	char		*dst;
 	size_t		i;
-	size_t		j;
+	size_t		e;
 
 	if (!s)
 		return (NULL);
-	i = ft_strlen(s) - 1;
-	tmp = malloc(sizeof(char) * ft_strlen(s) + 1);
-	while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
-		i = i - 1;
-	j = 0;
-	while (s[j] == ' ' || s[j] == '\t' || s[j] == '\n')
-		j = j + 1;
-	if (j == ft_strlen(s))
-	{
-		tmp[0] = '\0';
-		return (tmp);
-	}
-	tmp = ft_strsub(s, j, i - j + 1);
-	return (tmp);
+	i = 0;
+	while (ft_sp(*s++))
+		i++;
+	s -= i + 1;
+	e = ft_strlen(s) - 1;
+	if (!*s || e == i - 1)
+		return (dst = ft_strnew(1));
+	if (i != (e + 1))
+		while (ft_sp(s[e]))
+			e--;
+	dst = ft_strsub(s, i, (e - i + 1));
+	return (dst);
 }
