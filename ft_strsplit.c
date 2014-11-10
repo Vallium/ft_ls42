@@ -6,11 +6,12 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 10:23:10 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/10 16:15:40 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/10 16:19:03 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 static int		wc(const char *s, char c)
 {
 	int		i;
@@ -37,7 +38,7 @@ static int		wc(const char *s, char c)
 
 static int		wl(const char *s, int i, int j, char c)
 {
-	while (	s[i] != c && s[i])
+	while (s[i] != c && s[i])
 	{
 		++i;
 		++j;
@@ -47,7 +48,7 @@ static int		wl(const char *s, int i, int j, char c)
 
 char		**ft_strsplit(const char *s, char c)
 {
-	char**ret;
+	char	**ret;
 	int		i;
 	int		k;
 	int		w;
