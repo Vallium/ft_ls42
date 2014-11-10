@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/05 07:41:29 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/05 07:54:44 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/10 14:31:23 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 	const unsigned char	*ptrsrc;
 	unsigned char		cara;
 
+	if (!src || !dst)
+		return (NULL);
 	ptrdst = (unsigned char *)dst;
 	ptrsrc = (const unsigned char *)src;
 	cara = (unsigned char)c;

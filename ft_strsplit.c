@@ -6,47 +6,63 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 10:23:10 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 13:51:35 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/10 14:40:10 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	countwords(const char *s, char c)
+static int		countwords(const char *s, char c)
 {
 	int		i;
 
 	i = 0;
-	while (*s)
-	{
+	while (*s++)
 		if (*s == c && *(s + 1) != c && *(s + 1))
 			i++;
-		s++;
-	}
 	return (i);
 }
 
-char		**ft_strsplit(const	char *s, char c)
+static size_t	len(const char *s, char c)
+{
+	size_t		i;
+
+	i = 0;
+	while (*s && *s != c)
+		i++;
+	return (i);
+}
+
+static void		cpy(char *s1, char *s2, char c)
+{
+	while (*s2 != c)
+		*s1++ = *s2++;
+	*s1 = 0;
+}
+
+static char*	new(const char *s, char c)
+{
+	char	*ret;
+
+	ret = (char *)malloc(sizeof(char) * (len(s, c) + 1));
+	cpy(ret, (char *)s, c);
+	return (ret);
+}
+
+char		**ft_strsplit(const char *s, char c)
 {
 	char			**tab;
-	char			*data;
-	char			*datatmp;
+	char			**ret;
 	unsigned int	i;
 
 	if (!s)
 		return (NULL);
-	data = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
 	tab = (char **)malloc(sizeof(char *) * countwords(s, c));
-	datatmp = data;
-	i = 0;
-	while (*datatmp)
-	{
-		if (*datatmp == c && *(datatmp + 1) != c && *(datatmp + 1))
-			tab[i] = datatmp + 1;
-		if (*datatmp == c)
-			*datatmp = 0;
-		datatmp++;
-		i++;
-	}
+	if (!tab)
+		return (NULL);
+	ret = tab;
+	while (*s)
+		if (*s == c && *(s + 1) != c && *(s + 1))
+			*tab++ = new(s, c);
 	return (tab);
 }
