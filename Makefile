@@ -6,7 +6,7 @@
 #    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
-#    Updated: 2014/11/09 20:50:59 by adoussau         ###   ########.fr        #
+#    Updated: 2014/11/10 11:51:47 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ dyn:
 	@gcc -fPIC -Wall -Werror -Wextra -c $(SRC)
 	@gcc -fPIC -Werror -Wall -Wextra -shared -o libft.so $(OBJ)
 
-.PHONY: clean fclean re test test2 testall
+.PHONY: clean fclean re test1 dltest1 test2 dltest2 testall
 
 clean:
 	@rm -f $(OBJ)
@@ -58,18 +58,20 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 
-testall: test test2
+testall: test1 test2
 
-test: re $(NAME)
-	curl -s http://pastebin.com/raw.php?i=p3BBP70K > main.c
-	gcc -I . main.c $(FBSD_addons) libft.a
-	rm main.c
+test1: $(NAME) main1.c
+	gcc -I . main1.c $(FBSD_addons) libft.a
 	./a.out
 
-test2: re
-	curl -s http://pastebin.com/raw.php\?i\=KQRs4L2H > main.c
-	gcc -I . main.c $(FBSD_addons) libft.a
-	rm main.c
+test2: $(NAME) main2.c
+	gcc -I . main2.c $(FBSD_addons) libft.a
 	./a.out
+
+main1.c:
+	curl -s http://pastebin.com/raw.php?i=p3BBP70K > main1.c
+
+main2.c:
+	curl -s http://pastebin.com/raw.php\?i\=KQRs4L2H > main2.c
 
 re: fclean all
