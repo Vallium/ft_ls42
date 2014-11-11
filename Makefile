@@ -6,7 +6,7 @@
 #    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
-#    Updated: 2014/11/10 11:51:47 by adoussau         ###   ########.fr        #
+#    Updated: 2014/11/11 15:09:13 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,10 +62,12 @@ testall: test1 test2
 
 test1: $(NAME) main1.c
 	gcc -I . main1.c $(FBSD_addons) libft.a
+	rm main1.c
 	./a.out
 
 test2: $(NAME) main2.c
 	gcc -I . main2.c $(FBSD_addons) libft.a
+	rm main2.c
 	./a.out
 
 main1.c:
