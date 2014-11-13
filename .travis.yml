@@ -6,5 +6,4 @@ compiler:
 install:
 
 script:
-  - make test1
-  - make test2
+  - make
