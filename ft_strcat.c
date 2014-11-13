@@ -20,10 +20,7 @@ char	*ft_strcat(char *s1, const char *s2)
 	while (*s)
 		s++;
 	while (*s2)
-	{
-		*s = *s2;
-		s++;
-		s2++;
-	}
+		*s++ = *s2++;
+	*s = 0;
 	return (s1);
 }
