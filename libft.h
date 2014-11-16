@@ -6,7 +6,7 @@
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 11:04:26 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/13 18:13:53 by adoussau         ###   ########.fr       */
+/*   Updated: 2014/11/16 12:00:01 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				ft_lstpushback(t_list **lst, t_list *new);
+void				ft_lstsmartpushback(t_list **list, t_list*new);
 
 int					ft_isalpha(int c);
 int					ft_isalnum(int c);
