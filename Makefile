@@ -6,7 +6,7 @@
 #    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
-#    Updated: 2014/11/16 12:00:26 by adoussau         ###   ########.fr        #
+#    Updated: 2014/11/16 12:02:50 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ $(NAME): $(OBJ)
 	@ranlib $(NAME)
 
 %.o: %.c
-	@$(CC) -I . -o $@ -c $? $(FLAGS)
+	@$(CC) -O3 -I . -o $@ -c $? $(FLAGS)
 
 dyn: 
 	@gcc -fPIC -Wall -Werror -Wextra -c $(SRC)
