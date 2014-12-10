@@ -11,8 +11,32 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <unistd.h>
 
-int		int main(int ac, char **av)
+void ls_a(DIR* ptdir)
 {
+	struct dirent* entree;
+	while((entree=readdir(ptdir))!= NULL)
+		printf("%s\n", entree->d_name);
+}
+
+int			main(int argc, char **argv)
+{
+	DIR* ptdir;
+	//struct stat buff;
+	//struct dirent* entree;
+	if (argc == 1)
+		ptdir = opendir(".");
+	else
+		ptdir = opendir(argv[1]);
+
+	ls_a(ptdir);
+	/*printf("%d\n",stat("main.c", &buff));
+	printf("%d %d\n",buff.st_size, buff.st_gid);*/
+	closedir(ptdir);
 	return (0);
 }
