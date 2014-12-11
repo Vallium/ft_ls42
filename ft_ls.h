@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 11:14:55 by aalliot           #+#    #+#             */
-/*   Updated: 2014/12/10 11:19:56 by aalliot          ###   ########.fr       */
+/*   Updated: 2014/12/11 15:11:31 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 # define FT_LS_H
 
-
+#include "libft/includes/get_next_line.h"
 
 #endif
