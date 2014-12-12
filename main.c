@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 11:13:40 by aalliot           #+#    #+#             */
-/*   Updated: 2014/12/10 11:14:48 by aalliot          ###   ########.fr       */
+/*   Updated: 2014/12/12 12:46:14 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <unistd.h>
+
+void		usage(void)
+{
+	ft_putstr_fd("usage: ft_ls [-Ralrt][file ...]\n", 2);
+}
 
 void ls_a(DIR* ptdir)
 {
