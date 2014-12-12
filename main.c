@@ -32,6 +32,38 @@ void	usage(void)
 	ft_putstr_fd("usage: ft_ls [-Ralrt][file ...]\n", 2);
 }
 
+void	print_type(int mode)
+{
+	if (S_ISDIR(mode))
+		ft_putchar('d');
+	else if (S_ISREG(mode))
+		ft_putchar('-');
+	else if (S_ISLNK(mode))
+		ft_putchar('l');
+	else if (S_ISSOCK(mode))
+		ft_putchar('s');
+	else if (S_ISFIFO(mode))
+		ft_putchar('p');
+	else if (S_ISCHR(mode))
+		ft_putchar('c');
+	else if (S_ISBLK(mode))
+		ft_putchar('b');
+}
+
+void	print_rights(int mode)
+{
+	ft_putchar((mode & 0400) ? 'r' : '-');
+	ft_putchar((mode & 0200) ? 'w' : '-');
+	ft_putchar((mode & 0100) ? 'x' : '-');
+	ft_putchar((mode & 040) ? 'r' : '-');
+	ft_putchar((mode & 020) ? 'w' : '-');
+	ft_putchar((mode & 010) ? 'x' : '-');
+	ft_putchar((mode & 04) ? 'r' : '-');
+	ft_putchar((mode & 02) ? 'w' : '-');
+	ft_putchar((mode & 01) ? 'x' : '-');
+
+}
+
 void	ls_l(DIR* ptdir)
 {
 	struct dirent* entree;
@@ -53,8 +85,10 @@ void	ls_l(DIR* ptdir)
 				stat(entree->d_name, &statbuff);
 				gp = getgrgid (statbuff.st_gid);
 				ps = getpwuid(statbuff.st_uid);
+				print_type(statbuff.st_mode);
+				print_rights(statbuff.st_mode);
 
-				printf("drwxrwxrwx\t%d\t%s\t%s\t%llu\t%s\t%s\n",
+				printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
 					statbuff.st_nlink,
 					ps->pw_name ,gp->gr_name,
 					statbuff.st_size,
