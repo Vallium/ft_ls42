@@ -18,11 +18,11 @@
 
 typedef struct		s_opt
 {
+	int				nbarg;
 	char			*optstr;
-//	char			*nxtchr;
-	int				optind;
+
 }					t_opt;
 
-int		ft_get_opt(int argc, char **argv, char *optstr);
+int		ft_get_opt(int argc, char **argv, t_opt opt);
 
 #endif
