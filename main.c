@@ -16,6 +16,13 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <grp.h>
+#include <uuid/uuid.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <uuid/uuid.h>
+#include <time.h>
+
 
 int		a = 0;
 int		l = 0;
@@ -25,12 +32,37 @@ void	usage(void)
 	ft_putstr_fd("usage: ft_ls [-Ralrt][file ...]\n", 2);
 }
 
-void	ls_a(DIR* ptdir)
+void	ls_l(DIR* ptdir)
 {
 	struct dirent* entree;
-	while((entree=readdir(ptdir))!= NULL)
-		if (a || *entree->d_name != '.')
-			printf("%s\n", entree->d_name);
+	struct stat statbuff;
+	struct group *gp;
+	struct passwd *ps;
+
+	if (!l)
+	{
+		while((entree=readdir(ptdir))!= NULL)
+			if (a || *entree->d_name != '.')
+				printf("%s\n", entree->d_name);
+	}
+	else
+	{
+		while((entree=readdir(ptdir))!= NULL)
+			if (a || *entree->d_name != '.')
+			{
+				stat(entree->d_name, &statbuff);
+				gp = getgrgid (statbuff.st_gid);
+				ps = getpwuid(statbuff.st_uid);
+
+				printf("drwxrwxrwx\t%d\t%s\t%s\t%llu\t%s\t%s\n",
+					statbuff.st_nlink,
+					ps->pw_name ,gp->gr_name,
+					statbuff.st_size,
+					ft_strsub(ctime(&statbuff.st_mtimespec.tv_sec), 4, 12),
+					entree->d_name);
+			}
+
+	}
 }
 
 int		main(int argc, char **argv)
@@ -52,7 +84,8 @@ int		main(int argc, char **argv)
 		ptdir = opendir(".");
 	}
 
-	ls_a(ptdir);
+	ls_l(ptdir);
+
 	/*printf("%d\n",stat("main.c", &buff));
 	printf("%d %d\n",buff.st_size, buff.st_gid);*/
 	closedir(ptdir);
