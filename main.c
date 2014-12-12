@@ -17,27 +17,40 @@
 #include <dirent.h>
 #include <unistd.h>
 
-void		usage(void)
+int		a = 0;
+int		l = 0;
+
+void	usage(void)
 {
 	ft_putstr_fd("usage: ft_ls [-Ralrt][file ...]\n", 2);
 }
 
-void ls_a(DIR* ptdir)
+void	ls_a(DIR* ptdir)
 {
 	struct dirent* entree;
 	while((entree=readdir(ptdir))!= NULL)
-		printf("%s\n", entree->d_name);
+		if (a || *entree->d_name != '.')
+			printf("%s\n", entree->d_name);
 }
 
-int			main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	DIR* ptdir;
-	//struct stat buff;
-	//struct dirent* entree;
+	char c;
+
 	if (argc == 1)
 		ptdir = opendir(".");
 	else
-		ptdir = opendir(argv[1]);
+	{
+		while ((c = ft_get_opt(argc, argv, "la")) > 0)
+		{
+			if (c == 'l')
+				l = 1;
+			else if (c == 'a')
+				a = 1;
+		}
+		ptdir = opendir(".");
+	}
 
 	ls_a(ptdir);
 	/*printf("%d\n",stat("main.c", &buff));

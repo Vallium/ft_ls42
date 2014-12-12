@@ -23,4 +23,6 @@ typedef struct		s_opt
 	int				optind;
 }					t_opt;
 
+int		ft_get_opt(int argc, char **argv, char *optstr);
+
 #endif

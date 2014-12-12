@@ -11,21 +11,28 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include <stdio.h>
 
-char				ft_get_opt(int argc, char **argv, char *optstr)
+int				ft_get_opt(int argc, char **argv, char *optstr)
 {
-	static int		i = 0;
-	char			*ret;
+	static int	nbarg = 1;
+	static int	i = 0;
+	char		*ret;
 
-	if (argv[argc][0] == '-' && argv[argc][1] == '-')
-		return (-1);
-	while (argv[argc][optind] && argv[argc][0] == '-')
+	if (!argv[nbarg][i])
 	{
-		if ((ret = ft_strchr(optstr, argv[argc][optind])));
-		{
-			opt.optind++;
-			return (*ret);
-		}
+		i = 0;
+		nbarg++;
+		if (nbarg == argc)
+			return (-1);
 	}
-	return (ret == 0 ? '?' : *ret);
+	if (!i)
+	{
+		if (argv[nbarg][0] == '-' && argv[nbarg][1] != '-'  && argv[nbarg][1])
+			i++;
+		else
+			return (-1);
+	}
+	ret = ft_strchr(optstr, argv[nbarg][i++]);
+	return (!ret ? '?' : *ret);
 }
