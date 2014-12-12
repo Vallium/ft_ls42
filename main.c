@@ -103,12 +103,15 @@ int		main(int argc, char **argv)
 {
 	DIR* ptdir;
 	char c;
+	t_opt opt;
 
+	opt.optstr = "Ralrt";
+	opt.nbarg = 1;
 	if (argc == 1)
 		ptdir = opendir(".");
 	else
 	{
-		while ((c = ft_get_opt(argc, argv, "la")) > 0)
+		while ((c = ft_get_opt(argc, argv, opt)) > 0)
 		{
 			if (c == 'l')
 				l = 1;
@@ -117,11 +120,7 @@ int		main(int argc, char **argv)
 		}
 		ptdir = opendir(".");
 	}
-
 	ls_l(ptdir);
-
-	/*printf("%d\n",stat("main.c", &buff));
-	printf("%d %d\n",buff.st_size, buff.st_gid);*/
 	closedir(ptdir);
 	return (0);
 }

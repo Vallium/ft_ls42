@@ -13,26 +13,25 @@
 #include "ft_ls.h"
 #include <stdio.h>
 
-int				ft_get_opt(int argc, char **argv, char *optstr)
+int				ft_get_opt(int argc, char **argv, t_opt opt)
 {
-	static int	nbarg = 1;
 	static int	i = 0;
 	char		*ret;
 
-	if (!argv[nbarg][i])
+	if (!argv[opt.nbarg][i])
 	{
 		i = 0;
-		nbarg++;
-		if (nbarg == argc)
+		opt.nbarg++;
+		if (opt.nbarg == argc)
 			return (-1);
 	}
 	if (!i)
 	{
-		if (argv[nbarg][0] == '-' && argv[nbarg][1] != '-'  && argv[nbarg][1])
+		if (argv[opt.nbarg][0] == '-' && argv[opt.nbarg][1] != '-'  && argv[opt.nbarg][1])
 			i++;
 		else
 			return (-1);
 	}
-	ret = ft_strchr(optstr, argv[nbarg][i++]);
+	ret = ft_strchr(opt.optstr, argv[opt.nbarg][i++]);
 	return (!ret ? '?' : *ret);
 }
