@@ -14,7 +14,17 @@
 
 # define FT_LS_H
 
-#include "libft/includes/get_next_line.h"
+#include "libft/includes/libft.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <grp.h>
+#include <uuid/uuid.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <uuid/uuid.h>
+#include <time.h>
 
 typedef struct		s_opt
 {
@@ -22,6 +32,10 @@ typedef struct		s_opt
 	char			*optstr;
 }					t_opt;
 
-int		ft_get_opt(int argc, char **argv, t_opt *opt);
+int								ft_get_opt(int argc, char **argv, t_opt *opt);
+void							usage(void);
+void							print_type(int mode);
+void							print_rights(int mode);
+void							ls_l(DIR *ptdir);
 
 #endif
