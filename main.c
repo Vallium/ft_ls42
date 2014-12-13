@@ -117,7 +117,10 @@ int		main(int argc, char **argv)
 			else if (c == 'a')
 				a = 1;
 		}
-		ptdir = opendir(argv[opt.nbarg]);
+		if (argc == 2)
+			ptdir = opendir(".");
+		else
+			ptdir = opendir(argv[opt.nbarg]);
 	}
 	ls_l(ptdir);
 	closedir(ptdir);
