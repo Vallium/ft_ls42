@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 11:14:55 by aalliot           #+#    #+#             */
-/*   Updated: 2014/12/12 10:56:50 by aalliot          ###   ########.fr       */
+/*   Updated: 2014/12/13 12:36:53 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ typedef struct		s_opt
 {
 	int				nbarg;
 	char			*optstr;
-
 }					t_opt;
 
-int		ft_get_opt(int argc, char **argv, t_opt opt);
+int		ft_get_opt(int argc, char **argv, t_opt *opt);
 
 #endif
