@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 11:13:40 by aalliot           #+#    #+#             */
-/*   Updated: 2014/12/13 12:02:06 by aalliot          ###   ########.fr       */
+/*   Updated: 2014/12/13 12:36:39 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,14 @@ int		main(int argc, char **argv)
 		ptdir = opendir(".");
 	else
 	{
-		while ((c = ft_get_opt(argc, argv, opt)) > 0)
+		while ((c = ft_get_opt(argc, argv, &opt)) > 0)
 		{
 			if (c == 'l')
 				l = 1;
 			else if (c == 'a')
 				a = 1;
 		}
-		ptdir = opendir(".");
+		ptdir = opendir(argv[opt.nbarg]);
 	}
 	ls_l(ptdir);
 	closedir(ptdir);
