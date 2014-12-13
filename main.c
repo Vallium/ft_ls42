@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 11:13:40 by aalliot           #+#    #+#             */
-/*   Updated: 2014/12/12 12:46:14 by aalliot          ###   ########.fr       */
+/*   Updated: 2014/12/13 12:02:06 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	ls_l(DIR* ptdir)
 					ft_strsub(ctime(&statbuff.st_mtimespec.tv_sec), 4, 12),
 					entree->d_name);
 			}
-
 	}
 }
 
