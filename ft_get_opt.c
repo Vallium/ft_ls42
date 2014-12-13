@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-#include <stdio.h>
 
 int				ft_get_opt(int argc, char **argv, t_opt *opt)
 {

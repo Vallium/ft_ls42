@@ -12,17 +12,6 @@
 
 #include "ft_ls.h"
 #include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <grp.h>
-#include <uuid/uuid.h>
-#include <sys/types.h>
-#include <pwd.h>
-#include <uuid/uuid.h>
-#include <time.h>
-
 
 int		a = 0;
 int		l = 0;
