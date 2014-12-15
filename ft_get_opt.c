@@ -32,5 +32,7 @@ int				ft_get_opt(int argc, char **argv, t_opt *opt)
 			return (-1);
 	}
 	ret = ft_strchr(opt->optstr, argv[opt->nbarg][i++]);
+	if (!ret)
+		opt->err = argv[opt->nbarg][i - 1];
 	return (!ret ? '?' : *ret);
 }
