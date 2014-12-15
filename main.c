@@ -104,6 +104,12 @@ int		main(int argc, char **argv)
 	{
 		while ((c = ft_get_opt(argc, argv, &opt)) > 0)
 		{
+			if (c == '?')
+			{
+				printf("ft_ls: illegal option -- %c\n", opt.err);
+				usage();
+				return (0);
+			}
 			if (c == 'l')
 				l = 1;
 			else if (c == 'a')

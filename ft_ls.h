@@ -29,6 +29,7 @@
 typedef struct		s_opt
 {
 	int				nbarg;
+	char			err;
 	char			*optstr;
 }					t_opt;
 
