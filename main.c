@@ -62,13 +62,13 @@ void	ls_l(DIR* ptdir)
 
 	if (!l)
 	{
-		while((entree=readdir(ptdir))!= NULL)
+		while((entree=readdir(ptdir)) != NULL)
 			if (a || *entree->d_name != '.')
 				printf("%s\n", entree->d_name);
 	}
 	else
 	{
-		while((entree=readdir(ptdir))!= NULL)
+		while((entree=readdir(ptdir)) != NULL)
 			if (a || *entree->d_name != '.')
 			{
 				stat(entree->d_name, &statbuff);
@@ -96,7 +96,10 @@ int		main(int argc, char **argv)
 	opt.optstr = "Ralrt";
 	opt.nbarg = 1;
 	if (argc == 1)
+	{
 		ptdir = opendir(".");
+		ls_l(ptdir);
+	}
 	else
 	{
 		while ((c = ft_get_opt(argc, argv, &opt)) > 0)
@@ -106,12 +109,21 @@ int		main(int argc, char **argv)
 			else if (c == 'a')
 				a = 1;
 		}
-		if (argc == 2)
+		if (argc == opt.nbarg)
+		{
 			ptdir = opendir(".");
-		else
+			ls_l(ptdir);
+		}
+		while (opt.nbarg < argc)
+		{
 			ptdir = opendir(argv[opt.nbarg]);
+			printf("%s:\n", argv[opt.nbarg]);
+			ls_l(ptdir);
+			ft_putchar('\n');
+			opt.nbarg++;
+		}
 	}
-	ls_l(ptdir);
+	//ls_l(ptdir);
 	closedir(ptdir);
 	return (0);
 }
