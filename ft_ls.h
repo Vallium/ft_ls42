@@ -37,6 +37,5 @@ int								ft_get_opt(int argc, char **argv, t_opt *opt);
 void							usage(void);
 void							print_type(int mode);
 void							print_rights(int mode);
-void							ls_l(DIR *ptdir);
 
 #endif
