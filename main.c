@@ -16,6 +16,21 @@
 int		a = 0;
 int		l = 0;
 
+void	ft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
+
+int		file_size_cmp(t_file *f1, t_file *f2)
+{
+	return(f1->stat.st_size > f2->stat.st_size);
+}
+
+int		file_name_cmp(t_file *f1, t_file *f2)
+{
+	return(ft_strcmp(f1->entree->d_name, f2->entree->d_name) < 0 ? 0 : 1);
+}
+
+int		file_name_cmp(t_file *f1, t_file *f2)
+{}
+
 void	usage(void)
 {
 	ft_putstr_fd("usage: ft_ls [-Ralrt][file ...]\n", 2);
@@ -55,16 +70,36 @@ void	print_rights(int mode)
 
 void	ls_l(DIR* ptdir, char *arg)
 {
-	struct dirent* entree;
-	struct stat statbuff;
-	struct group *gp;
-	struct passwd *ps;
+	t_list			*lst;
+	t_file			file;
+//	struct group	*gp;
+//	struct passwd	*ps;
+
+	lst = NULL;
+	arg = arg;
+	while((file.entree=readdir(ptdir)) != NULL)
+	{
+		stat(file.entree->d_name, &file.stat);
+		ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
+	}
+
+	ft_lst_bbl_sort(lst, file_name_cmp);
+
+	t_list  *tmp = lst;
+
+
+	while (tmp)
+	{
+		file = *((t_file *)tmp->content);
+		printf("%s\t\t\t\t\t%llu\n",file.entree->d_name, file.stat.st_size);
+		tmp = tmp->next;
+	}
+
+	/*
 
 	if (!l)
 	{
-		while((entree=readdir(ptdir)) != NULL)
-			if (a || *entree->d_name != '.')
-				printf("%s\n", entree->d_name);
+
 	}
 	else
 	{
@@ -85,6 +120,7 @@ void	ls_l(DIR* ptdir, char *arg)
 					entree->d_name);
 			}
 	}
+	*/
 }
 
 int		main(int argc, char **argv)
