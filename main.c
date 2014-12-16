@@ -53,7 +53,7 @@ void	print_rights(int mode)
 
 }
 
-void	ls_l(DIR* ptdir)
+void	ls_l(DIR* ptdir, char *arg)
 {
 	struct dirent* entree;
 	struct stat statbuff;
@@ -71,7 +71,7 @@ void	ls_l(DIR* ptdir)
 		while((entree=readdir(ptdir)) != NULL)
 			if (a || *entree->d_name != '.')
 			{
-				stat(entree->d_name, &statbuff);
+				stat(ft_strjoin(arg, entree->d_name), &statbuff);
 				gp = getgrgid (statbuff.st_gid);
 				ps = getpwuid(statbuff.st_uid);
 				print_type(statbuff.st_mode);
@@ -98,7 +98,7 @@ int		main(int argc, char **argv)
 	if (argc == 1)
 	{
 		ptdir = opendir(".");
-		ls_l(ptdir);
+		ls_l(ptdir, ".");
 	}
 	else
 	{
@@ -117,19 +117,18 @@ int		main(int argc, char **argv)
 		}
 		if (argc == opt.nbarg)
 		{
-			ptdir = opendir(".");
-			ls_l(ptdir);
+			ptdir = opendir("./");
+			ls_l(ptdir, "./");
 		}
 		while (opt.nbarg < argc)
 		{
 			ptdir = opendir(argv[opt.nbarg]);
 			printf("%s:\n", argv[opt.nbarg]);
-			ls_l(ptdir);
+			ls_l(ptdir, argv[opt.nbarg]);
 			ft_putchar('\n');
 			opt.nbarg++;
 		}
 	}
-	//ls_l(ptdir);
 	closedir(ptdir);
 	return (0);
 }

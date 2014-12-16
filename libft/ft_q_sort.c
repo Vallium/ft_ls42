@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/16 12:17:19 by aalliot           #+#    #+#             */
-/*   Updated: 2014/12/16 13:32:07 by aalliot          ###   ########.fr       */
+/*   Updated: 2014/12/16 20:45:20 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void			ft_q_sort(int *tab, int bg, int ed)
 		return ;
 	while (1)
 	{
-		while (tab[--rgt] > pvt);
-		while (tab[++lft] < pvt);
+		while (tab[--rgt] > pvt)
+			;
+		while (tab[++lft] < pvt)
+			;
 		if (lft < rgt)
 			ft_swap_int(tab, lft, rgt);
 		else
