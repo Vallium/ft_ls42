@@ -23,7 +23,7 @@ SRC		= ft_toupper.c ft_tolower.c ft_strtrim.c ft_strsub.c ft_strstr.c \
 		  ft_isdigit.c ft_isascii.c ft_isalpha.c ft_isalnum.c ft_bzero.c \
 		  ft_atoi.c ft_strsplit.c ft_itoa.c \
 		  ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
-		  get_next_line.c
+		  get_next_line.c ft_swap_int.c ft_q_sort.c
 OBJ		= $(SRC:.c=.o)
 HDR		= includes/
 CC		= gcc
@@ -59,7 +59,7 @@ test1: re $(NAME)
 	@./a.out
 	@rm a.out
 
-test2: re 
+test2: re
 	@curl -s http://pastebin.com/raw.php?i=ykKyqX78 > main.c
 	@$(CC) $(FLAGS) -I . $(NAME) main.c
 	@rm main.c
