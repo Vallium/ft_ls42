@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "includes/libft.h"
-#include <stdio.h>
 
 void    ft_q_sort(int *tab, int bg, int ed)
 {
@@ -34,22 +33,4 @@ void    ft_q_sort(int *tab, int bg, int ed)
   }
   ft_q_sort(tab, bg, rgt);
   ft_q_sort(tab, rgt + 1, ed);
-}
-
-int      main ()
-{
-  int   tab[10] = {46, 72, 72, 1, 19, 99, 24, 89, 36, 25};
-  int   i = 0;
-
-  printf("Unsort:\n");
-  while (i < 10)
-    printf("%d, ", tab[i++]);
-  printf("\n");
-  ft_q_sort(tab, 0, 9);
-  printf("Sort:\n");
-  i = 0;
-  while (i < 10)
-    printf("%d, ", tab[i++]);
-  printf("\n");
-  return 0;
 }
