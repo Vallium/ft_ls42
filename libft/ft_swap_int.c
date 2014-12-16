@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void    ft_swap_int(int *tab, int a, int b)
+void		ft_swap_int(int *tab, int a, int b)
 {
-  int   tmp;
+	int		tmp;
 
-  tmp = tab[a];
-  tab[a] = tab[b];
-  tab[b] = tmp;
+	tmp = tab[a];
+	tab[a] = tab[b];
+	tab[b] = tmp;
 }
