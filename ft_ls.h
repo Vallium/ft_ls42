@@ -33,6 +33,12 @@ typedef struct		s_opt
 	char			*optstr;
 }					t_opt;
 
+typedef struct		s_file
+{
+	struct dirent	*entree;
+	struct stat		stat;
+}					t_file;
+
 int								ft_get_opt(int argc, char **argv, t_opt *opt);
 void							usage(void);
 void							print_type(int mode);

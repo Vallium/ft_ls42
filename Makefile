@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME	= ft_ls
-SRC		= main.c ft_get_opt.c
+SRC		= main.c ft_get_opt.c ft_lst_bbl_sort.c
 OBJ		= $(SRC:.c=.o)
 HDR		= libft/includes/
 FLAGS	= -Wall -Wextra -Werror
