@@ -47,6 +47,7 @@ void				ft_bzero(void *s, size_t n);
 void				ft_memdel(void **ap);
 void				ft_q_sort(int *tab, int bg, int ed);
 void				ft_bbl_sort(char *tab);
+void				ft_merge_sort(int *tab, int lgt);
 void				ft_swap_int(int *tab, int a, int b);
 void				ft_swap_char(char *c1, char *c2);
 void				ft_strdel(char **as);
