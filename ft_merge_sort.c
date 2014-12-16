@@ -29,25 +29,14 @@ void			ft_merge(int *tab, int bgg1, int end1, int end2)
 	while (i++ <= end1)//cpy du debut du tab
 		tab1[i - bgg1] = tab[i];
 	i = bgg1 - 1;
-	while (i++ <= end2)//merge 2 tabs
+	while (i++ <= end2 && cnt1 != bgg2)//merge 2 tabs//all elems sorted
 	{
-		if (cnt1 == bgg2)//all elems premier tab utilises
-			break ;//all elems sorted
-		else if (cnt2 == (end2 + 1))//all elems second tab utilises
-		{
-			tab[i] = tab1[cnt1 - bgg1];//add elems du premier sous tab
-			cnt1++;
-		}
+		if (cnt2 == (end2 + 1))//all elems second tab utilises
+			tab[i] = tab1[cnt1++ - bgg1];//add elems du premier sous tab
 		else if (tab1[cnt1 - bgg1] < tab[cnt2])
-		{
-			tab[i] = tab1[cnt1 - bgg1];//add un elem du premier sous tab
-			cnt1++;//avance ds le 1er ss tab
-		}
+			tab[i] = tab1[cnt1++ - bgg1];//add un elem du premier sous tab
 		else
-		{
-			tab[i] = tab[cnt2];//add un elem du second tab a la suite
-			cnt2++;//avance ds le 2nd ss tab
-		}
+			tab[i] = tab[cnt2++];//add un elem du second tab a la suite
 	}
 	free(tab1);
 }
@@ -75,7 +64,7 @@ void			ft_merge_sort(int *tab, int lgt)
 
 int				main()
 {
-	int			tab[20] = {85, 89, 7 , 68, 1, 12, 96, 50, 45, 35, 15, 68, 5, 8, 36, 87, 0, 9, 51, 31};
+	int			tab[20] = {20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
 	int			i;
 
 	i = 0;
