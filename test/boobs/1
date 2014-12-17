@@ -1,0 +1,254 @@
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/12/10 11:13:40 by aalliot           #+#    #+#             */
+/*   Updated: 2014/12/13 12:36:39 by aalliot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_ls.h"
+#include <stdio.h>
+
+inta =		 0;
+intl = 0;
+
+voidft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1,			 t_file *f2));
+
+intfile_size_cmp(t_file *f1, t_file *f2)
+{
+		return(f1		->stat.st_size > f2->stat.st_size);
+}
+
+intfile_name_cmp(t_file *f1, t		_file *f2)
+{
+		return(ft_strcmp(f1->entree->d_name, f2->entree->d_name) < 0 ? 0 : 1);
+}
+
+intfile_date_cmp(t_file *f1, t_file *f2)
+{
+		if (f1->stat.st_m		timespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
+					return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
+						return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
+}
+
+voidusage(void)
+{
+		ft_p	utstr_fd("usage: ft_ls [-Ralrt][file ...]\n", 2);
+}
+
+voidprint_type(in	t mode)
+{
+		if (S_ISDIR(mode))
+					ft_putchar('d');
+						else if (S_ISREG(mode))
+									ft_putchar('-');
+										else if (S_ISLNK(mode))
+													ft_putchar('l');
+														else if (S_ISSOCK(mode))
+																	ft_putchar('s');
+																		else if (S_ISFIFO(mode))
+																					ft_putchar('p');
+																						else if (S_ISCHR(mode))
+																									ft_putchar('c');
+																										else if (S_ISBLK(mode))
+																													ft_putchar('b');
+}
+
+voidprint_rights(i	nt mode)
+{
+		ft_putchar((mode & 0400) ? 'r' : '-');
+			ft_putchar((mode & 0200) ? 'w' : '-');
+				ft_putchar((mode & 0100) ? 'x' : '-');
+					ft_putchar((mode & 040) ? 'r' : '-');
+						ft_putchar((mode & 020) ? 'w' : '-');
+							ft_putchar((mode & 010) ? 'x' : '-');
+								ft_putchar((mode & 04) ? 'r' : '-');
+									ft_putchar((mode & 02) ? 'w' : '-');
+										ft_putchar((mode & 01) ? 'x' : '-');
+
+}
+
+voidls_l(DIR* ptdir, char *arg)
+	{
+			t_list*lst;
+				t_filefile;
+				//struct group*gp;
+				//struct passwd										*ps;
+
+					lst = NULL;
+						arg = arg;
+							while((file.entree=readdir(ptdir)) != NULL)
+									{/* ************************************************************************** */
+									/*                                                                            */
+									/*                                                        :::      ::::::::   */
+									/*   main.c                                             :+:      :+:    :+:   */
+									/*                                                    +:+ +:+         +:+     */
+									/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
+									/*                                                +#+#+#+#+#+   +#+           */
+									/*   Created: 2014/12/10 11:13:40 by aalliot           #+#    #+#             */
+									/*   Updated: 2014/12/13 12:36:39 by aalliot          ###   ########.fr       */
+									/*                                                                            */
+									/* ************************************************************************** */
+
+#include "ft_ls.h"
+#include <stdio.h>
+
+inta = 0;
+intl = 0;
+
+voidft_lst					_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
+
+intfile_si		ze_cmp(t_file *f1, t_file *f2)
+{
+		return(f1->stat.st_size > f2->stat.st_size);
+}
+
+intfile_name_cmp(t_file *f1, t_file *f2)
+{
+		return(ft_strcmp		(f1->entree->d_name, f2->entree->d_name) < 0 ? 0 : 1);
+}
+
+intfile_dat		e_cmp(t_file *f1, t_file *f2)
+{
+		if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
+					return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
+						return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
+}
+
+voidusage(void)
+{
+		ft_putstr_fd("usage: ft_ls [-	Ralrt][file ...]\n", 2);
+}
+
+voidprint_type(int mode)
+{
+		if (S_ISDIR(mo	de))
+					ft_putchar('d');
+						else if (S_ISREG(mode))
+									ft_putchar('-');
+										else if (S_ISLNK(mode))
+													ft_putchar('l');
+														else if (S_ISSOCK(mode))
+																	ft_putchar('s');
+																		else if (S_ISFIFO(mode))
+																					ft_putchar('p');
+																						else if (S_ISCHR(mode))
+																									ft_putchar('c');
+																										else if (S_ISBLK(mode))
+																													ft_putchar('b');
+}
+
+voidprint_rights(int mode)
+{
+		ft_putchar((mode & 0400) ? 'r' : '-');
+			ft_	putchar((mode & 0200) ? 'w' : '-');
+				ft_putchar((mode & 0100) ? 'x' : '-');
+					ft_putchar((mode & 040) ? 'r' : '-');
+						ft_putchar((mode & 020) ? 'w' : '-');
+							ft_putchar((mode & 010) ? 'x' : '-');
+								ft_putchar((mode & 04) ? 'r' : '-');
+									ft_putchar((mode & 02) ? 'w' : '-');
+										ft_putchar((mode & 01) ? 'x' : '-');
+
+}
+
+voidls_l(DIR* ptdir, char *arg)
+{
+		t_list*lst;
+			t_filef							ile;
+			//struct group*gp;
+			//struct passwd*ps;
+
+				lst = NULL;
+					arg = ar				g;
+						while((file.entree=readdir(ptdir)) != NULL)
+								{/* ************************************************************************** */
+								/*                                                                            */
+								/*                                                        :::      ::::::::   */
+								/*   main.c                                             :+:      :+:    :+:   */
+								/*                                                    +:+ +:+         +:+     */
+								/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
+								/*                                                +#+#+#+#+#+   +#+           */
+								/*   Created: 2014/12/10 11:13:40 by aalliot           #+#    #+#             */
+								/*   Updated: 2014/12/13 12:36:39 by aalliot          ###   ########.fr       */
+								/*                                                                            */
+								/* ************************************************************************** */
+
+#include "ft_ls.h"
+#include <stdio.h>
+
+inta = 0;
+intl = 0;
+
+voi				dateft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
+
+int		file_size_cmp(t_file *f1, t_file *f2)
+{
+		return(f1->stat.st_size > f2->stat.st_size);
+}
+
+intfile_name_cmp(t_file *f1, t_fi		le *f2)
+{
+		return(ft_strcmp(f1->entree->d_name, f2->entree->d_name) < 0 ? 0 : 1);
+}
+
+intfile_date_cmp(t_file *f1, t_file *f2)
+{
+		if (f1->stat.st_mtime		spec.tv_sec == f2->stat.st_mtimespec.tv_sec)
+					return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
+						return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
+}
+
+voidusage(void)
+{
+		ft_putstr_f	d("usage: ft_ls [-Ralrt][file ...]\n", 2);
+}
+
+voidprint_type(int mode)	
+{
+		if (S_ISDIR(mode))
+					ft_putchar('d');
+						else if (S_ISREG(mode))
+									ft_putchar('-');
+										else if (S_ISLNK(mode))
+													ft_putchar('l');
+														else if (S_ISSOCK(mode))
+																	ft_putchar('s');
+																		else if (S_ISFIFO(mode))
+																					ft_putchar('p');
+																						else if (S_ISCHR(mode))
+																									ft_putchar('c');
+																										else if (S_ISBLK(mode))
+																													ft_putchar('b');
+}
+
+voidprint_rights(int mod	e)
+{
+		ft_putchar((mode & 0400) ? 'r' : '-');
+			ft_putchar((mode & 0200) ? 'w' : '-');
+				ft_putchar((mode & 0100) ? 'x' : '-');
+					ft_putchar((mode & 040) ? 'r' : '-');
+						ft_putchar((mode & 020) ? 'w' : '-');
+							ft_putchar((mode & 010) ? 'x' : '-');
+								ft_putchar((mode & 04) ? 'r' : '-');
+									ft_putchar((mode & 02) ? 'w' : '-');
+										ft_putchar((mode & 01) ? 'x' : '-');
+
+}
+
+voidls_l(DIR* ptdir, char *arg)
+{
+		t_list*lst;
+			t_				filefile;
+			//struct group*gp;
+			//struct passwd*ps;
+
+				lst = NULL;
+												arg = arg;
+													while((file.entree=readdir(ptdir)) != NULL)
+															{
