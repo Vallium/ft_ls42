@@ -28,8 +28,12 @@ int		file_name_cmp(t_file *f1, t_file *f2)
 	return(ft_strcmp(f1->entree->d_name, f2->entree->d_name) < 0 ? 0 : 1);
 }
 
-int		file_name_cmp(t_file *f1, t_file *f2)
-{}
+int		file_date_cmp(t_file *f1, t_file *f2)
+{
+	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
+		return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
+	return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
+}
 
 void	usage(void)
 {
@@ -68,13 +72,14 @@ void	print_rights(int mode)
 
 }
 
-void	ls_l(DIR* ptdir, char *arg)
+void	ls_l(char *arg)
 {
+	DIR*			ptdir;
 	t_list			*lst;
 	t_file			file;
-//	struct group	*gp;
-//	struct passwd	*ps;
-
+	struct group	*gp;
+	struct passwd	*ps;
+	ptdir = opendir(arg);
 	lst = NULL;
 	arg = arg;
 	while((file.entree=readdir(ptdir)) != NULL)
@@ -82,8 +87,8 @@ void	ls_l(DIR* ptdir, char *arg)
 		stat(file.entree->d_name, &file.stat);
 		ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
 	}
-
 	ft_lst_bbl_sort(lst, file_name_cmp);
+	//ft_lst_bbl_sort(lst, file_date_cmp);
 
 	t_list  *tmp = lst;
 
@@ -91,7 +96,48 @@ void	ls_l(DIR* ptdir, char *arg)
 	while (tmp)
 	{
 		file = *((t_file *)tmp->content);
-		printf("%s\t\t\t\t\t%llu\n",file.entree->d_name, file.stat.st_size);
+		stat(ft_strjoin(arg, file.entree->d_name), &file.stat);
+		gp = getgrgid (file.stat.st_gid);
+		ps = getpwuid(file.stat.st_uid);
+		print_type(file.stat.st_mode);
+		print_rights(file.stat.st_mode);
+
+		printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
+		file.stat.st_nlink,
+		ps->pw_name ,gp->gr_name,
+		file.stat.st_size,
+		ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
+		file.entree->d_name);
+		//printf("%s\t\t\t\t\t%llu\n",file.entree->d_name, file.stat.st_size);
+		tmp = tmp->next;
+	}
+	tmp = lst;
+
+	while (tmp)
+	{
+		file = *((t_file *)tmp->content);
+		//ptdir = opendir(file.entree->d_name);
+
+		if (S_ISDIR(file.stat.st_mode) && ft_strcmp(file.entree->d_name, ".") && ft_strcmp(file.entree->d_name, ".."))
+		{
+			printf("\n-------------\n");
+			stat(ft_strjoin(arg, file.entree->d_name), &file.stat);
+			gp = getgrgid (file.stat.st_gid);
+			ps = getpwuid(file.stat.st_uid);
+			print_type(file.stat.st_mode);
+			print_rights(file.stat.st_mode);
+
+			printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
+			file.stat.st_nlink,
+			ps->pw_name ,gp->gr_name,
+			file.stat.st_size,
+			ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
+			file.entree->d_name);
+
+
+			printf("\n\n%s:\n",ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
+			ls_l(ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
+		}
 		tmp = tmp->next;
 	}
 
@@ -133,8 +179,7 @@ int		main(int argc, char **argv)
 	opt.nbarg = 1;
 	if (argc == 1)
 	{
-		ptdir = opendir(".");
-		ls_l(ptdir, ".");
+		ls_l(".");
 	}
 	else
 	{
@@ -154,13 +199,13 @@ int		main(int argc, char **argv)
 		if (argc == opt.nbarg)
 		{
 			ptdir = opendir("./");
-			ls_l(ptdir, "./");
+	//		ls_l(ptdir, "./");
 		}
 		while (opt.nbarg < argc)
 		{
 			ptdir = opendir(argv[opt.nbarg]);
 			printf("%s:\n", argv[opt.nbarg]);
-			ls_l(ptdir, argv[opt.nbarg]);
+	//		ls_l(argv[opt.nbarg]);
 			ft_putchar('\n');
 			opt.nbarg++;
 		}
