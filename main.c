@@ -82,16 +82,16 @@ void	ls_l(char *arg)
 	ptdir = opendir(arg);
 	lst = NULL;
 	arg = arg;
-	printf("\nListe %s\n", arg);
+//	printf("\nListe %s\n", arg);
 
 	while((file.entree=readdir(ptdir)) != NULL)
 	{
-		if (!ft_strcmp(file.entree->d_name, "."))
-			stat(arg, &file.stat);
-		else
-			stat(file.entree->d_name, &file.stat);
+//		if (!ft_strcmp(file.entree->d_name, "."))
+//			stat(arg, &file.stat);
+//		else
+			stat(ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)), &file.stat);
 		ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
-		stat(ft_strjoin(arg, file.entree->d_name), &file.stat);
+//		stat(ft_strjoin(arg, file.entree->d_name), &file.stat);
 		gp = getgrgid (file.stat.st_gid);
 		ps = getpwuid(file.stat.st_uid);
 		print_type(file.stat.st_mode);
@@ -104,7 +104,7 @@ void	ls_l(char *arg)
 		ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
 		file.entree->d_name);
 	}
-	printf("\n-----------------\n");
+//	printf("\n-----------------\n");
 
 	ft_lst_bbl_sort(lst, file_name_cmp);
 	//ft_lst_bbl_sort(lst, file_date_cmp);
@@ -115,8 +115,12 @@ void	ls_l(char *arg)
 	while (tmp)
 	{
 		file = *((t_file *)tmp->content);
-		stat(ft_strjoin(arg, file.entree->d_name), &file.stat);
-		gp = getgrgid (file.stat.st_gid);
+/*		if (!ft_strcmp(file.entree->d_name, "."))
+			stat(arg, &file.stat);
+		else
+			stat(file.entree->d_name, &file.stat);
+*/
+/*		gp = getgrgid (file.stat.st_gid);
 		ps = getpwuid(file.stat.st_uid);
 		print_type(file.stat.st_mode);
 		print_rights(file.stat.st_mode);
@@ -127,7 +131,7 @@ void	ls_l(char *arg)
 		file.stat.st_size,
 		ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
 		file.entree->d_name);
-		//printf("%s\t\t\t\t\t%llu\n",file.entree->d_name, file.stat.st_size);
+		//printf("%s\t\t\t\t\t%llu\n",file.entree->d_name, file.stat.st_size);*/
 		tmp = tmp->next;
 	}
 	tmp = lst;
@@ -139,8 +143,8 @@ void	ls_l(char *arg)
 
 		if (S_ISDIR(file.stat.st_mode) && ft_strcmp(file.entree->d_name, ".") && ft_strcmp(file.entree->d_name, ".."))
 		{
-			printf("\n-------------\n");
-			stat(ft_strjoin(arg, file.entree->d_name), &file.stat);
+//			printf("\n-------------\n");
+/*			stat(ft_strjoin(arg, file.entree->d_name), &file.stat);
 			gp = getgrgid (file.stat.st_gid);
 			ps = getpwuid(file.stat.st_uid);
 			print_type(file.stat.st_mode);
@@ -152,10 +156,10 @@ void	ls_l(char *arg)
 			file.stat.st_size,
 			ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
 			file.entree->d_name);
+*/
 
-
-			printf("\n\n%s:\n",ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
-			ls_l(ft_strjoin(arg, ft_strjoin("/", ft_strjoin(file.entree->d_name, "/"))));
+			printf("\n%s:\n",ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
+			ls_l(ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
 		}
 		tmp = tmp->next;
 	}
