@@ -12,6 +12,7 @@
 
 #include "ft_ls.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int		a = 0;
 int		l = 0;
@@ -72,26 +73,36 @@ void	print_rights(int mode)
 
 }
 
+void			delete(void *a, size_t sz)
+{
+	t_file		*file;
+
+	(void)sz;
+	file = (t_file*)a;
+	free(file->entree);
+}
+
 void	ls_l(char *arg)
 {
 	DIR*			ptdir;
 	t_list			*lst;
 	t_file			file;
+	t_list			*tmp;
 	struct group	*gp;
 	struct passwd	*ps;
+
 	ptdir = opendir(arg);
 	lst = NULL;
-	arg = arg;
-//	printf("\nListe %s\n", arg);
-
 	while((file.entree=readdir(ptdir)) != NULL)
 	{
-//		if (!ft_strcmp(file.entree->d_name, "."))
-//			stat(arg, &file.stat);
-//		else
-			stat(ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)), &file.stat);
+		stat(ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)), &file.stat);
 		ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
-//		stat(ft_strjoin(arg, file.entree->d_name), &file.stat);
+	}
+	ft_lst_bbl_sort(lst, file_name_cmp);
+	tmp = lst;
+	while (tmp)
+	{
+		file = *((t_file *)tmp->content);
 		gp = getgrgid (file.stat.st_gid);
 		ps = getpwuid(file.stat.st_uid);
 		print_type(file.stat.st_mode);
@@ -103,35 +114,7 @@ void	ls_l(char *arg)
 		file.stat.st_size,
 		ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
 		file.entree->d_name);
-	}
-//	printf("\n-----------------\n");
 
-	ft_lst_bbl_sort(lst, file_name_cmp);
-	//ft_lst_bbl_sort(lst, file_date_cmp);
-
-	t_list  *tmp = lst;
-
-
-	while (tmp)
-	{
-		file = *((t_file *)tmp->content);
-/*		if (!ft_strcmp(file.entree->d_name, "."))
-			stat(arg, &file.stat);
-		else
-			stat(file.entree->d_name, &file.stat);
-*/
-/*		gp = getgrgid (file.stat.st_gid);
-		ps = getpwuid(file.stat.st_uid);
-		print_type(file.stat.st_mode);
-		print_rights(file.stat.st_mode);
-
-		printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
-		file.stat.st_nlink,
-		ps->pw_name ,gp->gr_name,
-		file.stat.st_size,
-		ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-		file.entree->d_name);
-		//printf("%s\t\t\t\t\t%llu\n",file.entree->d_name, file.stat.st_size);*/
 		tmp = tmp->next;
 	}
 	tmp = lst;
@@ -139,72 +122,29 @@ void	ls_l(char *arg)
 	while (tmp)
 	{
 		file = *((t_file *)tmp->content);
-		//ptdir = opendir(file.entree->d_name);
-
 		if (S_ISDIR(file.stat.st_mode) && ft_strcmp(file.entree->d_name, ".") && ft_strcmp(file.entree->d_name, ".."))
 		{
-//			printf("\n-------------\n");
-/*			stat(ft_strjoin(arg, file.entree->d_name), &file.stat);
-			gp = getgrgid (file.stat.st_gid);
-			ps = getpwuid(file.stat.st_uid);
-			print_type(file.stat.st_mode);
-			print_rights(file.stat.st_mode);
-
-			printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
-			file.stat.st_nlink,
-			ps->pw_name ,gp->gr_name,
-			file.stat.st_size,
-			ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-			file.entree->d_name);
-*/
-
 			printf("\n%s:\n",ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
 			ls_l(ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
 		}
 		tmp = tmp->next;
 	}
-
-	/*
-
-	if (!l)
-	{
-
-	}
-	else
-	{
-		while((entree=readdir(ptdir)) != NULL)
-			if (a || *entree->d_name != '.')
-			{
-				stat(ft_strjoin(arg, entree->d_name), &statbuff);
-				gp = getgrgid (statbuff.st_gid);
-				ps = getpwuid(statbuff.st_uid);
-				print_type(statbuff.st_mode);
-				print_rights(statbuff.st_mode);
-
-				printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
-					statbuff.st_nlink,
-					ps->pw_name ,gp->gr_name,
-					statbuff.st_size,
-					ft_strsub(ctime(&statbuff.st_mtimespec.tv_sec), 4, 12),
-					entree->d_name);
-			}
-	}
-	*/
+//	ft_lstdel(&lst, delete);
 }
 
 int		main(int argc, char **argv)
 {
-	DIR* ptdir;
-	char c;
-	t_opt opt;
+//	DIR* ptdir;
+//	char c;
+//	t_opt opt;
 
-	opt.optstr = "Ralrt";
-	opt.nbarg = 1;
-	if (argc == 1)
+//	opt.optstr = "Ralrt";
+//	opt.nbarg = 1;
+	if (argc == 2)
 	{
-		ls_l(".");
+		ls_l(argv[1]);
 	}
-	else
+	/*else
 	{
 		while ((c = ft_get_opt(argc, argv, &opt)) > 0)
 		{
@@ -232,7 +172,6 @@ int		main(int argc, char **argv)
 			ft_putchar('\n');
 			opt.nbarg++;
 		}
-	}
-	closedir(ptdir);
+	}*/
 	return (0);
 }
