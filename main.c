@@ -82,11 +82,30 @@ void	ls_l(char *arg)
 	ptdir = opendir(arg);
 	lst = NULL;
 	arg = arg;
+	printf("\nListe %s\n", arg);
+
 	while((file.entree=readdir(ptdir)) != NULL)
 	{
-		stat(file.entree->d_name, &file.stat);
+		if (!ft_strcmp(file.entree->d_name, "."))
+			stat(arg, &file.stat);
+		else
+			stat(file.entree->d_name, &file.stat);
 		ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
+		stat(ft_strjoin(arg, file.entree->d_name), &file.stat);
+		gp = getgrgid (file.stat.st_gid);
+		ps = getpwuid(file.stat.st_uid);
+		print_type(file.stat.st_mode);
+		print_rights(file.stat.st_mode);
+
+		printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
+		file.stat.st_nlink,
+		ps->pw_name ,gp->gr_name,
+		file.stat.st_size,
+		ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
+		file.entree->d_name);
 	}
+	printf("\n-----------------\n");
+
 	ft_lst_bbl_sort(lst, file_name_cmp);
 	//ft_lst_bbl_sort(lst, file_date_cmp);
 
@@ -136,7 +155,7 @@ void	ls_l(char *arg)
 
 
 			printf("\n\n%s:\n",ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
-			ls_l(ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
+			ls_l(ft_strjoin(arg, ft_strjoin("/", ft_strjoin(file.entree->d_name, "/"))));
 		}
 		tmp = tmp->next;
 	}
@@ -205,7 +224,7 @@ int		main(int argc, char **argv)
 		{
 			ptdir = opendir(argv[opt.nbarg]);
 			printf("%s:\n", argv[opt.nbarg]);
-	//		ls_l(argv[opt.nbarg]);
+			ls_l(argv[opt.nbarg]);
 			ft_putchar('\n');
 			opt.nbarg++;
 		}
