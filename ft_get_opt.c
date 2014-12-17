@@ -26,7 +26,8 @@ int				ft_get_opt(int argc, char **argv, t_opt *opt)
 	}
 	if (!i)
 	{
-		if (argv[opt->nbarg][0] == '-' && argv[opt->nbarg][1] != '-'  && argv[opt->nbarg][1])
+		if (argv[opt->nbarg][0] == '-' && argv[opt->nbarg][1] != '-'
+			&& argv[opt->nbarg][1])
 			i++;
 		else
 			return (-1);
