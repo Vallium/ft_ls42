@@ -119,7 +119,7 @@ void	printFile(t_file file)
 	}
 }
 
-void	ls_l(char *arg)
+void	ls_l(char *arg, char *dir)
 {
 	//printf("LS_L(%s);\n", arg);
 	DIR*			ptdir;
@@ -128,7 +128,12 @@ void	ls_l(char *arg)
 	t_list			*tmp;
 	struct dirent	*entree;
 
-	ptdir = opendir(arg);
+	if (!(ptdir = opendir(arg)))
+	{
+		ft_putstr("ls: ");
+		perror(dir);
+		return;
+	}
 	lst = NULL;
 
 	while ((entree = readdir(ptdir)) != NULL) //stockage liste
@@ -174,7 +179,7 @@ void	ls_l(char *arg)
 		if (R && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".") && ft_strcmp(file.name, ".."))
 		{
 			printf("\n%s:\n",ft_strjoin(arg, ft_strjoin( "/", file.name)));
-			ls_l(ft_strjoin(arg, ft_strjoin( "/", file.name)));
+			ls_l(ft_strjoin(arg, ft_strjoin( "/", file.name)), file.name);
 		}
 		tmp = tmp->next;
 	}
@@ -190,7 +195,7 @@ int		main(int argc, char **argv)
 	opt.nbarg = 1;
 
 	if (argc == 1)
-		ls_l(".");
+		ls_l(".", ".");
 
 	else
 	{
@@ -214,10 +219,10 @@ int		main(int argc, char **argv)
 				t = 1;
 		}
 		if (argc == opt.nbarg)
-			ls_l(".");
+			ls_l(".", ".");
 		while (opt.nbarg < argc)
 		{
-			ls_l(argv[opt.nbarg]);
+			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
 			ft_putchar('\n');
 			opt.nbarg++;
 		}
