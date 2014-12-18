@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstpushback.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/13 18:06:23 by adoussau          #+#    #+#             */
 /*   Updated: 2014/11/16 10:51:59 by adoussau         ###   ########.fr       */
