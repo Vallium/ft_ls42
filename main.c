@@ -17,6 +17,8 @@
 int		a = 0;
 int		l = 0;
 int		R = 0;
+int		r = 0;
+int		t = 0;
 
 void	ft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
 
@@ -30,11 +32,23 @@ int		file_name_cmp(t_file *f1, t_file *f2)
 	return(ft_strcmp(f1->name, f2->name) < 0 ? 0 : 1);
 }
 
-int		file_date_cmp(t_file *f1, t_file *f2)
+int		file_r_name_cmp(t_file *f1, t_file *f2)
+{
+	return(ft_strcmp(f1->name, f2->name) > 0 ? 0 : 1);
+}
+
+int		file_time_cmp(t_file *f1, t_file *f2)
 {
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
 		return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
 	return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
+}
+
+int		file_r_time_cmp(t_file *f1, t_file *f2)
+{
+	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
+		return (f1->stat.st_mtimespec.tv_nsec > f2->stat.st_mtimespec.tv_nsec);
+	return (f1->stat.st_mtimespec.tv_sec > f2->stat.st_mtimespec.tv_sec);
 }
 
 void	usage(void)
@@ -80,25 +94,29 @@ void	printFile(t_file file)
 	struct group	*gp;
 	struct passwd	*ps;
 
-	gp = getgrgid(file.stat.st_gid);
-	ps = getpwuid(file.stat.st_uid);
-	print_type(file.stat.st_mode);
-	print_rights(file.stat.st_mode);
+	if (l)
+	{
+		if (a || *file.name != '.')
+		{
+			gp = getgrgid(file.stat.st_gid);
+			ps = getpwuid(file.stat.st_uid);
 
-	printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
-		file.stat.st_nlink,
-		ps->pw_name ,gp->gr_name,
-		file.stat.st_size,
-		ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-		file.name);
-}
+			print_type(file.stat.st_mode);
+			print_rights(file.stat.st_mode);
 
-void			delete(void *a, size_t sz)
-{
-	t_file		*file;
-
-	(void)sz;
-	file = (t_file*)a;
+			printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
+				file.stat.st_nlink,
+				ps->pw_name ,gp->gr_name,
+				file.stat.st_size,
+				ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
+				file.name);
+		}
+	}
+	else
+	{
+		if (a || *file.name != '.')
+			printf("%s\n", file.name);
+	}
 }
 
 void	ls_l(char *arg)
@@ -118,10 +136,25 @@ void	ls_l(char *arg)
 		ft_strcpy(file.name, entree->d_name);
 
 		stat(ft_strjoin(arg, ft_strjoin("/", entree->d_name)), &file.stat);
-		ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
+		if (!r)
+			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
+		else
+			ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
 	}
 
-	ft_lst_bbl_sort(lst, file_name_cmp);
+	if (!r)
+		ft_lst_bbl_sort(lst, file_name_cmp);
+	else
+		ft_lst_bbl_sort(lst, file_r_name_cmp);
+
+
+	if (t)
+	{
+		if (!r)
+			ft_lst_bbl_sort(lst, file_time_cmp);
+		else
+			ft_lst_bbl_sort(lst, file_r_time_cmp);
+	}
 
 	tmp = lst;
 
@@ -138,7 +171,7 @@ void	ls_l(char *arg)
 	while (tmp) //recursivitee si ss/dossiers
 	{
 		file = *((t_file *)tmp->content);
-		if (S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".") && ft_strcmp(file.name, ".."))
+		if (R && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".") && ft_strcmp(file.name, ".."))
 		{
 			printf("\n%s:\n",ft_strjoin(arg, ft_strjoin( "/", file.name)));
 			ls_l(ft_strjoin(arg, ft_strjoin( "/", file.name)));
@@ -175,6 +208,10 @@ int		main(int argc, char **argv)
 				R = 1;
 			else if (c == 'a')
 				a = 1;
+			else if (c == 'r')
+				r = 1;
+			else if (c == 't')
+				t = 1;
 		}
 		if (argc == opt.nbarg)
 			ls_l(".");
