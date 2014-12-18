@@ -130,7 +130,7 @@ void	ls_l(char *arg, char *dir)
 
 	if (!(ptdir = opendir(arg)))
 	{
-		ft_putstr("ls: ");
+		ft_putstr_fd("ls: ", 2);
 		perror(dir);
 		return;
 	}
@@ -183,6 +183,7 @@ void	ls_l(char *arg, char *dir)
 		}
 		tmp = tmp->next;
 	}
+	closedir(ptdir);
 //	ft_lstdel(&lst, delete);
 }
 
