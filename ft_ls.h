@@ -35,7 +35,7 @@ typedef struct		s_opt
 
 typedef struct		s_file
 {
-	struct dirent	*entree;
+	char			name[256];
 	struct stat		stat;
 }					t_file;
 
