@@ -16,6 +16,7 @@
 
 int		a = 0;
 int		l = 0;
+int		R = 0;
 
 void	ft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
 
@@ -26,7 +27,7 @@ int		file_size_cmp(t_file *f1, t_file *f2)
 
 int		file_name_cmp(t_file *f1, t_file *f2)
 {
-	return(ft_strcmp(f1->entree->d_name, f2->entree->d_name) < 0 ? 0 : 1);
+	return(ft_strcmp(f1->name, f2->name) < 0 ? 0 : 1);
 }
 
 int		file_date_cmp(t_file *f1, t_file *f2)
@@ -73,59 +74,74 @@ void	print_rights(int mode)
 
 }
 
+
+void	printFile(t_file file)
+{
+	struct group	*gp;
+	struct passwd	*ps;
+
+	gp = getgrgid(file.stat.st_gid);
+	ps = getpwuid(file.stat.st_uid);
+	print_type(file.stat.st_mode);
+	print_rights(file.stat.st_mode);
+
+	printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
+		file.stat.st_nlink,
+		ps->pw_name ,gp->gr_name,
+		file.stat.st_size,
+		ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
+		file.name);
+}
+
 void			delete(void *a, size_t sz)
 {
 	t_file		*file;
 
 	(void)sz;
 	file = (t_file*)a;
-	free(file->entree);
 }
 
 void	ls_l(char *arg)
 {
+	//printf("LS_L(%s);\n", arg);
 	DIR*			ptdir;
 	t_list			*lst;
 	t_file			file;
 	t_list			*tmp;
-	struct group	*gp;
-	struct passwd	*ps;
+	struct dirent	*entree;
 
 	ptdir = opendir(arg);
 	lst = NULL;
-	while((file.entree=readdir(ptdir)) != NULL)
+
+	while ((entree = readdir(ptdir)) != NULL) //stockage liste
 	{
-		stat(ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)), &file.stat);
-		ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
+		ft_strcpy(file.name, entree->d_name);
+
+		stat(ft_strjoin(arg, ft_strjoin("/", entree->d_name)), &file.stat);
+		ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
 	}
+
 	ft_lst_bbl_sort(lst, file_name_cmp);
+
 	tmp = lst;
-	while (tmp)
+
+	while (tmp) // affiche le contenu de la liste
 	{
 		file = *((t_file *)tmp->content);
-		gp = getgrgid (file.stat.st_gid);
-		ps = getpwuid(file.stat.st_uid);
-		print_type(file.stat.st_mode);
-		print_rights(file.stat.st_mode);
-
-		printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
-		file.stat.st_nlink,
-		ps->pw_name ,gp->gr_name,
-		file.stat.st_size,
-		ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-		file.entree->d_name);
+		printFile(file);
 
 		tmp = tmp->next;
 	}
+
 	tmp = lst;
 
-	while (tmp)
+	while (tmp) //recursivitee si ss/dossiers
 	{
 		file = *((t_file *)tmp->content);
-		if (S_ISDIR(file.stat.st_mode) && ft_strcmp(file.entree->d_name, ".") && ft_strcmp(file.entree->d_name, ".."))
+		if (S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".") && ft_strcmp(file.name, ".."))
 		{
-			printf("\n%s:\n",ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
-			ls_l(ft_strjoin(arg, ft_strjoin("/", file.entree->d_name)));
+			printf("\n%s:\n",ft_strjoin(arg, ft_strjoin( "/", file.name)));
+			ls_l(ft_strjoin(arg, ft_strjoin( "/", file.name)));
 		}
 		tmp = tmp->next;
 	}
@@ -134,17 +150,16 @@ void	ls_l(char *arg)
 
 int		main(int argc, char **argv)
 {
-//	DIR* ptdir;
-//	char c;
-//	t_opt opt;
+	char c;
+	t_opt opt;
 
-//	opt.optstr = "Ralrt";
-//	opt.nbarg = 1;
-	if (argc == 2)
-	{
-		ls_l(argv[1]);
-	}
-	/*else
+	opt.optstr = "Ralrt";
+	opt.nbarg = 1;
+
+	if (argc == 1)
+		ls_l(".");
+
+	else
 	{
 		while ((c = ft_get_opt(argc, argv, &opt)) > 0)
 		{
@@ -156,22 +171,19 @@ int		main(int argc, char **argv)
 			}
 			if (c == 'l')
 				l = 1;
+			else if (c == 'R')
+				R = 1;
 			else if (c == 'a')
 				a = 1;
 		}
 		if (argc == opt.nbarg)
-		{
-			ptdir = opendir("./");
-	//		ls_l(ptdir, "./");
-		}
+			ls_l(".");
 		while (opt.nbarg < argc)
 		{
-			ptdir = opendir(argv[opt.nbarg]);
-			printf("%s:\n", argv[opt.nbarg]);
 			ls_l(argv[opt.nbarg]);
 			ft_putchar('\n');
 			opt.nbarg++;
 		}
-	}*/
+	}
 	return (0);
 }
