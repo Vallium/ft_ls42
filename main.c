@@ -6,7 +6,7 @@
 /*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 11:13:40 by aalliot           #+#    #+#             */
-/*   Updated: 2014/12/13 12:36:39 by aalliot          ###   ########.fr       */
+/*   Updated: 2014/12/20 20:52:42 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,24 @@ int		file_r_name_cmp(t_file *f1, t_file *f2)
 
 int		file_time_cmp(t_file *f1, t_file *f2)
 {
+	#ifdef __APPLE__
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
 		return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
 	return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
+	#else	
+	return (f1->stat.st_mtime < f2->stat.st_mtime);
+	#endif
 }
 
 int		file_r_time_cmp(t_file *f1, t_file *f2)
 {
+	#ifdef __APPLE__
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
 		return (f1->stat.st_mtimespec.tv_nsec > f2->stat.st_mtimespec.tv_nsec);
 	return (f1->stat.st_mtimespec.tv_sec > f2->stat.st_mtimespec.tv_sec);
+	#else	
+	return (f1->stat.st_mtime > f2->stat.st_mtime);
+	#endif	
 }
 
 void	usage(void)
@@ -104,11 +112,15 @@ void	printFile(t_file file)
 			print_type(file.stat.st_mode);
 			print_rights(file.stat.st_mode);
 
-			printf("\t%d\t%s\t%s\t%llu\t%s\t%s\n",
-				file.stat.st_nlink,
+			printf(" %4d %15s %15s %5llu %s %s\n",
+				(int)file.stat.st_nlink,
 				ps->pw_name ,gp->gr_name,
-				file.stat.st_size,
+				(long long unsigned int)file.stat.st_size, 	
+			#ifdef __APPLE__ 
 				ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
+			#else
+				ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
+			#endif
 				file.name);
 		}
 	}
