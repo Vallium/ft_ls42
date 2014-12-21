@@ -28,16 +28,16 @@
 
 typedef struct		s_opt
 {
-	int				nbarg;
-	char			err;
-	char			*optstr;
-}					t_opt;
+	int							nbarg;
+	char						err;
+	char						*optstr;
+}									t_opt;
 
 typedef struct		s_file
 {
-	char			name[256];
-	struct stat		stat;
-}					t_file;
+	char						name[256];
+	struct stat			stat;
+}									t_file;
 
 int								ft_get_opt(int argc, char **argv, t_opt *opt);
 void							usage(void);

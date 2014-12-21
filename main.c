@@ -19,6 +19,7 @@ int		l = 0;
 int		R = 0;
 int		r = 0;
 int		t = 0;
+long long	total = 0;
 
 void	ft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
 
@@ -43,7 +44,7 @@ int		file_time_cmp(t_file *f1, t_file *f2)
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
 		return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
 	return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
-	#else	
+	#else
 	return (f1->stat.st_mtime < f2->stat.st_mtime);
 	#endif
 }
@@ -54,9 +55,9 @@ int		file_r_time_cmp(t_file *f1, t_file *f2)
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
 		return (f1->stat.st_mtimespec.tv_nsec > f2->stat.st_mtimespec.tv_nsec);
 	return (f1->stat.st_mtimespec.tv_sec > f2->stat.st_mtimespec.tv_sec);
-	#else	
+	#else
 	return (f1->stat.st_mtime > f2->stat.st_mtime);
-	#endif	
+	#endif
 }
 
 void	usage(void)
@@ -112,11 +113,11 @@ void	printFile(t_file file)
 			print_type(file.stat.st_mode);
 			print_rights(file.stat.st_mode);
 
-			printf(" %4d %15s %15s %5llu %s %s\n",
+			printf(" %4d %1s %6s %6llu %s %s\n",
 				(int)file.stat.st_nlink,
 				ps->pw_name ,gp->gr_name,
-				(long long unsigned int)file.stat.st_size, 	
-			#ifdef __APPLE__ 
+				(long long unsigned int)file.stat.st_size,
+			#ifdef __APPLE__
 				ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
 			#else
 				ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
@@ -157,6 +158,7 @@ void	ls_l(char *arg, char *dir)
 			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
 		else
 			ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
+		total += file.stat.st_blocks;
 	}
 
 	if (!r)
@@ -174,7 +176,8 @@ void	ls_l(char *arg, char *dir)
 	}
 
 	tmp = lst;
-
+	if (l)
+		printf("total %llu\n", total);//affiche total mais bug quand il y a un symbolic link
 	while (tmp) // affiche le contenu de la liste
 	{
 		file = *((t_file *)tmp->content);
