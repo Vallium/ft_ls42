@@ -191,12 +191,13 @@ void	ls_l(char *arg, char *dir)
 	while (tmp) //recursivitee si ss/dossiers
 	{
 		file = *((t_file *)tmp->content);
-		if (R && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".") && ft_strcmp(file.name, ".."))
-		{
-			total = 0;
-			printf("\n%s:\n",ft_strjoin(arg, ft_strjoin( "/", file.name)));
-			ls_l(ft_strjoin(arg, ft_strjoin( "/", file.name)), file.name);
-		}
+		if (a || *file.name != '.')
+			if (R && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".") && ft_strcmp(file.name, ".."))
+			{
+				total = 0;
+				printf("\n%s:\n",ft_strjoin(arg, ft_strjoin( "/", file.name)));
+				ls_l(ft_strjoin(arg, ft_strjoin( "/", file.name)), file.name);
+			}
 		tmp = tmp->next;
 	}
 	closedir(ptdir);
