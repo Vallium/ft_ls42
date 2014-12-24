@@ -132,6 +132,31 @@ void	printFile(t_file file)
 	}
 }
 
+t_file *lst2tab(t_list **lst)
+{
+	t_list *tmp = *lst;
+	int size = 0;
+	t_file *tab;
+
+	while (tmp)
+	{
+		size++;
+		tmp = tmp->next;
+	}
+
+	tmp = *lst;
+	tab = (t_file *)malloc(sizeof(t_file) * size);
+
+	size = 0;
+	while (tmp)
+	{
+		tab[size++] = *((t_file *)tmp->content);
+		tmp = tmp->next;
+	}
+	//ft_lstfree(lst); // free
+	return (tab);
+}
+
 void	ls_l(char *arg, char *dir)
 {
 	//printf("LS_L(%s);\n", arg);

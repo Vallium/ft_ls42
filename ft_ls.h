@@ -20,10 +20,10 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <grp.h>
-#include <uuid/uuid.h>
+//#include <uuid/uuid.h>
 #include <sys/types.h>
 #include <pwd.h>
-#include <uuid/uuid.h>
+//#include <uuid/uuid.h>
 #include <time.h>
 
 typedef struct		s_opt
