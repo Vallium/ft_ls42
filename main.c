@@ -113,7 +113,7 @@ void	printFile(t_file file)
 			print_type(file.stat.st_mode);
 			print_rights(file.stat.st_mode);
 
-			printf(" %4d %1s %6s %6llu %s %s\n",
+			printf(" %3d %1s %6s %6llu %s %s\n",
 				(int)file.stat.st_nlink,
 				ps->pw_name ,gp->gr_name,
 				(long long unsigned int)file.stat.st_size,
@@ -153,7 +153,7 @@ void	ls_l(char *arg, char *dir)
 	{
 		ft_strcpy(file.name, entree->d_name);
 
-		stat(ft_strjoin(arg, ft_strjoin("/", entree->d_name)), &file.stat);
+		lstat(ft_strjoin(arg, ft_strjoin("/", entree->d_name)), &file.stat);
 		if (!r)
 			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
 		else
