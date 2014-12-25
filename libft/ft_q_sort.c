@@ -14,7 +14,7 @@
 
 void			sort(void **tab, int bg, int ed, int (*f)(void *, void *))
 {
-	const int	pvt = tab[bg];
+	const void	*pvt = tab[bg];
 	int			lft;
 	int			rgt;
 
@@ -29,7 +29,7 @@ void			sort(void **tab, int bg, int ed, int (*f)(void *, void *))
 		while (!f(tab[++lft], pvt))
 			;
 		if (lft < rgt)
-			ft_swap(tab[lft], tab[rgt]);
+			ft_swap(&tab[lft], &tab[rgt]);
 		else
 			break ;
 	}
