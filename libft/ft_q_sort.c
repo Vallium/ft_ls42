@@ -12,7 +12,7 @@
 
 #include "includes/libft.h"
 
-void			ft_q_sort(int *tab, int bg, int ed)
+void			sort(void **tab, int bg, int ed, int (*f)(void *, void *))
 {
 	const int	pvt = tab[bg];
 	int			lft;
@@ -24,15 +24,20 @@ void			ft_q_sort(int *tab, int bg, int ed)
 		return ;
 	while (1)
 	{
-		while (tab[--rgt] > pvt)
+		while (f(tab[--rgt], pvt))
 			;
-		while (tab[++lft] < pvt)
+		while (!f(tab[++lft], pvt))
 			;
 		if (lft < rgt)
-			ft_swap_int(tab, lft, rgt);
+			ft_swap(tab[lft], tab[rgt]);
 		else
 			break ;
 	}
-	ft_q_sort(tab, bg, rgt);
-	ft_q_sort(tab, rgt + 1, ed);
+	sort(tab, bg, rgt, f);
+	sort(tab, rgt + 1, ed, f);
+}
+
+void	ft_q_sort(void **tab, size_t size, int (*f)(void *, void *))
+{
+	sort(tab, 0, size - 1, f);
 }
