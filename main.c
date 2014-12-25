@@ -132,28 +132,28 @@ void	printFile(t_file file)
 	}
 }
 
-t_file *lst2tab(t_list **lst)
+t_file **lst2tab(t_list **lst, int *size)
 {
 	t_list *tmp = *lst;
-	int size = 0;
-	t_file *tab;
+	*size = 0;
+	t_file **tab;
 
 	while (tmp)
 	{
-		size++;
+		(*size)++;
 		tmp = tmp->next;
 	}
 
 	tmp = *lst;
-	tab = (t_file *)malloc(sizeof(t_file) * size);
+	tab = (t_file **)malloc(sizeof(t_file *) * size);
 
 	size = 0;
 	while (tmp)
 	{
-		tab[size++] = *((t_file *)tmp->content);
+		tab[(*size)++] = (t_file *)tmp->content;
 		tmp = tmp->next;
 	}
-	//ft_lstfree(lst); // free
+	ft_lstsimplefree(lst); // free
 	return (tab);
 }
 
@@ -186,7 +186,11 @@ void	ls_l(char *arg, char *dir)
 		total += file.stat.st_blocks;
 	}
 
-	if (!r)
+	int size;
+	t_file	tab = lst2tab(&lst, size); // test de lst to tab renvoit tab et size
+	ft_q_sort(tab, size, file_name_cmp); // test du trie
+
+	/*if (!r)
 		ft_lst_bbl_sort(lst, file_name_cmp);
 	else
 		ft_lst_bbl_sort(lst, file_r_name_cmp);
@@ -199,7 +203,7 @@ void	ls_l(char *arg, char *dir)
 		else
 			ft_lst_bbl_sort(lst, file_r_time_cmp);
 	}
-
+*/
 	tmp = lst;
 	if (l)
 		printf("total %llu\n", total);//affiche total mais bug quand il y a un symbolic link
