@@ -246,29 +246,21 @@ void	ls_l(char *arg, char *dir)
 			ft_bbl2_sort((void **)tab, size, file_r_time_cmp);
 	}
 
-	while (size--)
-	{
-		file = **tab;
-		printf("- %s \n", file.name);
-		tab++;
-	}
+	if (l)
+		printf("total %llu\n", total);//affiche total mais bug quand il y a un symbolic link
 
-	//tmp = lst;
-	//if (l)
-//		printf("total %llu\n", total);//affiche total mais bug quand il y a un symbolic link
-/*	while (tmp) // affiche le contenu de la liste
+	int i = 0;
+	while (i < size) // affiche le contenu de la liste
 	{
-		file = *((t_file *)tmp->content);
+		file = *((t_file *)tab[i]);
 		printFile(file);
-
-		tmp = tmp->next;
+		i++;
 	}
 
-	tmp = lst;
-
-	while (tmp) //recursivitee si ss/dossiers
+	i = 0;
+	while (i < size) //recursivitee si ss/dossiers
 	{
-		file = *((t_file *)tmp->content);
+		file = *((t_file *)tab[i]);
 		if (a || *file.name != '.')
 			if (R && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".") && ft_strcmp(file.name, ".."))
 			{
@@ -276,8 +268,8 @@ void	ls_l(char *arg, char *dir)
 				printf("\n%s:\n",ft_strjoin(arg, ft_strjoin( "/", file.name)));
 				ls_l(ft_strjoin(arg, ft_strjoin( "/", file.name)), file.name);
 			}
-		tmp = tmp->next;
-	}*/
+		i++;
+	}
 	closedir(ptdir);
 //	ft_lstdel(&lst, delete);
 }
