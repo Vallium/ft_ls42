@@ -14,7 +14,7 @@ NAME	= ft_ls
 SRC		= main.c ft_get_opt.c ft_lst_bbl_sort.c
 OBJ		= $(SRC:.c=.o)
 HDR		= libft/includes/
-FLAGS	= #-Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror
 CC		= gcc
 
 .PHONY: test clean cleanlib fclean re 42
