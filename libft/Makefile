@@ -24,7 +24,8 @@ SRC		= ft_toupper.c ft_tolower.c ft_strtrim.c ft_strsub.c ft_strstr.c \
 		  ft_atoi.c ft_strsplit.c ft_itoa.c \
 		  ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
 		  get_next_line.c ft_swap_int.c ft_q_sort.c ft_bbl_sort.c \
-		  ft_swap_char.c ft_merge_sort.c ft_lstpushback.c ft_lstsmartpushback.c
+		  ft_swap_char.c ft_merge_sort.c ft_lstpushback.c ft_lstsmartpushback.c \
+			ft_swap.c
 OBJ		= $(SRC:.c=.o)
 HDR		= includes/
 CC		= gcc

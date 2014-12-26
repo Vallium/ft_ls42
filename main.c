@@ -145,15 +145,15 @@ t_file **lst2tab(t_list **lst, int *size)
 	}
 
 	tmp = *lst;
-	tab = (t_file **)malloc(sizeof(t_file *) * size);
+	tab = (t_file **)malloc(sizeof(t_file *) * *size);
 
-	size = 0;
+	*size = 0;
 	while (tmp)
 	{
 		tab[(*size)++] = (t_file *)tmp->content;
 		tmp = tmp->next;
 	}
-	ft_lstsimplefree(lst); // free
+	//ft_lstsimplefree(lst); // free
 	return (tab);
 }
 
@@ -187,9 +187,21 @@ void	ls_l(char *arg, char *dir)
 	}
 
 	int size;
-	t_file	tab = lst2tab(&lst, size); // test de lst to tab renvoit tab et size
-	ft_q_sort(tab, size, file_name_cmp); // test du trie
+	t_file	**tab;
 
+	size = 0;
+	tab = lst2tab(&lst, &size); // test + modifs apparement OK
+
+	printf("<%d>\n", size); // print size
+
+	ft_q_sort((void**)tab, size, (void*)file_name_cmp); // Modifs + SEGV
+
+	while (*tab)
+	{
+		file = **tab;
+		printf("- %s \n", file.name);
+		tab++;
+	}
 	/*if (!r)
 		ft_lst_bbl_sort(lst, file_name_cmp);
 	else
@@ -207,7 +219,7 @@ void	ls_l(char *arg, char *dir)
 	tmp = lst;
 	if (l)
 		printf("total %llu\n", total);//affiche total mais bug quand il y a un symbolic link
-	while (tmp) // affiche le contenu de la liste
+/*	while (tmp) // affiche le contenu de la liste
 	{
 		file = *((t_file *)tmp->content);
 		printFile(file);
@@ -228,7 +240,7 @@ void	ls_l(char *arg, char *dir)
 				ls_l(ft_strjoin(arg, ft_strjoin( "/", file.name)), file.name);
 			}
 		tmp = tmp->next;
-	}
+	}*/
 	closedir(ptdir);
 //	ft_lstdel(&lst, delete);
 }

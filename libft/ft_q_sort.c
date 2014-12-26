@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/libft.h"
-
+#include <stdio.h>
 void			sort(void **tab, int bg, int ed, int (*f)(void *, void *))
 {
 	const void	*pvt = tab[bg];
@@ -24,12 +24,15 @@ void			sort(void **tab, int bg, int ed, int (*f)(void *, void *))
 		return ;
 	while (1)
 	{
-		while (f(tab[--rgt], pvt))
+		while (tab[--rgt] > pvt)
 			;
-		while (!f(tab[++lft], pvt))
+		while (tab[++lft] < pvt)
 			;
-		if (lft < rgt)
+		if (f(tab[lft], tab[rgt]))			//SEGV
+		{
+			printf("Alive\n");
 			ft_swap(&tab[lft], &tab[rgt]);
+		}
 		else
 			break ;
 	}

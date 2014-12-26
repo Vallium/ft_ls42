@@ -13,19 +13,11 @@
 #include "ft_ls.h"
 #include <stdio.h>
 
-void        ft_swap(void **a, void **b)
-{
-    void    *tmp;
-
-    tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
 
 void	ft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2))
 {
 	t_list		*tmp;
-	int			end;
+	int		    end;
 	t_file		*f1;
 	t_file		*f2;
 
