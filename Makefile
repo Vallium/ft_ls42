@@ -10,7 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libft.a
+STATIC_LIB	= libft.a
+DYNAMIC_LIB	= libft.so
+
 SRC		= ft_bzero.c ft_memset.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		ft_memchr.c ft_memcmp.c \
 		ft_strdup.c ft_strlen.c \
@@ -32,53 +34,45 @@ SRC		= ft_bzero.c ft_memset.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		ft_lstsimpledel.c ft_lstsimpledelone.c \
 		get_next_line.c
 
-HEADDIR	= includes/
+DYNAMIC_OBJ		= $(patsubst %.c,$(DYNAMIC_DIR)/%.o,$(SRC))
+STATIC_OBJ		= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
 
-OBJ		= $(SRC:.c=.o)
+HEADDIR	= includes/
+SRCDIR	= src/
+
 CC		= gcc
-FLAGS	= -Wall -Werror -Wextra
+FLAGS	= -Wall -Wextra -Werror
+
+STATIC_DIR = static
+DYNAMIC_DIR = dynamic
 
 ifeq ($(SYSTEM),Linux)
-	FBSD_addons=strlcat.c strnstr.c
+	FLAGS	= -Wall -Wextra #-Werror
 endif
 
-all: $(NAME)
+$(shell mkdir -p $(STATIC_DIR) $(DYNAMIC_DIR))
 
-$(NAME): $(OBJ)
-	@ar rc $(NAME) $(OBJ)
-	@ranlib $(NAME)
+all: $(STATIC_LIB) $(DYNAMIC_LIB)
 
-%.o: %.c
-	@$(CC) -O3 -I $(HEADDIR) -o $@ -c $? $(FLAGS)
+$(STATIC_LIB): $(STATIC_OBJ)
+	ar rc $@ $(STATIC_OBJ)
+	ranlib $@
 
-dyn: 
-	@gcc -fPIC -Wall -Werror -Wextra -c $(SRC)
-	@gcc -fPIC -Werror -Wall -Wextra -shared -o libft.so $(OBJ)
+$(DYNAMIC_LIB): $(DYNAMIC_OBJ)
+	$(CC) -shared -o $@ $(DYNAMIC_OBJ)
 
-.PHONY: clean fclean re test1 dltest1 test2 dltest2 testall
+$(STATIC_DIR)/%.o: %.c
+	$(CC) -I $(HEADDIR) -o $@ -c $< $(FLAGS)
+
+$(DYNAMIC_DIR)/%.o: %.c
+	$(CC) -fPIC -I $(HEADDIR) -o $@ -c $< $(FLAGS)
+
+.PHONY: clean fclean re
 
 clean:
-	@rm -f $(OBJ)
+	rm -f $(STATIC_OBJ) $(DYNAMIC_OBJ)
 
 fclean: clean
-	@rm -f $(NAME)
-
-testall: test1 test2
-
-test1: $(NAME) main1.c
-	gcc -I . main1.c $(FBSD_addons) libft.a
-	rm main1.c
-	./a.out
-
-test2: $(NAME) main2.c
-	gcc -I . main2.c $(FBSD_addons) libft.a
-	rm main2.c
-	./a.out
-
-main1.c:
-	curl -s http://pastebin.com/raw.php?i=p3BBP70K > main1.c
-
-main2.c:
-	curl -s http://pastebin.com/raw.php\?i\=KQRs4L2H > main2.c
+	rm -f $(STATIC_LIB) $(DYNAMIC_LIB)
 
 re: fclean all
