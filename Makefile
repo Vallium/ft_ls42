@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 STATIC_LIB	= libft.a
+DEBUG_LIB	= libft_debug.a
 DYNAMIC_LIB	= libft.so
 
 SRC		= ft_bzero.c ft_memset.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
@@ -34,38 +35,46 @@ SRC		= ft_bzero.c ft_memset.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		ft_lstsimpledel.c ft_lstsimpledelone.c \
 		get_next_line.c
 
-DYNAMIC_OBJ		= $(patsubst %.c,$(DYNAMIC_DIR)/%.o,$(SRC))
-STATIC_OBJ		= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
+DYNAMIC_OBJ	= $(patsubst %.c,$(DYNAMIC_DIR)/%.o,$(SRC))
+STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
+DEBUG_OBJ	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
 
-HEADDIR	= includes/
-SRCDIR	= src/
+HEAD_DIR	= includes
+SRC_DIR		= src
+DEBUG_DIR	= debug
+STATIC_DIR	= static
+DYNAMIC_DIR	= dynamic
 
-CC		= gcc
-FLAGS	= -Wall -Wextra -Werror
+CC			= gcc
+FLAGS		= -Wall -Wextra -Werror
 
-STATIC_DIR = static
-DYNAMIC_DIR = dynamic
+#ifeq ($(SYSTEM),Linux)
+#	FLAGS	= -Wall -Wextra #-Werror
+#endif
 
-ifeq ($(SYSTEM),Linux)
-	FLAGS	= -Wall -Wextra #-Werror
-endif
+$(shell mkdir -p $(STATIC_DIR) $(DYNAMIC_DIR) $(DEBUG_DIR))
 
-$(shell mkdir -p $(STATIC_DIR) $(DYNAMIC_DIR))
-
-all: $(STATIC_LIB) $(DYNAMIC_LIB)
+all: $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)
 
 $(STATIC_LIB): $(STATIC_OBJ)
 	ar rc $@ $(STATIC_OBJ)
 	ranlib $@
 
+$(DEBUG_LIB): $(DEBUG_OBJ)
+	ar rc $@ $(DEBUG_OBJ)
+	ranlib $@
+
 $(DYNAMIC_LIB): $(DYNAMIC_OBJ)
 	$(CC) -shared -o $@ $(DYNAMIC_OBJ)
 
-$(STATIC_DIR)/%.o: %.c
-	$(CC) -I $(HEADDIR) -o $@ -c $< $(FLAGS)
+$(STATIC_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
 
-$(DYNAMIC_DIR)/%.o: %.c
-	$(CC) -fPIC -I $(HEADDIR) -o $@ -c $< $(FLAGS)
+$(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS) -g
+
+$(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -fPIC -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
 
 .PHONY: clean fclean re
 
