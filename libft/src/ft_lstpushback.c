@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstpushback.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/16 12:05:36 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/27 19:23:03 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/13 18:06:23 by adoussau          #+#    #+#             */
+/*   Updated: 2014/11/16 10:51:59 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "libft.h"
-# include <unistd.h>
-# include <fcntl.h>
+void	ft_lstpushback(t_list **start, t_list *new)
+{
+	t_list		*lst;
 
-# define BUFF_SIZE 65
-
-int		get_next_line(int fd, char **line);
-
-#endif
+	lst = *start;
+	if (!(*start))
+		*start = new;
+	else
+	{
+		while (lst->next)
+			lst = lst->next;
+		lst->next = new;
+	}
+}
