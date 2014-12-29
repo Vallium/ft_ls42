@@ -82,18 +82,26 @@ int		file_time_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1 = (t_file *)ptr1;
 	t_file *f2 = (t_file *)ptr2;
+	#ifdef __APPLE__
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
 		return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
 	return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
+	#else
+	return (f1->stat.st_mtime < f2->stat.st_mtime);
+	#endif
 }
 
 int		file_r_time_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1 = (t_file *)ptr1;
 	t_file *f2 = (t_file *)ptr2;
+	#ifdef __APPLE__
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
 		return (f1->stat.st_mtimespec.tv_nsec > f2->stat.st_mtimespec.tv_nsec);
 	return (f1->stat.st_mtimespec.tv_sec > f2->stat.st_mtimespec.tv_sec);
+	#else
+	return (f1->stat.st_mtime > f2->stat.st_mtime);
+	#endif
 }
 
 void	usage(void)
@@ -155,19 +163,29 @@ void	printFile(t_file file)
 				{
 					printf(" %3d %10d %10d %6llu %s %s\n",
 						(int)file.stat.st_nlink,
-						file.stat.st_uid ,file.stat.st_gid,
+						file.stat.st_uid,
+						file.stat.st_gid,
 						(long long unsigned int)file.stat.st_size,
+						#ifdef __APPLE__
 						ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-							file.name);
+						#else
+						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
+						#endif
+							"file.name");
 				}
 				else
 				{
 					printf(" %3d %10d %6s %6llu %s %s\n",
 						(int)file.stat.st_nlink,
-						file.stat.st_uid ,gp->gr_name,
+						file.stat.st_uid,
+						gp->gr_name,
 						(long long unsigned int)file.stat.st_size,
+						#ifdef __APPLE__
 						ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-							file.name);
+						#else
+						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
+						#endif
+						"file.name");
 				}
 			}
 			else
@@ -176,19 +194,29 @@ void	printFile(t_file file)
 				{
 					printf(" %3d %10s %6s %6llu %s %s\n",
 						(int)file.stat.st_nlink,
-						ps->pw_name, file.stat.st_gid,
+						ps->pw_name,
+						file.stat.st_gid,
 						(long long unsigned int)file.stat.st_size,
+						#ifdef __APPLE__
 						ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-							file.name);
+						#else
+						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
+						#endif
+						file.name);
 				}
 				else
 				{
 					printf(" %3d %10s %6s %6llu %s %s\n",
 						(int)file.stat.st_nlink,
-						ps->pw_name ,gp->gr_name,
+						ps->pw_name,
+						gp->gr_name,
 						(long long unsigned int)file.stat.st_size,
+						#ifdef __APPLE__
 						ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-							file.name);
+						#else
+						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
+						#endif
+						"file.name");
 				}
 			}
 		}
@@ -231,7 +259,6 @@ void	ls_l(char *arg, char *dir)
 	DIR*			ptdir;
 	t_list			*lst;
 	t_file			file;
-	t_list			*tmp;
 	struct dirent	*entree;
 
 	if (!(ptdir = opendir(arg)))
@@ -279,7 +306,7 @@ void	ls_l(char *arg, char *dir)
 			ft_bbl2_sort((void **)tab, size, file_r_time_cmp);
 	}
 	if (l)
-		printf("total %llu\n", total);//affiche total mais bug quand il y a un symbolic link
+		printf("total %llu\n", total);  //affiche total mais bug quand il y a un symbolic link
 
 	int i = 0;
 	while (i < size) // affiche le contenu de la liste
