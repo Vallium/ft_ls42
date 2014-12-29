@@ -171,7 +171,7 @@ void	printFile(t_file file)
 						#else
 						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
 						#endif
-							"file.name");
+						file.name);
 				}
 				else
 				{
@@ -185,7 +185,7 @@ void	printFile(t_file file)
 						#else
 						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
 						#endif
-						"file.name");
+						file.name);
 				}
 			}
 			else
@@ -216,7 +216,7 @@ void	printFile(t_file file)
 						#else
 						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
 						#endif
-						"file.name");
+						file.name);
 				}
 			}
 		}
