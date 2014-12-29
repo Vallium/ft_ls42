@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/16 12:05:36 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/27 19:23:03 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/04 19:46:05 by adoussau          #+#    #+#             */
+/*   Updated: 2014/11/10 18:18:19 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "libft.h"
-# include <unistd.h>
-# include <fcntl.h>
+char	*ft_strnstr(const char *s1, const char *s2, size_t n)
+{
+	size_t		len_s2;
 
-# define BUFF_SIZE 65
-
-int		get_next_line(int fd, char **line);
-
-#endif
+	len_s2 = ft_strlen(s2);
+	if (!*s2)
+		return ((char*)s1);
+	while (*s1 && len_s2 <= n--)
+	{
+		if (!ft_memcmp(s1++, s2, len_s2))
+			return ((char*)s1 - 1);
+	}
+	return (NULL);
+}

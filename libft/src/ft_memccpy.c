@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/16 12:05:36 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/27 19:23:03 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/05 07:41:29 by adoussau          #+#    #+#             */
+/*   Updated: 2014/11/10 14:31:23 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "libft.h"
-# include <unistd.h>
-# include <fcntl.h>
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+{
+	unsigned char		*ptrdst;
+	const unsigned char	*ptrsrc;
+	unsigned char		cara;
 
-# define BUFF_SIZE 65
-
-int		get_next_line(int fd, char **line);
-
-#endif
+	if (!src || !dst)
+		return (NULL);
+	ptrdst = (unsigned char *)dst;
+	ptrsrc = (const unsigned char *)src;
+	cara = (unsigned char)c;
+	while (n--)
+		if ((*ptrdst++ = *ptrsrc++) == cara)
+			return (ptrdst);
+	return (NULL);
+}

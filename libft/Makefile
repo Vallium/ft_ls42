@@ -3,69 +3,131 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+         #
+#    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2014/11/10 11:30:22 by aalliot           #+#    #+#              #
-#    Updated: 2014/11/29 14:45:59 by aalliot          ###   ########.fr        #
+#    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
+#    Updated: 2014/11/28 15:13:43 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libft.a
-SRC		= ft_toupper.c ft_tolower.c ft_strtrim.c ft_strsub.c ft_strstr.c \
-		  ft_strrchr.c ft_strnstr.c ft_strnew.c ft_strnequ.c ft_strncpy.c \
-		  ft_strncmp.c ft_strncat.c ft_strmapi.c ft_strmap.c ft_strlen.c \
-		  ft_strlcat.c ft_strjoin.c ft_striteri.c ft_striter.c ft_strequ.c \
-		  ft_strdup.c ft_strdel.c ft_strcpy.c ft_strcmp.c ft_strclr.c \
-		  ft_strchr.c ft_strcat.c ft_putstr_fd.c ft_putstr.c ft_putnbr_fd.c \
-		  ft_putnbr.c ft_putendl_fd.c ft_putendl.c ft_putchar_fd.c \
-		  ft_putchar.c ft_memset.c ft_memmove.c ft_memdel.c ft_memcpy.c \
-		  ft_memcmp.c ft_memchr.c ft_memccpy.c ft_memalloc.c ft_isprint.c \
-		  ft_isdigit.c ft_isascii.c ft_isalpha.c ft_isalnum.c ft_bzero.c \
-		  ft_atoi.c ft_strsplit.c ft_itoa.c \
-		  ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
-		  get_next_line.c ft_swap_int.c ft_q_sort.c ft_bbl_sort.c \
-		  ft_swap_char.c ft_merge_sort.c ft_lstpushback.c ft_lstsmartpushback.c \
-			ft_swap.c
-OBJ		= $(SRC:.c=.o)
-HDR		= includes/
-CC		= gcc
-FLAGS	= -Wall -Wextra -Werror
+STATIC_LIB	= libft.a
+DEBUG_LIB	= libft_debug.a
+DYNAMIC_LIB	= libft.so
 
-all: $(NAME)
+SRC		=	ft_bzero.c				\
+			ft_memset.c				\
+			ft_memcpy.c				\
+			ft_memccpy.c			\
+			ft_memmove.c			\
+			ft_memchr.c				\
+			ft_memcmp.c				\
+			ft_memalloc.c			\
+			ft_memdel.c				\
+			ft_strdup.c				\
+			ft_strlen.c				\
+			ft_strcpy.c				\
+			ft_strncpy.c			\
+			ft_strcat.c				\
+			ft_strncat.c			\
+			ft_strlcat.c			\
+			ft_strchr.c				\
+			ft_strrchr.c			\
+			ft_strstr.c				\
+			ft_strncmp.c			\
+			ft_strnstr.c			\
+			ft_strcmp.c				\
+			ft_strnew.c				\
+			ft_strclr.c				\
+			ft_strdel.c				\
+			ft_strequ.c				\
+			ft_striter.c			\
+			ft_striteri.c			\
+			ft_strjoin.c			\
+			ft_strmap.c				\
+			ft_strmapi.c			\
+			ft_strnequ.c			\
+			ft_strsplit.c			\
+			ft_strsub.c				\
+			ft_strtrim.c			\
+			ft_tolower.c			\
+			ft_toupper.c			\
+			ft_islower.c			\
+			ft_isupper.c			\
+			ft_isprint.c			\
+			ft_isascii.c			\
+			ft_isdigit.c			\
+			ft_isalnum.c			\
+			ft_isalpha.c			\
+			ft_isspace.c			\
+			ft_atoi.c				\
+			ft_itoa.c				\
+			ft_putchar.c			\
+			ft_putstr.c				\
+			ft_putnbr.c				\
+			ft_putendl.c			\
+			ft_putchar_fd.c			\
+			ft_putstr_fd.c			\
+			ft_putendl_fd.c			\
+			ft_putnbr_fd.c			\
+			ft_lstnew.c			\
+			ft_lstdelone.c			\
+			ft_lstdel.c				\
+			ft_lstadd.c				\
+			ft_lstiter.c			\
+			ft_lstmap.c				\
+			ft_lstpushback.c		\
+			ft_lstsmartpushback.c	\
+			ft_lstsimpledel.c		\
+			ft_lstsimpledelone.c	\
+			get_next_line.c
 
-$(NAME): $(OBJ)
-	@ar rc $(NAME) $(OBJ)
-	@ranlib $(NAME)
+DYNAMIC_OBJ	= $(patsubst %.c,$(DYNAMIC_DIR)/%.o,$(SRC))
+STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
+DEBUG_OBJ	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
 
-%.o: %.c
-	@$(CC) $(FLAGS) -I $(HDR) -o $@ -c $?
+HEAD_DIR	= includes
+SRC_DIR		= src
+DEBUG_DIR	= debug
+STATIC_DIR	= static
+DYNAMIC_DIR	= dynamic
 
-.PHONY: clean fclean re test1 test2 testall
+CC			= gcc
+FLAGS		= -Wall -Wextra -Werror
+
+#ifeq ($(SYSTEM),Linux)
+#	FLAGS	= -Wall -Wextra #-Werror
+#endif
+
+$(shell mkdir -p $(STATIC_DIR) $(DYNAMIC_DIR) $(DEBUG_DIR))
+
+all: $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)
+
+$(STATIC_LIB): $(STATIC_OBJ)
+	ar rc $@ $(STATIC_OBJ)
+	ranlib $@
+
+$(DEBUG_LIB): $(DEBUG_OBJ)
+	ar rc $@ $(DEBUG_OBJ)
+	ranlib $@
+
+$(DYNAMIC_LIB): $(DYNAMIC_OBJ)
+	$(CC) -shared -o $@ $(DYNAMIC_OBJ)
+
+$(STATIC_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
+
+$(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS) -g
+
+$(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -fPIC -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
+
+.PHONY: clean fclean re
 
 clean:
-	@rm -f $(OBJ)
+	rm -f $(STATIC_OBJ) $(DYNAMIC_OBJ) $(DEBUG_OBJ)
 
 fclean: clean
-	@rm -f $(NAME)
-
-other: re $(NAME)
-	@$(CC) -I . $(NAME) main.c
-	@./a.out
-
-testall: test1 test2
-
-test1: re $(NAME)
-	@curl -s http://pastebin.com/raw.php?i=cKeTYAjN > main.c
-	@$(CC) -I . $(NAME) main.c
-	@rm main.c
-	@./a.out
-	@rm a.out
-
-test2: re
-	@curl -s http://pastebin.com/raw.php?i=ykKyqX78 > main.c
-	@$(CC) $(FLAGS) -I . $(NAME) main.c
-	@rm main.c
-	@./a.out
-	@rm a.out
+	rm -f $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)
 
 re: fclean all
