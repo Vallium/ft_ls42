@@ -3,45 +3,59 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+         #
+#    By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2014/12/13 12:03:10 by aalliot           #+#    #+#              #
-#    Updated: 2014/12/16 20:58:42 by aalliot          ###   ########.fr        #
+#    Created: 2014/11/06 10:11:24 by adoussau          #+#    #+#              #
+#    Updated: 2014/11/28 15:13:43 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= ft_ls
-SRC		= main.c ft_get_opt.c ft_lst_bbl_sort.c
-OBJ		= $(SRC:.c=.o)
-HDR		= libft/includes/
-FLAGS	= -Wall -Wextra #-Werror
-CC		= gcc
+STATIC_EXE	= ft_ls
+DEBUG_EXE	= ft_ls_debug
 
-.PHONY: test clean cleanlib fclean re 42
+SRC		=	main.c			\
+			ft_get_opt.c
 
-%.o: %.c
-	@$(CC) $(FLAGS) -I $(HDR) -I . -o $@ -c $?
+STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
+DEBUG_OBJ	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
 
-all: $(NAME)
+HEAD_DIR	= .
+SRC_DIR		= src
+DEBUG_DIR	= debug
+STATIC_DIR	= static
+LIBFT		= libft/libft.a
+LIBFT_HEAD	= libft/includes/
 
-$(NAME): $(OBJ)
-	@echo "\033[H\033[2J"
-	@echo "\033[36m...\033[33m╦ ╦╔═╗╦  ╦  ╔═╗  ╦  ╦╔═╗╦  ╦  ╦╦ ╦╔╦╗\033[36m...";
-	@echo "\033[36m───\033[33m╠═╣║╣ ║  ║  ║ ║  ╚╗╔╝╠═╣║  ║  ║║ ║║║║\033[36m───";
-	@echo "\033[36m   \033[33m╩ ╩╚═╝╩═╝╩═╝╚═╝   ╚╝ ╩ ╩╩═╝╩═╝╩╚═╝╩ ╩\033[0m   ";
-	@echo "\033[01m\033[32m\n\xf0\x9f\x91\x8c  COMPILATION OF FDF \xf0\x9f\x91\x8c\n\033[0m"
-	@echo "\033[31mCompilation time detail:"
-	@time make -C libft/ fclean && make -C libft/ && $(CC) $(FLAGS) -o $(NAME)\
-		$(OBJ) libft/libft.a
-	@echo "\033[01m\033[32m\n\xf0\x9f\x91\x8c  PROGRAM COMPILED ! \xf0\x9f\x91\x8c\n\033[0m"
+CC			= gcc
+FLAGS		= -Wall -Wextra -Werror
+
+$(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR))
+
+all: $(STATIC_EXE)
+
+$(DEBUG_EXE): $(DEBUG_OBJ)
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(DEBUG_OBJ) $(FLAGS) -g
+
+$(STATIC_EXE): $(STATIC_OBJ)
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(STATIC_OBJ) $(FLAGS) -g
+
+$(STATIC_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS)
+
+$(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS) -g
+
+$(LIBFT):
+	make -C libft
+
+.PHONY: clean fclean re
 
 clean:
-	@rm -f $(OBJ)
+	make -C libft clean
+	rm -f $(STATIC_OBJ) $(DEBUG_OBJ)
 
-cleanlib:
-	@make -C libft/ fclean
-
-fclean: clean cleanlib
-	@rm -f $(NAME)
+fclean: clean
+	make -C libft fclean
+	rm -f $(STATIC_EXE) $(DEBUG_EXE)
 
 re: fclean all
