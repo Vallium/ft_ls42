@@ -33,11 +33,11 @@ $(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR))
 
 all: $(STATIC_EXE)
 
-$(DEBUG_EXE): $(DEBUG_OBJ)
-	@$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(DEBUG_OBJ) $(FLAGS) -g
+debug: $(DEBUG_OBJ)
+	@$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $(DEBUG_EXE) $(DEBUG_OBJ) $(LIBFT) $(FLAGS) -g
 
 $(STATIC_EXE): $(STATIC_OBJ)
-	@$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(STATIC_OBJ) $(LIBFT) $(FLAGS) -g
+	@$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(STATIC_OBJ) $(LIBFT) $(FLAGS)
 
 $(STATIC_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
 	@$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS)
@@ -48,7 +48,7 @@ $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
 $(LIBFT):
 	@make -C libft
 
-.PHONY: clean fclean re
+.PHONY: clean fclean re debug
 
 clean:
 	@make -C libft clean

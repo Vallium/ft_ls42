@@ -33,6 +33,36 @@ void swap(void **p1, void **p2)
 	*p2 = tmp;
 }
 
+void	   sort(void **tab, int bg, int ed, int (*f)(void *, void *))
+{
+	void		*pvt = tab[bg];
+	int			lft;
+	int			rgt;
+
+	lft = bg - 1;
+	rgt = ed + 1;
+	if (bg >= ed)
+		return ;
+	while (1)
+	{
+		while (f(tab[--rgt], pvt) > 0)
+			;
+		while (f(tab[++lft], pvt) < 0)
+			;
+		if (lft < rgt)
+			swap(&tab[lft], &tab[rgt]);
+		else
+			break ;
+	}
+	sort(tab, bg, rgt, f);
+	sort(tab, rgt + 1, ed, f);
+}
+
+void	   ft_q_sort(void **tab, size_t size, int (*f)(void *, void *))
+{
+	sort(tab, 0, size - 1, f);
+}
+
 void	ft_bbl2_sort(void **tab, int size, int (*f)(void *f1, void *f2))
 {
 	int			i;
@@ -61,47 +91,79 @@ int		file_size_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1 = (t_file *)ptr1;
 	t_file *f2 = (t_file *)ptr2;
-	return(f1->stat.st_size > f2->stat.st_size);
+	if (f1->stat.st_size > f2->stat.st_size)
+		return (1);
+	else if (f1->stat.st_size < f2->stat.st_size)
+		return (-1);
+	return (0);
 }
 
 int		file_name_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1 = (t_file *)ptr1;
 	t_file *f2 = (t_file *)ptr2;
-	return(ft_strcmp(f1->name, f2->name) <= 0 ? 0 : 1);
+	return(ft_strcmp(f1->name, f2->name));
 }
 
 int		file_r_name_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1 = (t_file *)ptr1;
 	t_file *f2 = (t_file *)ptr2;
-	return(ft_strcmp(f1->name, f2->name) >= 0 ? 0 : 1);
+	return(ft_strcmp(f2->name, f1->name));
 }
 
 int		file_time_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1 = (t_file *)ptr1;
 	t_file *f2 = (t_file *)ptr2;
-	#ifdef __APPLE__
+#ifdef __APPLE__
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-		return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
-	return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
-	#else
-	return (f1->stat.st_mtime < f2->stat.st_mtime);
-	#endif
+	{
+		if (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec)
+			return (1);
+		else if (f1->stat.st_mtimespec.tv_nsec > f2->stat.st_mtimespec.tv_nsec)
+			return (-1);
+		return (0);
+	}
+	if (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec)
+		return (1);
+	else if (f1->stat.st_mtimespec.tv_sec > f2->stat.st_mtimespec.tv_sec)
+		return (-1);
+	return (0);
+#else
+	if (f1->stat.st_mtime < f2->stat.st_mtime);
+		return (1);
+	else if (f1->stat.st_mtime > f2->stat.st_mtime);
+		return (-1);
+	return (0);
+#endif
 }
 
 int		file_r_time_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1 = (t_file *)ptr1;
 	t_file *f2 = (t_file *)ptr2;
-	#ifdef __APPLE__
+#ifdef __APPLE__
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-		return (f1->stat.st_mtimespec.tv_nsec > f2->stat.st_mtimespec.tv_nsec);
-	return (f1->stat.st_mtimespec.tv_sec > f2->stat.st_mtimespec.tv_sec);
-	#else
-	return (f1->stat.st_mtime > f2->stat.st_mtime);
-	#endif
+	{
+		if (f1->stat.st_mtimespec.tv_nsec > f2->stat.st_mtimespec.tv_nsec)
+			return (1);
+		else if (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec)
+			return (-1);
+		return (0);
+	}
+	if (f1->stat.st_mtimespec.tv_sec > f2->stat.st_mtimespec.tv_sec)
+		return (1);
+	else if (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec)
+		return (-1);
+	return (0);
+#else
+	if (f1->stat.st_mtime > f2->stat.st_mtime);
+		return (1);
+	else if (f1->stat.st_mtime < f2->stat.st_mtime);
+		return (-1);
+	return (0);
+#endif
 }
 
 void	usage(void)
@@ -287,23 +349,23 @@ void	ls_l(char *arg, char *dir)
 	size = 0;
 	tab = lst2tab(&lst, &size); // test + modifs apparement OK
 
-	printf("<%d>\n", size); // print size
+	//printf("<%d>\n", size); // print size
 
 	//ft_bbl2_sort((void **)tab, size, file_name_cmp);
 	//ft_q_sort((void **)tab, size, file_name_cmp); // Modifs + SEGV
 
 	if (!r)
-		ft_bbl2_sort((void **)tab, size, file_name_cmp);
+		ft_q_sort((void **)tab, size, file_name_cmp);
 	else
-		ft_bbl2_sort((void **)tab, size, file_r_name_cmp);
+		ft_q_sort((void **)tab, size, file_r_name_cmp);
 
 
 	if (t)
 	{
 		if (!r)
-			ft_bbl2_sort((void **)tab, size, file_time_cmp);
+			ft_q_sort((void **)tab, size, file_time_cmp);
 		else
-			ft_bbl2_sort((void **)tab, size, file_r_time_cmp);
+			ft_q_sort((void **)tab, size, file_r_time_cmp);
 	}
 	if (l)
 		printf("total %llu\n", total);  //affiche total mais bug quand il y a un symbolic link
