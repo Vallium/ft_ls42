@@ -18,12 +18,6 @@ int				ft_get_opt(int argc, char **argv, t_opt *opt)
 	static int	i = 0;
 	char		*ret;
 
-/*	if (argv[opt->nbarg + 1][0] == '-' && argv[opt->nbarg + 1][1] == '-') // si arg == "--"
-	{
-		opt->nbarg += 2;
-		return (0);
-	}*/
-	//        -la --
 	if (!argv[opt->nbarg][i]) // si de lire l'arg
 	{
 		i = 0;
