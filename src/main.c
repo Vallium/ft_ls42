@@ -192,7 +192,7 @@ void	printFile(t_file file)
 			{
 				if (!gp)
 				{
-					printf(" %3d %10s %6s %6llu %s %s\n",
+					printf(" %3d %10s %6d %6llu %s %s\n",
 						(int)file.stat.st_nlink,
 						ps->pw_name,
 						file.stat.st_gid,
