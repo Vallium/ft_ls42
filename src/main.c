@@ -19,7 +19,6 @@ int		l = 0;
 int		R = 0;
 int		r = 0;
 int		t = 0;
-long long	total = 0;
 
 //void	ft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
 
@@ -322,7 +321,9 @@ void	ls_l(char *arg, char *dir)
 	t_list			*lst;
 	t_file			file;
 	struct dirent	*entree;
+	long long		total;
 
+	total = 0;
 	if (!(ptdir = opendir(arg)))
 	{
 		ft_putstr_fd("ls: ", 2);
@@ -340,19 +341,15 @@ void	ls_l(char *arg, char *dir)
 			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
 		else
 			ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
-		total += file.stat.st_blocks;
+		if (a || *file.name != '.')
+			total += file.stat.st_blocks;
 	}
 
 	int size;
 	t_file	**tab;
 
 	size = 0;
-	tab = lst2tab(&lst, &size); // test + modifs apparement OK
-
-	//printf("<%d>\n", size); // print size
-
-	//ft_bbl2_sort((void **)tab, size, file_name_cmp);
-	//ft_q_sort((void **)tab, size, file_name_cmp); // Modifs + SEGV
+	tab = lst2tab(&lst, &size);
 
 	if (!r)
 		ft_q_sort((void **)tab, size, file_name_cmp);
