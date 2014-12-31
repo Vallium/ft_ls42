@@ -106,31 +106,31 @@ $(shell mkdir -p $(STATIC_DIR) $(DYNAMIC_DIR) $(DEBUG_DIR))
 all: $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)
 
 $(STATIC_LIB): $(STATIC_OBJ)
-	@ar rc $@ $(STATIC_OBJ)
-	@ranlib $@
+	ar rc $@ $(STATIC_OBJ)
+	ranlib $@
 
 $(DEBUG_LIB): $(DEBUG_OBJ)
-	@ar rc $@ $(DEBUG_OBJ)
-	@ranlib $@
+	ar rc $@ $(DEBUG_OBJ)
+	ranlib $@
 
 $(DYNAMIC_LIB): $(DYNAMIC_OBJ)
-	@$(CC) -shared -o $@ $(DYNAMIC_OBJ)
+	$(CC) -shared -o $@ $(DYNAMIC_OBJ)
 
 $(STATIC_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
+	$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS) -g
+	$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS) -g
 
 $(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) -fPIC -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
+	$(CC) -fPIC -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
 
 .PHONY: clean fclean re
 
 clean:
-	@rm -f $(STATIC_OBJ) $(DYNAMIC_OBJ) $(DEBUG_OBJ)
+	rm -f $(STATIC_OBJ) $(DYNAMIC_OBJ) $(DEBUG_OBJ)
 
 fclean: clean
-	@rm -f $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)
+	rm -f $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)
 
 re: fclean all
