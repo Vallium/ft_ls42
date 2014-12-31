@@ -14,6 +14,8 @@
 
 # define FT_LS_H
 
+# define MAXLEN 1024
+
 #include "libft/includes/libft.h"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -26,22 +28,23 @@
 //#include <uuid/uuid.h>
 #include <time.h>
 
-typedef struct		s_opt
+typedef struct			s_opt
 {
-	int							nbarg;
-	char						err;
-	char						*optstr;
-}									t_opt;
+	int					nbarg;
+	char				err;
+	char				*optstr;
+}						t_opt;
 
-typedef struct		s_file
+typedef struct			s_file
 {
-	char						name[256];
+	char				name[256];
+	char				lnkname[MAXLEN];
 	struct stat			stat;
-}									t_file;
+}						t_file;
 
-int								ft_get_opt(int argc, char **argv, t_opt *opt);
-void							usage(void);
-void							print_type(int mode);
-void							print_rights(int mode);
+int						ft_get_opt(int argc, char **argv, t_opt *opt);
+void					usage(void);
+void					print_type(int mode);
+void					print_rights(int mode);
 
 #endif

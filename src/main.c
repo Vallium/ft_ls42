@@ -185,7 +185,7 @@ void	print_type(int mode)
 	else if (S_ISCHR(mode))
 		ft_putchar('c');
 	else if (S_ISBLK(mode))
-		ft_putchar('b');
+		ft_putchar('b');               //stickybit fonction S_ISVTX
 }
 
 void	print_rights(int mode)
@@ -267,17 +267,30 @@ void	printFile(t_file file)
 				}
 				else
 				{
-					printf(" %3d %10s %6s %6llu %s %s\n",
-						(int)file.stat.st_nlink,
-						ps->pw_name,
-						gp->gr_name,
-						(long long unsigned int)file.stat.st_size,
-						#ifdef __APPLE__
-						ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-						#else
-						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
-						#endif
-						file.name);
+					if (!S_ISLNK(file.stat.st_mode))
+						printf(" %3d %10s %6s %6llu %s %s\n",
+							(int)file.stat.st_nlink,
+							ps->pw_name,
+							gp->gr_name,
+							(long long unsigned int)file.stat.st_size,
+							#ifdef __APPLE__
+							ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
+							#else
+							ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
+							#endif
+							file.name);
+					else
+						printf(" %3d %10s %6s %6llu %s %s -> %s\n",
+							(int)file.stat.st_nlink,
+							ps->pw_name,
+							gp->gr_name,
+							(long long unsigned int)file.stat.st_size,
+							#ifdef __APPLE__
+							ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
+							#else
+							ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
+							#endif
+							file.name, file.lnkname);
 				}
 			}
 		}
@@ -322,6 +335,7 @@ void	ls_l(char *arg, char *dir)
 	t_file			file;
 	struct dirent	*entree;
 	long long		total;
+	//int				test;
 
 	total = 0;
 	if (!(ptdir = opendir(arg)))
@@ -336,7 +350,9 @@ void	ls_l(char *arg, char *dir)
 	{
 		ft_strcpy(file.name, entree->d_name);
 
-		lstat(ft_strjoin(arg, ft_strjoin("/", entree->d_name)), &file.stat);
+		lstat(ft_strjoin(arg, ft_strjoin("/", entree->d_name)), &file.stat); //print slnk
+		readlink(ft_strjoin(arg, ft_strjoin("/", entree->d_name)), file.lnkname, MAXLEN);
+
 		if (!r)
 			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
 		else
@@ -430,12 +446,15 @@ int		main(int argc, char **argv)
 		}
 		if (argc == opt.nbarg)
 			ls_l(".", ".");
-		while (opt.nbarg < argc)
-		{
+		else if (opt.nbarg + 1 == argc)
 			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
-			ft_putchar('\n');
-			opt.nbarg++;
-		}
+		else
+			while (opt.nbarg < argc)
+			{
+				ls_l(argv[opt.nbarg], argv[opt.nbarg]);
+				ft_putchar('\n');
+				opt.nbarg++;
+			}
 	}
 	return (0);
 }
