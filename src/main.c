@@ -23,6 +23,23 @@ int		t = 0;
 //void	ft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
 
 
+char	*ft_burger(const char *s1, char c, const char *s2)
+{
+	char *ret;
+	char *tmp;
+	ret = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+	tmp = ret;
+	if (!ret)
+		exit(1);
+	while (*s1)
+		*tmp++ = *s1++;
+	*tmp++ = c;
+	while (*s2)
+		*tmp++ = *s2++;
+	*tmp = 0;
+	return(ret);
+}
+
 void swap(void **p1, void **p2)
 {
 	void	*tmp;
@@ -391,6 +408,8 @@ int		arg_cmp(void *na1, void *na2)
 
 int		main(int argc, char **argv)
 {
+
+	printf("%s\n",ft_burger("test", 'A', "test"));
 	char c;
 	t_opt opt;
 
@@ -422,8 +441,11 @@ int		main(int argc, char **argv)
 				t = 1;
 		}
 		if (argc == opt.nbarg)
+		{
 			ls_l(".", ".");
-		sort((void**)argv, opt.nbarg, argc - 1, arg_cmp);
+			return (0);
+		}
+		sort((void **)argv, opt.nbarg, argc - 1, arg_cmp);
 		if (opt.nbarg + 1 == argc)
 			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
 		else
