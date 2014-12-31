@@ -412,6 +412,11 @@ void	ls_l(char *arg, char *dir)
 //	ft_lstdel(&lst, delete);
 }
 
+int		arg_cmp(void *na1, void *na2)
+{
+	return(ft_strcmp(na1, na2));
+}
+
 int		main(int argc, char **argv)
 {
 	char c;
@@ -446,15 +451,19 @@ int		main(int argc, char **argv)
 		}
 		if (argc == opt.nbarg)
 			ls_l(".", ".");
-		else if (opt.nbarg + 1 == argc)
+		sort((void**)argv, opt.nbarg, argc - 1, arg_cmp);
+		if (opt.nbarg + 1 == argc)
 			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
 		else
-			while (opt.nbarg < argc)
+		{
+			while (opt.nbarg < argc - 1)
 			{
 				ls_l(argv[opt.nbarg], argv[opt.nbarg]);
 				ft_putchar('\n');
 				opt.nbarg++;
 			}
+			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
+		}
 	}
 	return (0);
 }
