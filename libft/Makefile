@@ -48,6 +48,7 @@ SRC		=	ft_bzero.c				\
 			ft_strnequ.c			\
 			ft_strsplit.c			\
 			ft_strsub.c				\
+			ft_putstr_sub.c			\
 			ft_strtrim.c			\
 			ft_tolower.c			\
 			ft_toupper.c			\
@@ -79,6 +80,7 @@ SRC		=	ft_bzero.c				\
 			ft_lstsmartpushback.c	\
 			ft_lstsimpledel.c		\
 			ft_lstsimpledelone.c	\
+			ft_malloc.c				\
 			get_next_line.c
 
 DYNAMIC_OBJ	= $(patsubst %.c,$(DYNAMIC_DIR)/%.o,$(SRC))

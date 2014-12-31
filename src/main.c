@@ -20,29 +20,6 @@ int		R = 0;
 int		r = 0;
 int		t = 0;
 
-void	*ft_malloc (size_t n)
-{
-	void	*ret;
-
-	if(!(ret = malloc(n)))
-	{
-		ft_putstr_fd("Malloc error: Program quited.", 2);
-		exit (EXIT_FAILURE);
-	}
-	return (ret);
-}
-
-void	ft_putstr_sub(char *str, int start, int l)
-{
-	if (!str)
-		return ;
-	str += start;
-	while (l-- && *str)
-	{
-		ft_putchar(*str++);
-	}
-}
-
 void	to_wedge(const char *str, int n)
 {
 	int		i;
