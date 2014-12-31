@@ -6,4 +6,4 @@ compiler:
 install:
 
 script:
-  - make
+  - make -j
