@@ -246,10 +246,13 @@ void	printFile(t_file file)
 						file.stat.st_gid,
 						(long long unsigned int)file.stat.st_size,
 						#ifdef __APPLE__
+
 						ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
 						#else
+
 						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
 						#endif
+						
 						file.name);
 				}
 				else
