@@ -20,13 +20,52 @@ int		R = 0;
 int		r = 0;
 int		t = 0;
 
-//void	ft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
+void	*ft_malloc (size_t n)
+{
+	void	*ret;
 
+	if(!(ret = malloc(n)))
+	{
+		ft_putstr_fd("Malloc error: Program quited.", 2);
+		exit (EXIT_FAILURE);
+	}
+	return (ret);
+}
+
+void	ft_putstr_sub(char *str, int start, int l)
+{
+	if (!str)
+		return ;
+	str += start;
+	while (l-- && *str)
+	{
+		ft_putchar(*str++);
+	}
+}
+
+void	to_wedge(const char *str, int n)
+{
+	int		i;
+	int		l;
+
+	if (!str)
+		return ;
+	l = 0;
+	i = n - ft_strlen(str);
+	while (i-- > 0)
+	{
+		ft_putchar(' ');
+		l++;
+	}
+	while (l++ < n)
+		ft_putchar(*str++);
+}
 
 char	*ft_burger(const char *s1, char c, const char *s2)
 {
 	char *ret;
 	char *tmp;
+
 	ret = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
 	tmp = ret;
 	if (!ret)
@@ -408,8 +447,6 @@ int		arg_cmp(void *na1, void *na2)
 
 int		main(int argc, char **argv)
 {
-
-	printf("%s\n",ft_burger("test", 'A', "test"));
 	char c;
 	t_opt opt;
 
