@@ -117,24 +117,10 @@ int		file_time_cmp(void *ptr1, void *ptr2)
 	t_file *f2 = (t_file *)ptr2;
 #ifdef __APPLE__
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-	{
-		if (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec)
-			return (1);
-		else if (f1->stat.st_mtimespec.tv_nsec > f2->stat.st_mtimespec.tv_nsec)
-			return (-1);
-		return (0);
-	}
-	if (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec)
-		return (1);
-	else if (f1->stat.st_mtimespec.tv_sec > f2->stat.st_mtimespec.tv_sec)
-		return (-1);
-	return (0);
+		return (f1->stat.st_mtimespec.tv_nsec - f2->stat.st_mtimespec.tv_nsec);
+	return (f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec);
 #else
-	if (f1->stat.st_mtime < f2->stat.st_mtime);
-		return (1);
-	else if (f1->stat.st_mtime > f2->stat.st_mtime);
-		return (-1);
-	return (0);
+	return (f1->stat.st_mtime - f2->stat.st_mtime);
 #endif
 }
 
@@ -144,24 +130,10 @@ int		file_r_time_cmp(void *ptr1, void *ptr2)
 	t_file *f2 = (t_file *)ptr2;
 #ifdef __APPLE__
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-	{
-		if (f1->stat.st_mtimespec.tv_nsec > f2->stat.st_mtimespec.tv_nsec)
-			return (1);
-		else if (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec)
-			return (-1);
-		return (0);
-	}
-	if (f1->stat.st_mtimespec.tv_sec > f2->stat.st_mtimespec.tv_sec)
-		return (1);
-	else if (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec)
-		return (-1);
-	return (0);
+		return (f2->stat.st_mtimespec.tv_nsec - f1->stat.st_mtimespec.tv_nsec);
+	return (f2->stat.st_mtimespec.tv_sec - f1->stat.st_mtimespec.tv_sec);
 #else
-	if (f1->stat.st_mtime > f2->stat.st_mtime);
-		return (1);
-	else if (f1->stat.st_mtime < f2->stat.st_mtime);
-		return (-1);
-	return (0);
+	return (f2->stat.st_mtime - f1->stat.st_mtime);
 #endif
 }
 
@@ -329,7 +301,7 @@ t_file **lst2tab(t_list **lst, int *size)
 
 void	ls_l(char *arg, char *dir)
 {
-	//printf("LS_L(%s);\n", arg);
+	printf("LS_L(%s, %s);\n", arg, dir);
 	DIR*			ptdir;
 	t_list			*lst;
 	t_file			file;
