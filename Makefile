@@ -34,28 +34,28 @@ $(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR))
 all: $(STATIC_EXE)
 
 debug: $(DEBUG_OBJ)
-	@$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $(DEBUG_EXE) $(DEBUG_OBJ) $(LIBFT) $(FLAGS) -g
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $(DEBUG_EXE) $(DEBUG_OBJ) $(LIBFT) $(FLAGS) -g
 
 $(STATIC_EXE): $(STATIC_OBJ)
-	@$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(STATIC_OBJ) $(LIBFT) $(FLAGS)
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(STATIC_OBJ) $(LIBFT) $(FLAGS)
 
 $(STATIC_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
-	@$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS)
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
-	@$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS) -g
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS) -g
 
 $(LIBFT):
-	@make -C libft
+	make -C libft
 
 .PHONY: clean fclean re debug
 
 clean:
-	@make -C libft clean
-	@rm -f $(STATIC_OBJ) $(DEBUG_OBJ)
+	make -C libft clean
+	rm -f $(STATIC_OBJ) $(DEBUG_OBJ)
 
 fclean: clean
-	@make -C libft fclean
-	@rm -f $(STATIC_EXE) $(DEBUG_EXE)
+	make -C libft fclean
+	rm -f $(STATIC_EXE) $(DEBUG_EXE)
 
 re: fclean all
