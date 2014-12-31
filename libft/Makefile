@@ -81,6 +81,7 @@ SRC		=	ft_bzero.c				\
 			ft_lstsimpledel.c		\
 			ft_lstsimpledelone.c	\
 			ft_malloc.c				\
+			ft_burger.c				\
 			get_next_line.c
 
 DYNAMIC_OBJ	= $(patsubst %.c,$(DYNAMIC_DIR)/%.o,$(SRC))
