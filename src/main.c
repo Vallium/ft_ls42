@@ -30,6 +30,16 @@ int		ft_intlen(int i)
 	return (ret);
 }
 
+int		ft_llilen(long long int i)
+{
+	int ret;
+
+	ret = 1;
+	while (i /= 10)
+		ret++;
+	return (ret);
+}
+
 void	to_wedge(const char *str, int n)
 {
 	int		i;
@@ -61,19 +71,29 @@ void	to_wedge2(const char *str, int n)
 		ft_putchar(' ');
 }
 
-void	to_wedge_int(int nb, int n)
+void	to_wedge_lli2(long long int nb, int n)
+{
+	int		l;
+
+	l = ft_llilen(nb);
+	ft_putnbrll(nb);
+	while (l++ < n)
+		ft_putchar(' ');
+}
+
+void	to_wedge_lli(long long int nb, int n)
 {
 	int		i;
 	int		l;
 
 	l = 0;
-	i = n - ft_intlen(nb);
+	i = n - ft_llilen(nb);
 	while (i-- > 0)
 	{
 		ft_putchar(' ');
 		l++;
 	}
-	ft_putnbr(nb);
+	ft_putnbrll(nb);
 }
 
 int		file_size_cmp(void *ptr1, void *ptr2)
@@ -164,7 +184,7 @@ void	print_rights(int mode)
 
 }
 
-
+/*
 void	printFile(t_file file)
 {
 	struct group	*gp;
@@ -266,7 +286,27 @@ void	printFile(t_file file)
 			printf("%s\n", file.name);
 	}
 }
+*/
 
+void	printdate(t_file *file)
+{
+
+#ifdef __APPLE__
+	//printf("%d \n", (int)file->stat.st_mtimespec.tv_sec);
+	if (file->stat.st_mtimespec.tv_sec > time(0) - 15778463)
+		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 12);
+	else
+	{
+		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 7);
+		ft_putchar(' ');
+		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 20, 4);
+	}
+#else
+	if (file->stat.st_mtime <= 15778463)
+		ft_putstr_sub(ctime(&file->stat.st_mtime), 4, 12);
+#endif
+
+}
 void	printFileList(t_file **file, int size)
 {
 	int		gp_len = 0;
@@ -305,10 +345,18 @@ void	printFileList(t_file **file, int size)
 				tmp = ft_strlen(file[i]->name);
 				if (tmp > name_len)
 					name_len = tmp;
-				tmp = ft_strlen(ps->pw_name);
+
+				if (ps)
+					tmp = ft_strlen(ps->pw_name);
+				else
+					tmp = ft_intlen(file[i]->stat.st_uid);
 				if (tmp > ps_len)
 					ps_len = tmp;
-				tmp = ft_strlen(gp->gr_name);
+
+				if (gp)
+					tmp = ft_strlen(gp->gr_name);
+				else
+					tmp = ft_intlen(file[i]->stat.st_gid);
 				if (tmp > ps_len)
 					gp_len = tmp;
 				tmp = ft_intlen(file[i]->stat.st_size);
@@ -331,21 +379,29 @@ void	printFileList(t_file **file, int size)
 				print_type(file[i]->stat.st_mode);
 				print_rights(file[i]->stat.st_mode);
 				ft_putstr("  ");
-				to_wedge_int(file[i]->stat.st_nlink, link_len);
+				to_wedge_lli(file[i]->stat.st_nlink, link_len);
 				ft_putchar(' ');
-				to_wedge2(ps->pw_name, ps_len);
+
+				if (ps)
+					to_wedge2(ps->pw_name, ps_len);
+				else
+					to_wedge_lli2(file[i]->stat.st_uid, ps_len);
 				ft_putstr("  ");
-				to_wedge2(gp->gr_name, gp_len);
+				if (gp)
+					to_wedge2(gp->gr_name, gp_len);
+				else
+					to_wedge_lli2(file[i]->stat.st_gid, gp_len);
 				ft_putstr("  ");
-				to_wedge_int(file[i]->stat.st_size, size_len);
+				to_wedge_lli(file[i]->stat.st_size, size_len);
 				ft_putchar(' ');
-				#ifdef __APPLE__
-				ft_putstr_sub(ctime(&file[i]->stat.st_mtimespec.tv_sec), 4, 12),
-				#else
-				ft_putstr_sub(ctime(&file[i]->stat.st_mtime), 4, 12),
-				#endif
+				printdate(file[i]);
 				ft_putchar(' ');
 				ft_putstr(file[i]->name);
+				if (S_ISLNK(file[i]->stat.st_mode))
+				{
+					ft_putstr(" -> ");
+					ft_putstr(file[i]->lnkname);
+				}
 				ft_putchar('\n');
 			}
 			i++;

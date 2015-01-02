@@ -65,6 +65,7 @@ SRC		=	ft_bzero.c				\
 			ft_putchar.c			\
 			ft_putstr.c				\
 			ft_putnbr.c				\
+			ft_putnbrll.c			\
 			ft_putendl.c			\
 			ft_putchar_fd.c			\
 			ft_putstr_fd.c			\
