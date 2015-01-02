@@ -213,7 +213,7 @@ void	print_rights(int mode)
 	ft_putchar((mode & 01) ? 'x' : '-');
 
 }
-
+sdsadd
 
 void	printFile(t_file file)
 {
