@@ -20,6 +20,16 @@ int		R = 0;
 int		r = 0;
 int		t = 0;
 
+int		ft_intlen(int i)
+{
+	int ret;
+
+	ret = 1;
+	while (i /= 10)
+		ret++;
+	return (ret);
+}
+
 void	to_wedge(const char *str, int n)
 {
 	int		i;
@@ -36,6 +46,21 @@ void	to_wedge(const char *str, int n)
 	}
 	while (l++ < n)
 		ft_putchar(*str++);
+}
+
+void	to_wedge_int(int nb, int n)
+{
+	int		i;
+	int		l;
+
+	l = 0;
+	i = n - ft_intlen(nb);
+	while (i-- > 0)
+	{
+		ft_putchar(' ');
+		l++;
+	}
+	ft_putnbr(nb);
 }
 
 void swap(void **p1, void **p2)
@@ -252,7 +277,7 @@ void	printFile(t_file file)
 
 						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
 						#endif
-						
+
 						file.name);
 				}
 				else
@@ -290,6 +315,75 @@ void	printFile(t_file file)
 		if (a || *file.name != '.')
 			printf("%s\n", file.name);
 	}
+}
+
+void	printFileList(t_file **file, int size)
+{
+	int		gp_len = 0;
+	int		ps_len = 0;
+	int		name_len = 0;
+	int		size_len = 0;
+	int		link_len = 0;
+	struct group	*gp;
+	struct passwd	*ps;
+
+	int i = 0;
+	int tmp;
+	while (i < size)
+	{
+		if (a || *file[i]->name != '.')
+		{
+			gp = getgrgid(file[i]->stat.st_gid);
+			ps = getpwuid(file[i]->stat.st_uid);
+
+			tmp = ft_intlen(file[i]->stat.st_nlink);
+			if (tmp > link_len)
+				link_len = tmp;
+			tmp = ft_strlen(file[i]->name);
+			if (tmp > name_len)
+				name_len = tmp;
+			tmp = ft_strlen(ps->pw_name);
+			if (tmp > ps_len)
+				ps_len = tmp;
+			tmp = ft_strlen(gp->gr_name);
+			if (tmp > ps_len)
+				gp_len = tmp;
+			tmp = ft_intlen(file[i]->stat.st_size);
+			if (tmp > size_len)
+				size_len = tmp;
+		}
+		i++;
+	}
+	//printf("%d, %d, %d\n", gp_len, ps_len, name_len);
+
+	i = 0;
+
+	while(i < size)
+	{
+		if (a || *file[i]->name != '.')
+		{
+			gp = getgrgid(file[i]->stat.st_gid);
+			ps = getpwuid(file[i]->stat.st_uid);
+
+			print_type(file[i]->stat.st_mode);
+			print_rights(file[i]->stat.st_mode);
+			ft_putchar(' ');
+			to_wedge_int(file[i]->stat.st_nlink, link_len);
+			ft_putchar(' ');
+			to_wedge(ps->pw_name, ps_len);
+			ft_putchar(' ');
+			to_wedge(gp->gr_name, gp_len);
+			ft_putchar(' ');
+			to_wedge_int(file[i]->stat.st_size, size_len);
+			ft_putchar(' ');
+			ft_putstr_sub(ctime(&file[i]->stat.st_mtime), 4, 12);
+			ft_putchar(' ');
+			ft_putstr(file[i]->name);
+			ft_putchar('\n');
+		}
+		i++;
+	}
+
 }
 
 t_file **lst2tab(t_list **lst, int *size)
@@ -371,17 +465,16 @@ void	ls_l(char *arg, char *dir)
 			ft_q_sort((void **)tab, size, file_r_time_cmp);
 	}
 	if (l)
-		printf("total %llu\n", total);  //affiche total mais bug quand il y a un symbolic link
-
-	int i = 0;
-	while (i < size) // affiche le contenu de la liste
 	{
-		file = *((t_file *)tab[i]);
-		printFile(file);
-		i++;
+		ft_putstr("total ");
+		ft_putnbr(total);
+		ft_putchar('\n');
+		//printf("total %llu\n", total);  //affiche total mais bug quand il y a un symbolic link
 	}
 
-	i = 0;
+	int i = 0;
+	printFileList(tab, size);
+
 	while (i < size) //recursivitee si ss/dossiers
 	{
 		file = *((t_file *)tab[i]);
