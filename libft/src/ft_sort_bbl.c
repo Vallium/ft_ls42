@@ -1,17 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_sort_bbl.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adoussau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/01/02 17:37:25 by adoussau          #+#    #+#             */
+/*   Updated: 2015/01/02 17:37:27 by adoussau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-void	ft_sort_bbl(void **tab, int size, int (*f)(void *f1, void *f2))
+void		ft_sort_bbl(void **tab, int size, int (*f)(void *f1, void *f2))
 {
-	int			i;
-	int		    end;
+	int		i;
+	int		end;
 
 	end = 0;
-
 	while (!end)
 	{
 		end = 1;
 		i = 0;
-		while (i < (size- 1))
+		while (i < (size - 1))
 		{
 			if (f(tab[i], tab[i + 1]))
 			{
