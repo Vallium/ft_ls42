@@ -184,110 +184,6 @@ void	print_rights(int mode)
 
 }
 
-/*
-void	printFile(t_file file)
-{
-	struct group	*gp;
-	struct passwd	*ps;
-
-	if (l)
-	{
-		if (a || *file.name != '.')
-		{
-			gp = getgrgid(file.stat.st_gid);
-			ps = getpwuid(file.stat.st_uid);
-
-			print_type(file.stat.st_mode);
-			print_rights(file.stat.st_mode);
-
-			if (!ps)
-			{
-				if (!gp)
-				{
-					printf(" %3d %10d %10d %6llu %s %s\n",
-						(int)file.stat.st_nlink,
-						file.stat.st_uid,
-						file.stat.st_gid,
-						(long long unsigned int)file.stat.st_size,
-						#ifdef __APPLE__
-						ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-						#else
-						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
-						#endif
-						file.name);
-				}
-				else
-				{
-					printf(" %3d %10d %6s %6llu %s %s\n",
-						(int)file.stat.st_nlink,
-						file.stat.st_uid,
-						gp->gr_name,
-						(long long unsigned int)file.stat.st_size,
-						#ifdef __APPLE__
-						ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-						#else
-						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
-						#endif
-						file.name);
-				}
-			}
-			else
-			{
-				if (!gp)
-				{
-					printf(" %3d %10s %6d %6llu %s %s\n",
-						(int)file.stat.st_nlink,
-						ps->pw_name,
-						file.stat.st_gid,
-						(long long unsigned int)file.stat.st_size,
-						#ifdef __APPLE__
-
-						ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-						#else
-
-						ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
-						#endif
-
-						file.name);
-				}
-				else
-				{
-					if (!S_ISLNK(file.stat.st_mode))
-						printf(" %3d %10s %6s %6llu %s %s\n",
-							(int)file.stat.st_nlink,
-							ps->pw_name,
-							gp->gr_name,
-							(long long unsigned int)file.stat.st_size,
-							#ifdef __APPLE__
-							ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-							#else
-							ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
-							#endif
-							file.name);
-					else
-						printf(" %3d %10s %6s %6llu %s %s -> %s\n",
-							(int)file.stat.st_nlink,
-							ps->pw_name,
-							gp->gr_name,
-							(long long unsigned int)file.stat.st_size,
-							#ifdef __APPLE__
-							ft_strsub(ctime(&file.stat.st_mtimespec.tv_sec), 4, 12),
-							#else
-							ft_strsub(ctime(&file.stat.st_mtime), 4, 12),
-							#endif
-							file.name, file.lnkname);
-				}
-			}
-		}
-	}
-	else
-	{
-		if (a || *file.name != '.')
-			printf("%s\n", file.name);
-	}
-}
-*/
-
 void	printdate(t_file *file)
 {
 
@@ -345,7 +241,6 @@ void	print(t_file **file, t_print *prt, int i)
 	ft_putstr("  ");
 	to_wedge_lli(file[i]->stat.st_nlink, prt->link_len);
 	ft_putchar(' ');
-
 	if (prt->ps)
 		to_wedge2(prt->ps->pw_name, prt->ps_len);
 	else
@@ -433,13 +328,11 @@ t_file **lst2tab(t_list **lst, int *size)
 
 void	ls_l(char *arg, char *dir)
 {
-	//printf("LS_L(%s, %s);\n", arg, dir);
 	DIR*			ptdir;
 	t_list			*lst;
 	t_file			file;
 	struct dirent	*entree;
 	long long		total;
-	//int				test;
 
 	total = 0;
 	if (!(ptdir = opendir(arg)))
@@ -450,7 +343,7 @@ void	ls_l(char *arg, char *dir)
 	}
 	lst = NULL;
 
-	while ((entree = readdir(ptdir)) != NULL) //stockage liste
+	while ((entree = readdir(ptdir)) != NULL)
 	{
 		ft_strcpy(file.name, entree->d_name);
 
