@@ -114,4 +114,9 @@ void				*ft_malloc(size_t t);
 char				*ft_burger(const char *s1, char c, const char *s2);
 void				ft_putstr_sub(char *str, int start, int l);
 
+void				ft_sort_bbl(void **t, int s, int (*f)(void*, void*));
+void				ft_sort_qck(void **t, int s, int (*f)(void*, void*));
+
+void				ft_swap(void **p1, void **p2);
+
 #endif

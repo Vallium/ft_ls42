@@ -76,69 +76,6 @@ void	to_wedge_int(int nb, int n)
 	ft_putnbr(nb);
 }
 
-void swap(void **p1, void **p2)
-{
-	void	*tmp;
-
-	tmp = *p1;
-	*p1 = *p2;
-	*p2 = tmp;
-}
-
-void	   sort(void **tab, int bg, int ed, int (*f)(void *, void *))
-{
-	void		*pvt = tab[bg];
-	int			lft;
-	int			rgt;
-
-	lft = bg - 1;
-	rgt = ed + 1;
-	if (bg >= ed)
-		return ;
-	while (1)
-	{
-		while (f(tab[--rgt], pvt) > 0)
-			;
-		while (f(tab[++lft], pvt) < 0)
-			;
-		if (lft < rgt)
-			swap(&tab[lft], &tab[rgt]);
-		else
-			break ;
-	}
-	sort(tab, bg, rgt, f);
-	sort(tab, rgt + 1, ed, f);
-}
-
-void	   ft_q_sort(void **tab, size_t size, int (*f)(void *, void *))
-{
-	sort(tab, 0, size - 1, f);
-}
-
-void	ft_bbl2_sort(void **tab, int size, int (*f)(void *f1, void *f2))
-{
-	int			i;
-	int		    end;
-
-	end = 0;
-
-	while (!end)
-	{
-		//printf("Alive\n");
-		end = 1;
-		i = 0;
-		while (i < (size- 1))
-		{
-			if (f(tab[i], tab[i + 1]))
-			{
-				swap(&tab[i], &tab[i + 1]);
-				end = 0;
-			}
-			i++;
-		}
-	}
-}
-
 int		file_size_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1 = (t_file *)ptr1;
@@ -444,7 +381,7 @@ t_file **lst2tab(t_list **lst, int *size)
 
 void	ls_l(char *arg, char *dir)
 {
-	printf("LS_L(%s, %s);\n", arg, dir);
+	//printf("LS_L(%s, %s);\n", arg, dir);
 	DIR*			ptdir;
 	t_list			*lst;
 	t_file			file;
@@ -483,17 +420,17 @@ void	ls_l(char *arg, char *dir)
 	tab = lst2tab(&lst, &size);
 
 	if (!r)
-		ft_q_sort((void **)tab, size, file_name_cmp);
+		ft_sort_qck((void **)tab, size, file_name_cmp);
 	else
-		ft_q_sort((void **)tab, size, file_r_name_cmp);
+		ft_sort_qck((void **)tab, size, file_r_name_cmp);
 
 
 	if (t)
 	{
 		if (!r)
-			ft_q_sort((void **)tab, size, file_time_cmp);
+			ft_sort_qck((void **)tab, size, file_time_cmp);
 		else
-			ft_q_sort((void **)tab, size, file_r_time_cmp);
+			ft_sort_qck((void **)tab, size, file_r_time_cmp);
 	}
 	if (l)
 	{
@@ -568,17 +505,21 @@ int		main(int argc, char **argv)
 			ls_l(".", ".");
 			return (0);
 		}
-		sort((void **)argv, opt.nbarg, argc - 1, arg_cmp);
+		ft_sort_qck((void **)argv + opt.nbarg, argc - 1 - opt.nbarg, arg_cmp);
 		if (opt.nbarg + 1 == argc)
 			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
 		else
 		{
 			while (opt.nbarg < argc - 1)
 			{
+				ft_putstr(argv[opt.nbarg]);
+				ft_putstr(":\n");
 				ls_l(argv[opt.nbarg], argv[opt.nbarg]);
 				ft_putchar('\n');
 				opt.nbarg++;
 			}
+			ft_putstr(argv[opt.nbarg]);
+			ft_putstr(":\n");
 			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
 		}
 	}
