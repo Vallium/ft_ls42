@@ -291,7 +291,7 @@ void	printFileList(t_file **file, int size)
 	{
 		while (i < size)
 			if (a || *file[i++]->name != '.')
-				fillprt(file, &prt, i - 1);
+				fill_prt(file, &prt, i - 1);
 		i = 0;
 		while(i < size)
 			if (a || *file[i++]->name != '.')
