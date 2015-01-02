@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_opt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/11 12:43:29 by aalliot           #+#    #+#             */
-/*   Updated: 2014/12/13 12:37:56 by aalliot          ###   ########.fr       */
+/*   Created: 2014/12/11 12:43:29 by adoussau          #+#    #+#             */
+/*   Updated: 2014/12/13 12:37:56 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int				ft_get_opt(int argc, char **argv, t_opt *opt)
 	static int	i = 0;
 	char		*ret;
 
-	if (!argv[opt->nbarg][i]) // si de lire l'arg
+	if (!argv[opt->nbarg][i])
 	{
 		i = 0;
 		opt->nbarg++;
-		if (opt->nbarg == argc) //si plus d'arg
+		if (opt->nbarg == argc)
 			return (-1);
 	}
 	if (!i)
 	{
 		if (argv[opt->nbarg][0] == '-' && argv[opt->nbarg][1] != '-'
-			&& argv[opt->nbarg][1]) // si arg valide
+			&& argv[opt->nbarg][1])
 			i++;
 		else
 		{
@@ -37,8 +37,7 @@ int				ft_get_opt(int argc, char **argv, t_opt *opt)
 			return (-1);
 		}
 	}
-	ret = ft_strchr(opt->optstr, argv[opt->nbarg][i++]);
-	if (!ret)
+	if (!(ret = ft_strchr(opt->optstr, argv[opt->nbarg][i++])))
 		opt->err = argv[opt->nbarg][i - 1];
 	return (!ret ? '?' : *ret);
 }

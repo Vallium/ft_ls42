@@ -3,9 +3,9 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/10 11:13:40 by aalliot           #+#    #+#             */
+/*   Created: 2014/12/10 11:13:40 by adoussau          #+#    #+#             */
 /*   Updated: 2014/12/20 20:52:42 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -98,8 +98,11 @@ void	to_wedge_lli(long long int nb, int n)
 
 int		file_size_cmp(void *ptr1, void *ptr2)
 {
-	t_file *f1 = (t_file *)ptr1;
-	t_file *f2 = (t_file *)ptr2;
+	t_file *f1;
+	t_file *f2;
+
+	f1 = (t_file *)ptr1;
+	f2 = (t_file *)ptr2;
 	if (f1->stat.st_size > f2->stat.st_size)
 		return (1);
 	else if (f1->stat.st_size < f2->stat.st_size)
@@ -109,42 +112,46 @@ int		file_size_cmp(void *ptr1, void *ptr2)
 
 int		file_name_cmp(void *ptr1, void *ptr2)
 {
-	t_file *f1 = (t_file *)ptr1;
-	t_file *f2 = (t_file *)ptr2;
-	return(ft_strcmp(f1->name, f2->name));
+	t_file *f1;
+	t_file *f2;
+
+	f1 = (t_file *)ptr1;
+	f2 = (t_file *)ptr2;
+	return (ft_strcmp(f1->name, f2->name));
 }
 
 int		file_r_name_cmp(void *ptr1, void *ptr2)
 {
-	t_file *f1 = (t_file *)ptr1;
-	t_file *f2 = (t_file *)ptr2;
-	return(ft_strcmp(f2->name, f1->name));
+	t_file *f1;
+	t_file *f2;
+
+	f1 = (t_file *)ptr1;
+	f2 = (t_file *)ptr2;
+	return (ft_strcmp(f2->name, f1->name));
 }
 
 int		file_time_cmp(void *ptr1, void *ptr2)
 {
-	t_file *f1 = (t_file *)ptr1;
-	t_file *f2 = (t_file *)ptr2;
-#ifdef __APPLE__
+	t_file *f1;
+	t_file *f2;
+
+	f1 = (t_file *)ptr1;
+	f2 = (t_file *)ptr2;
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
 		return (f1->stat.st_mtimespec.tv_nsec - f2->stat.st_mtimespec.tv_nsec);
 	return (f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec);
-#else
-	return (f1->stat.st_mtime - f2->stat.st_mtime);
-#endif
 }
 
 int		file_r_time_cmp(void *ptr1, void *ptr2)
 {
-	t_file *f1 = (t_file *)ptr1;
-	t_file *f2 = (t_file *)ptr2;
-#ifdef __APPLE__
+	t_file *f1;
+	t_file *f2;
+
+	f1 = (t_file *)ptr1;
+	f2 = (t_file *)ptr2;
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
 		return (f2->stat.st_mtimespec.tv_nsec - f1->stat.st_mtimespec.tv_nsec);
 	return (f2->stat.st_mtimespec.tv_sec - f1->stat.st_mtimespec.tv_sec);
-#else
-	return (f2->stat.st_mtime - f1->stat.st_mtime);
-#endif
 }
 
 void	usage(void)
@@ -167,7 +174,7 @@ void	print_type(int mode)
 	else if (S_ISCHR(mode))
 		ft_putchar('c');
 	else if (S_ISBLK(mode))
-		ft_putchar('b');               //stickybit fonction S_ISVTX
+		ft_putchar('b');
 }
 
 void	print_rights(int mode)
@@ -181,28 +188,16 @@ void	print_rights(int mode)
 	ft_putchar((mode & 04) ? 'r' : '-');
 	ft_putchar((mode & 02) ? 'w' : '-');
 	ft_putchar((mode & 01) ? 'x' : '-');
-
 }
 
 void	printdate(t_file *file)
 {
-
-#ifdef __APPLE__
 	if (file->stat.st_mtimespec.tv_sec > time(0) - 15778463)
 		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 12);
 	else
 		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 7),
 		ft_putchar(' '),
 		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 20, 4);
-#else
-	if (file->stat.st_mtime > time(0) - 15778463)
-		ft_putstr_sub(ctime(&file->stat.st_mtime), 4, 12);
-	else
-		ft_putstr_sub(ctime(&file->stat.st_mtime), 4, 7),
-		ft_putchar(' '),
-		ft_putstr_sub(ctime(&file->stat.st_mtime), 20, 4);
-#endif
-
 }
 
 void	fill_prt(t_file **file, t_print *prt, int i)
@@ -215,14 +210,12 @@ void	fill_prt(t_file **file, t_print *prt, int i)
 	prt->tmp = ft_strlen(file[i]->name);
 	if (prt->tmp > prt->name_len)
 		prt->name_len = prt->tmp;
-
 	if (prt->ps)
 		prt->tmp = ft_strlen(prt->ps->pw_name);
 	else
 		prt->tmp = ft_intlen(file[i]->stat.st_uid);
 	if (prt->tmp > prt->ps_len)
 		prt->ps_len = prt->tmp;
-
 	if (prt->gp)
 		prt->tmp = ft_strlen(prt->gp->gr_name);
 	else
@@ -234,7 +227,7 @@ void	fill_prt(t_file **file, t_print *prt, int i)
 		prt->size_len = prt->tmp;
 }
 
-void	print(t_file **file, t_print *prt, int i)
+void			print(t_file **file, t_print *prt, int i)
 {
 	print_type(file[i]->stat.st_mode);
 	print_rights(file[i]->stat.st_mode);
@@ -257,14 +250,12 @@ void	print(t_file **file, t_print *prt, int i)
 	ft_putchar(' ');
 	ft_putstr(file[i]->name);
 	if (S_ISLNK(file[i]->stat.st_mode))
-	{
-		ft_putstr(" -> ");
+		ft_putstr(" -> "),
 		ft_putstr(file[i]->lnkname);
-	}
 	ft_putchar('\n');
 }
 
-void	prt_init(t_print *prt)
+void			prt_init(t_print *prt)
 {
 	prt->gp_len = 0;
 	prt->ps_len = 0;
@@ -273,83 +264,83 @@ void	prt_init(t_print *prt)
 	prt->link_len = 0;
 }
 
-void	printFileList(t_file **file, int size)
+void			printfilelist(t_file **file, int size)
 {
-	int i;
+	int			i;
 	t_print		prt;
 
 	prt_init(&prt);
 	i = 0;
 	if (!l)
 	{
-		while (i < size)
-			if (a || *file[i++]->name != '.')
+		while (i++ < size)
+			if (a || *file[i - 1]->name != '.')
 				ft_putstr(file[i - 1]->name),
 				ft_putchar('\n');
 	}
 	else
 	{
-		while (i < size)
-			if (a || *file[i++]->name != '.')
+		while (i++ < size)
+			if (a || *file[i - 1]->name != '.')
 				fill_prt(file, &prt, i - 1);
 		i = 0;
-		while(i < size)
-			if (a || *file[i++]->name != '.')
+		while (i++ < size)
+			if (a || *file[i - 1]->name != '.')
 				prt.gp = getgrgid(file[i - 1]->stat.st_gid),
 				prt.ps = getpwuid(file[i - 1]->stat.st_uid),
 				print(file, &prt, i - 1);
 	}
 }
 
-t_file **lst2tab(t_list **lst, int *size)
+t_file			**lst2tab(t_list **lst, int *size)
 {
-	t_list *tmp = *lst;
-	*size = 0;
+	t_list *tmp;
 	t_file **tab;
 
+	*size = 0;
+	tmp = *lst;
 	while (tmp)
 	{
 		(*size)++;
 		tmp = tmp->next;
 	}
-
 	tmp = *lst;
 	tab = (t_file **)malloc(sizeof(t_file *) * (*size));
-
 	*size = 0;
 	while (tmp)
 	{
 		tab[(*size)++] = (t_file *)tmp->content;
 		tmp = tmp->next;
 	}
-	ft_lstsimpledel(lst); // free
+	ft_lstsimpledel(lst);
 	return (tab);
 }
 
-void	ls_l(char *arg, char *dir)
+void				ls_l(char *arg, char *dir)
 {
-	DIR*			ptdir;
+	DIR				*ptdir;
 	t_list			*lst;
 	t_file			file;
+	int				size;
 	struct dirent	*entree;
 	long long		total;
+	t_file			**tab;
+	int				i;
 
+	i = 0;
 	total = 0;
 	if (!(ptdir = opendir(arg)))
 	{
 		ft_putstr_fd("ls: ", 2);
 		perror(dir);
-		return;
+		return ;
 	}
 	lst = NULL;
-
 	while ((entree = readdir(ptdir)) != NULL)
 	{
 		ft_strcpy(file.name, entree->d_name);
-
-		lstat(ft_strjoin(arg, ft_strjoin("/", entree->d_name)), &file.stat); //print slnk
-		readlink(ft_strjoin(arg, ft_strjoin("/", entree->d_name)), file.lnkname, MAXLEN);
-
+		lstat(ft_burger(arg, '/', entree->d_name), &file.stat);
+		readlink(ft_burger(arg, '/', entree->d_name), file.lnkname, MAXLEN);
 		if (!r)
 			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
 		else
@@ -357,19 +348,12 @@ void	ls_l(char *arg, char *dir)
 		if (a || *file.name != '.')
 			total += file.stat.st_blocks;
 	}
-
-	int size;
-	t_file	**tab;
-
 	size = 0;
 	tab = lst2tab(&lst, &size);
-
 	if (!r)
 		ft_sort_qck((void **)tab, size, file_name_cmp);
 	else
 		ft_sort_qck((void **)tab, size, file_r_name_cmp);
-
-
 	if (t)
 	{
 		if (!r)
@@ -382,21 +366,18 @@ void	ls_l(char *arg, char *dir)
 		ft_putstr("total ");
 		ft_putnbr(total);
 		ft_putchar('\n');
-		//printf("total %llu\n", total);  //affiche total mais bug quand il y a un symbolic link
 	}
-
-	int i = 0;
-	printFileList(tab, size);
-
-	while (i < size) //recursivitee si ss/dossiers
+	printfilelist(tab, size);
+	while (i < size)
 	{
 		file = *((t_file *)tab[i]);
 		if (a || *file.name != '.')
-			if (R && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".") && ft_strcmp(file.name, ".."))
+			if (R && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".")
+				&& ft_strcmp(file.name, ".."))
 			{
 				total = 0;
-				printf("\n%s:\n",ft_strjoin(arg, ft_strjoin( "/", file.name)));
-				ls_l(ft_strjoin(arg, ft_strjoin( "/", file.name)), file.name);
+				printf("\n%s:\n", ft_burger(arg, '/', file.name));
+				ls_l(ft_burger(arg, '/', file.name), file.name);
 			}
 		i++;
 	}
@@ -405,25 +386,23 @@ void	ls_l(char *arg, char *dir)
 		free(tab[i++]);
 	free(tab);
 	closedir(ptdir);
-//	ft_lstdel(&lst, delete);
+	ft_lstsimpledel(&lst);
 }
 
-int		arg_cmp(void *na1, void *na2)
+int				arg_cmp(void *na1, void *na2)
 {
-	return(ft_strcmp(na1, na2));
+	return (ft_strcmp(na1, na2));
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
-	char c;
-	t_opt opt;
+	char			c;
+	t_opt			opt;
 
 	opt.optstr = "Ralrt";
 	opt.nbarg = 1;
-
 	if (argc == 1)
 		ls_l(".", ".");
-
 	else
 	{
 		while ((c = ft_get_opt(argc, argv, &opt)) > 0)
