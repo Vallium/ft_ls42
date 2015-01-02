@@ -302,9 +302,9 @@ void	printdate(t_file *file)
 	if (file->stat.st_mtime > time(0) - 15778463)
 		ft_putstr_sub(ctime(&file->stat.st_mtime), 4, 12);
 	else
-		ft_putstr_sub(ctime(&file->stat.st_mtimespec), 4, 7),
+		ft_putstr_sub(ctime(&file->stat.st_mtime), 4, 7),
 		ft_putchar(' '),
-		ft_putstr_sub(ctime(&file->stat.st_mtimespec), 20, 4);
+		ft_putstr_sub(ctime(&file->stat.st_mtime), 20, 4);
 #endif
 
 }
