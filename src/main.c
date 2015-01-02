@@ -292,18 +292,19 @@ void	printdate(t_file *file)
 {
 
 #ifdef __APPLE__
-	//printf("%d \n", (int)file->stat.st_mtimespec.tv_sec);
 	if (file->stat.st_mtimespec.tv_sec > time(0) - 15778463)
 		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 12);
 	else
-	{
-		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 7);
-		ft_putchar(' ');
+		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 7),
+		ft_putchar(' '),
 		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 20, 4);
-	}
 #else
-	if (file->stat.st_mtime <= 15778463)
+	if (file->stat.st_mtime > time(0) - 15778463)
 		ft_putstr_sub(ctime(&file->stat.st_mtime), 4, 12);
+	else
+		ft_putstr_sub(ctime(&file->stat.st_mtimespec), 4, 7),
+		ft_putchar(' '),
+		ft_putstr_sub(ctime(&file->stat.st_mtimespec), 20, 4);
 #endif
 
 }
