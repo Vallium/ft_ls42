@@ -133,4 +133,7 @@ clean:
 fclean: clean
 	rm -f $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)
 
+norm:
+	norminette $(patsubst %,$(SRC_DIR)/%,$(SRC)) $(HEAD_DIR)/libft.h $(HEAD_DIR)/get_next_line.h
+
 re: fclean all

@@ -114,5 +114,4 @@ void				*ft_malloc(size_t t);
 char				*ft_burger(const char *s1, char c, const char *s2);
 void				ft_putstr_sub(char *str, int start, int l);
 
-
 #endif

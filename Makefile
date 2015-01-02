@@ -19,7 +19,7 @@ SRC		=	main.c			\
 STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
 DEBUG_OBJ	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
 
-HEAD_DIR	= .
+HEAD_DIR	= includes
 SRC_DIR		= src
 DEBUG_DIR	= debug
 STATIC_DIR	= static
@@ -48,7 +48,7 @@ $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
 $(LIBFT):
 	make -C libft
 
-.PHONY: clean fclean re debug
+.PHONY: clean fclean re debug norm
 
 clean:
 	make -C libft clean
@@ -57,5 +57,9 @@ clean:
 fclean: clean
 	make -C libft fclean
 	rm -f $(STATIC_EXE) $(DEBUG_EXE)
+
+norm:
+	make -C libft norm
+	norminette $(patsubst %,$(SRC_DIR)/%,$(SRC)) $(HEAD_DIR)/ft_ls.h
 
 re: fclean all

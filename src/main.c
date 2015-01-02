@@ -48,6 +48,19 @@ void	to_wedge(const char *str, int n)
 		ft_putchar(*str++);
 }
 
+void	to_wedge2(const char *str, int n)
+{
+	int		l;
+
+	if (!str)
+		return ;
+	l = 0;
+	while (l++ < n && *str)
+		ft_putchar(*str++);
+	while (l++ <= n)
+		ft_putchar(' ');
+}
+
 void	to_wedge_int(int nb, int n)
 {
 	int		i;
@@ -329,59 +342,77 @@ void	printFileList(t_file **file, int size)
 
 	int i = 0;
 	int tmp;
-	while (i < size)
-	{
-		if (a || *file[i]->name != '.')
+
+	if (!l)
+		while (i < size)
 		{
-			gp = getgrgid(file[i]->stat.st_gid);
-			ps = getpwuid(file[i]->stat.st_uid);
-
-			tmp = ft_intlen(file[i]->stat.st_nlink);
-			if (tmp > link_len)
-				link_len = tmp;
-			tmp = ft_strlen(file[i]->name);
-			if (tmp > name_len)
-				name_len = tmp;
-			tmp = ft_strlen(ps->pw_name);
-			if (tmp > ps_len)
-				ps_len = tmp;
-			tmp = ft_strlen(gp->gr_name);
-			if (tmp > ps_len)
-				gp_len = tmp;
-			tmp = ft_intlen(file[i]->stat.st_size);
-			if (tmp > size_len)
-				size_len = tmp;
+			if (a || *file[i]->name != '.')
+			{
+				ft_putstr(file[i]->name);
+				ft_putchar('\n');
+			}
+			i++;
 		}
-		i++;
-	}
-	//printf("%d, %d, %d\n", gp_len, ps_len, name_len);
-
-	i = 0;
-
-	while(i < size)
+	else
 	{
-		if (a || *file[i]->name != '.')
+		while (i < size)
 		{
-			gp = getgrgid(file[i]->stat.st_gid);
-			ps = getpwuid(file[i]->stat.st_uid);
+			if (a || *file[i]->name != '.')
+			{
+				gp = getgrgid(file[i]->stat.st_gid);
+				ps = getpwuid(file[i]->stat.st_uid);
 
-			print_type(file[i]->stat.st_mode);
-			print_rights(file[i]->stat.st_mode);
-			ft_putchar(' ');
-			to_wedge_int(file[i]->stat.st_nlink, link_len);
-			ft_putchar(' ');
-			to_wedge(ps->pw_name, ps_len);
-			ft_putchar(' ');
-			to_wedge(gp->gr_name, gp_len);
-			ft_putchar(' ');
-			to_wedge_int(file[i]->stat.st_size, size_len);
-			ft_putchar(' ');
-			ft_putstr_sub(ctime(&file[i]->stat.st_mtime), 4, 12);
-			ft_putchar(' ');
-			ft_putstr(file[i]->name);
-			ft_putchar('\n');
+				tmp = ft_intlen(file[i]->stat.st_nlink);
+				if (tmp > link_len)
+					link_len = tmp;
+				tmp = ft_strlen(file[i]->name);
+				if (tmp > name_len)
+					name_len = tmp;
+				tmp = ft_strlen(ps->pw_name);
+				if (tmp > ps_len)
+					ps_len = tmp;
+				tmp = ft_strlen(gp->gr_name);
+				if (tmp > ps_len)
+					gp_len = tmp;
+				tmp = ft_intlen(file[i]->stat.st_size);
+				if (tmp > size_len)
+					size_len = tmp;
+			}
+			i++;
 		}
-		i++;
+		//printf("%d, %d, %d\n", gp_len, ps_len, name_len);
+
+		i = 0;
+
+		while(i < size)
+		{
+			if (a || *file[i]->name != '.')
+			{
+				gp = getgrgid(file[i]->stat.st_gid);
+				ps = getpwuid(file[i]->stat.st_uid);
+
+				print_type(file[i]->stat.st_mode);
+				print_rights(file[i]->stat.st_mode);
+				ft_putstr("  ");
+				to_wedge_int(file[i]->stat.st_nlink, link_len);
+				ft_putchar(' ');
+				to_wedge2(ps->pw_name, ps_len);
+				ft_putstr("  ");
+				to_wedge2(gp->gr_name, gp_len);
+				ft_putstr("  ");
+				to_wedge_int(file[i]->stat.st_size, size_len);
+				ft_putchar(' ');
+				#ifdef __APPLE__
+				ft_putstr_sub(ctime(&file[i]->stat.st_mtimespec.tv_sec), 4, 12),
+				#else
+				ft_putstr_sub(ctime(&file[i]->stat.st_mtime), 4, 12),
+				#endif
+				ft_putchar(' ');
+				ft_putstr(file[i]->name);
+				ft_putchar('\n');
+			}
+			i++;
+		}
 	}
 
 }
