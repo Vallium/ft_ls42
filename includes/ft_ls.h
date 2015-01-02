@@ -16,7 +16,7 @@
 
 # define MAXLEN 1024
 
-#include "libft/includes/libft.h"
+#include "libft.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
