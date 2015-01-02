@@ -308,107 +308,102 @@ void	printdate(t_file *file)
 #endif
 
 }
+
+void	fill_prt(t_file **file, t_print *prt, int i)
+{
+	prt->gp = getgrgid(file[i]->stat.st_gid);
+	prt->ps = getpwuid(file[i]->stat.st_uid);
+	prt->tmp = ft_intlen(file[i]->stat.st_nlink);
+	if (prt->tmp > prt->link_len)
+		prt->link_len = prt->tmp;
+	prt->tmp = ft_strlen(file[i]->name);
+	if (prt->tmp > prt->name_len)
+		prt->name_len = prt->tmp;
+
+	if (prt->ps)
+		prt->tmp = ft_strlen(prt->ps->pw_name);
+	else
+		prt->tmp = ft_intlen(file[i]->stat.st_uid);
+	if (prt->tmp > prt->ps_len)
+		prt->ps_len = prt->tmp;
+
+	if (prt->gp)
+		prt->tmp = ft_strlen(prt->gp->gr_name);
+	else
+		prt->tmp = ft_intlen(file[i]->stat.st_gid);
+	if (prt->tmp > prt->ps_len)
+		prt->gp_len = prt->tmp;
+	prt->tmp = ft_intlen(file[i]->stat.st_size);
+	if (prt->tmp > prt->size_len)
+		prt->size_len = prt->tmp;
+}
+
+void	print(t_file **file, t_print *prt, int i)
+{
+	print_type(file[i]->stat.st_mode);
+	print_rights(file[i]->stat.st_mode);
+	ft_putstr("  ");
+	to_wedge_lli(file[i]->stat.st_nlink, prt->link_len);
+	ft_putchar(' ');
+
+	if (prt->ps)
+		to_wedge2(prt->ps->pw_name, prt->ps_len);
+	else
+		to_wedge_lli2(file[i]->stat.st_uid, prt->ps_len);
+	ft_putstr("  ");
+	if (prt->gp)
+		to_wedge2(prt->gp->gr_name, prt->gp_len);
+	else
+		to_wedge_lli2(file[i]->stat.st_gid, prt->gp_len);
+	ft_putstr("  ");
+	to_wedge_lli(file[i]->stat.st_size, prt->size_len);
+	ft_putchar(' ');
+	printdate(file[i]);
+	ft_putchar(' ');
+	ft_putstr(file[i]->name);
+	if (S_ISLNK(file[i]->stat.st_mode))
+	{
+		ft_putstr(" -> ");
+		ft_putstr(file[i]->lnkname);
+	}
+	ft_putchar('\n');
+}
+
+void	prt_init(t_print *prt)
+{
+	prt->gp_len = 0;
+	prt->ps_len = 0;
+	prt->name_len = 0;
+	prt->size_len = 0;
+	prt->link_len = 0;
+}
+
 void	printFileList(t_file **file, int size)
 {
-	int		gp_len = 0;
-	int		ps_len = 0;
-	int		name_len = 0;
-	int		size_len = 0;
-	int		link_len = 0;
-	struct group	*gp;
-	struct passwd	*ps;
+	int i;
+	t_print		prt;
 
-	int i = 0;
-	int tmp;
-
+	prt_init(&prt);
+	i = 0;
 	if (!l)
+	{
 		while (i < size)
-		{
-			if (a || *file[i]->name != '.')
-			{
-				ft_putstr(file[i]->name);
+			if (a || *file[i++]->name != '.')
+				ft_putstr(file[i - 1]->name),
 				ft_putchar('\n');
-			}
-			i++;
-		}
+	}
 	else
 	{
 		while (i < size)
-		{
-			if (a || *file[i]->name != '.')
-			{
-				gp = getgrgid(file[i]->stat.st_gid);
-				ps = getpwuid(file[i]->stat.st_uid);
-
-				tmp = ft_intlen(file[i]->stat.st_nlink);
-				if (tmp > link_len)
-					link_len = tmp;
-				tmp = ft_strlen(file[i]->name);
-				if (tmp > name_len)
-					name_len = tmp;
-
-				if (ps)
-					tmp = ft_strlen(ps->pw_name);
-				else
-					tmp = ft_intlen(file[i]->stat.st_uid);
-				if (tmp > ps_len)
-					ps_len = tmp;
-
-				if (gp)
-					tmp = ft_strlen(gp->gr_name);
-				else
-					tmp = ft_intlen(file[i]->stat.st_gid);
-				if (tmp > ps_len)
-					gp_len = tmp;
-				tmp = ft_intlen(file[i]->stat.st_size);
-				if (tmp > size_len)
-					size_len = tmp;
-			}
-			i++;
-		}
-		//printf("%d, %d, %d\n", gp_len, ps_len, name_len);
-
+			if (a || *file[i++]->name != '.')
+				fillprt(file, &prt, i - 1);
 		i = 0;
-
 		while(i < size)
-		{
-			if (a || *file[i]->name != '.')
-			{
-				gp = getgrgid(file[i]->stat.st_gid);
-				ps = getpwuid(file[i]->stat.st_uid);
-
-				print_type(file[i]->stat.st_mode);
-				print_rights(file[i]->stat.st_mode);
-				ft_putstr("  ");
-				to_wedge_lli(file[i]->stat.st_nlink, link_len);
-				ft_putchar(' ');
-
-				if (ps)
-					to_wedge2(ps->pw_name, ps_len);
-				else
-					to_wedge_lli2(file[i]->stat.st_uid, ps_len);
-				ft_putstr("  ");
-				if (gp)
-					to_wedge2(gp->gr_name, gp_len);
-				else
-					to_wedge_lli2(file[i]->stat.st_gid, gp_len);
-				ft_putstr("  ");
-				to_wedge_lli(file[i]->stat.st_size, size_len);
-				ft_putchar(' ');
-				printdate(file[i]);
-				ft_putchar(' ');
-				ft_putstr(file[i]->name);
-				if (S_ISLNK(file[i]->stat.st_mode))
-				{
-					ft_putstr(" -> ");
-					ft_putstr(file[i]->lnkname);
-				}
-				ft_putchar('\n');
-			}
-			i++;
-		}
+			if (a || *file[i++]->name != '.')
+				prt.gp = getgrgid(file[i - 1]->stat.st_gid),
+				prt.ps = getpwuid(file[i - 1]->stat.st_uid),
+				print(file, &prt, i - 1);
 	}
-
 }
 
 t_file **lst2tab(t_list **lst, int *size)

@@ -42,6 +42,18 @@ typedef struct			s_file
 	struct stat			stat;
 }						t_file;
 
+typedef struct			s_print
+{
+	int					gp_len;
+	int					ps_len;
+	int					name_len;
+	int					size_len;
+	int					link_len;
+	int					tmp;
+	struct group		*gp;
+	struct passwd		*ps;
+}						t_print;
+
 int						ft_get_opt(int argc, char **argv, t_opt *opt);
 void					usage(void);
 void					print_type(int mode);
