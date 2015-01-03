@@ -316,38 +316,53 @@ t_file		**lst2tab(t_list **lst, int *size)
 	return (tab);
 }
 
-void		ls_l(char *arg, char *dir)
+void		free_ls(t_file **tab, t_llu *llu)
+{
+	llu->i = 0;
+	while (llu->i < llu->size)
+		free(tab[llu->i++]);
+	free(tab);
+}
+
+int			fill_tab(t_file ***tab, char *arg, char *dir, t_llu *llu)
 {
 	struct dirent	*entree;
 	DIR				*ptdir;
 	t_list			*lst;
 	t_file			file;
-	t_file			**tab;
-	t_llu			llu;
 
-	llu.i = 0;
-	llu.total = 0;
 	if (!(ptdir = opendir(arg)))
 	{
-		ft_putstr_fd("ls: ", 2);
-		perror(dir);
-		return ;
+		ft_putstr_fd("ls: ", 2), perror(dir);
+		return (0);
 	}
 	lst = NULL;
 	while ((entree = readdir(ptdir)) != NULL)
 	{
 		ft_strcpy(file.name, entree->d_name);
-		lstat(ft_burger(arg, '/', entree->d_name), &file.stat);
-		readlink(ft_burger(arg, '/', entree->d_name), file.lnkname, MAXLEN);
+		lstat(ft_burger(arg, '/', entree->d_name), &(file.stat));
+		file.lnkname[readlink(ft_burger(arg, '/', entree->d_name),
+		file.lnkname, MAXLEN)] = 0;
 		if (!g_r)
 			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
 		else
 			ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
-		if (g_a || *file.name != '.')
-			llu.total += file.stat.st_blocks;
+		if (g_a || *(file.name) != '.')
+			llu->total += file.stat.st_blocks;
 	}
-	llu.size = 0;
-	tab = lst2tab(&lst, &llu.size);
+	closedir(ptdir), *tab = lst2tab(&lst, &(llu->size)), ft_lstsimpledel(&lst);
+	return (1);
+}
+
+void		ls_l(char *arg, char *dir)
+{
+	t_file			file;
+	t_file			**tab;
+	t_llu			llu;
+
+	llu.total = 0;
+	if (!(fill_tab(&tab, arg, dir, &llu)))
+		return ;
 	if (!g_r)
 		ft_sort_qck((void **)tab, llu.size, file_name_cmp);
 	else
@@ -366,27 +381,22 @@ void		ls_l(char *arg, char *dir)
 		ft_putchar('\n');
 	}
 	printfilelist(tab, llu.size);
+	llu.i = 0;
 	while (llu.i < llu.size)
 	{
 		file = *((t_file *)tab[llu.i]);
-	//	if (g_a || *file.name != '.')
-			if (g_re && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".")
-				&& ft_strcmp(file.name, ".."))
-			{
-				llu.total = 0;
-				ft_putchar('\n');
-				ft_putstr(ft_burger(arg, '/', file.name));
-				ft_putendl(":");
-				ls_l(ft_burger(arg, '/', file.name), file.name);
-			}
+		if (g_re && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".")
+			&& ft_strcmp(file.name, ".."))
+		{
+			llu.total = 0;
+			ft_putchar('\n');
+			ft_putstr(ft_burger(arg, '/', file.name));
+			ft_putendl(":");
+			ls_l(ft_burger(arg, '/', file.name), file.name);
+		}
 		llu.i++;
 	}
-	llu.i = 0;
-	while (llu.i < llu.size)
-		free(tab[llu.i++]);
-	free(tab);
-	closedir(ptdir);
-	ft_lstsimpledel(&lst);
+//	free_ls(tab, &llu);
 }
 
 int			arg_cmp(void *na1, void *na2)
