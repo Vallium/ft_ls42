@@ -61,15 +61,21 @@ typedef struct		s_llu
 
 typedef struct		s_tab
 {
-	char			**data;
+	t_file			*data;
 	int				size;
 }					t_tab;
 
+typedef struct		s_tab2
+{
+	char			**data;
+	int				size;
+}					t_tab2;
+
 typedef struct		s_argtab
 {
-	t_tab			dir;
+	t_tab2			dir;
 	t_tab			file;
-	t_tab			error;
+	t_tab2			error;
 }					t_argtab;
 
 int					ft_get_opt(int argc, char **argv, t_opt *opt);

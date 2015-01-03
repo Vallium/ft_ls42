@@ -331,11 +331,8 @@ int			fill_tab(t_file ***tab, char *arg, char *dir, t_llu *llu)
 	t_list			*lst;
 	t_file			file;
 
-	if (!(ptdir = opendir(arg)))
-	{
-		ft_putstr_fd("ls: ", 2), perror(dir);
-		return (0);
-	}
+	(void)dir;
+	ptdir = opendir(arg);
 	lst = NULL;
 	while ((entree = readdir(ptdir)) != NULL)
 	{
@@ -448,12 +445,53 @@ int			get_types(char *arg)
 	if ((ptdir = opendir(arg)))
 	{
 		closedir(ptdir);
-		return (1);//directory
+		return (1);
 	}
 	else if (!lstat(arg, &stat))
-		return (2);//file
+		return (2);
 	else
-		return (3);//error
+		return (3);
+}
+
+void		print_error(t_argtab tab)
+{
+	int			i;
+
+	i = 0;
+	while (i < tab.error.size)
+	{
+		ft_putstr_fd("ls: ", 2), perror(tab.error.data[i]);
+		i++;
+	}
+	free(tab.error.data);
+}
+
+void		printfile(t_file *file, int size)
+{
+	int			i;
+	t_print		prt;
+
+	prt_init(&prt);
+	i = 0;
+	if (!g_l)
+	{
+		while (i++ < size)
+			if (g_a || file[i - 1]->name != '.')
+				ft_putstr(file[i - 1].name),
+				ft_putchar('\n');
+	}
+	else
+	{
+		while (i++ < size)
+			if (g_a || file[i - 1]->name != '.')
+				fill_prt(file, &prt, i - 1);
+		i = 0;
+		while (i++ < size)
+			if (g_a || *file[i - 1]->name != '.')
+				prt.gp = getgrgid(file[i - 1]->stat.st_gid),
+				prt.ps = getpwuid(file[i - 1]->stat.st_uid),
+				print(file, &prt, i - 1);
+	}
 }
 
 void		arg_to_tab(int argc, char **argv)
@@ -466,7 +504,7 @@ void		arg_to_tab(int argc, char **argv)
 	tab.file.size = 0;
 	tab.dir.size = 0;
 	tab.error.size = 0;
-	tab.file.data = (char **)malloc(sizeof(char *) * argc);
+	tab.file.data = (t_file *)malloc(sizeof(t_file) * argc);
 	tab.dir.data = (char **)malloc(sizeof(char *) * argc);
 	tab.error.data = (char **)malloc(sizeof(char *) * argc);
 	while (i < argc)
@@ -475,7 +513,10 @@ void		arg_to_tab(int argc, char **argv)
 		if (get == 1)
 			tab.dir.data[tab.dir.size++] = argv[i];
 		else if (get == 2)
-			tab.file.data[tab.file.size++] = argv[i];
+		{
+			lstat(tab.file.data[tab.file.size].name, &tab.file.data[tab.file.size].stat);
+			ft_strcpy(tab.file.data[tab.file.size++].name, argv[i]);
+		}
 		else if (get == 3)
 			tab.error.data[tab.error.size++] = argv[i];
 		i++;
@@ -483,6 +524,12 @@ void		arg_to_tab(int argc, char **argv)
 	ft_sort_qck((void**)tab.dir.data, tab.dir.size, arg_cmp);
 	ft_sort_qck((void**)tab.file.data, tab.file.size, arg_cmp);
 	ft_sort_qck((void**)tab.error.data, tab.error.size, arg_cmp);
+	print_error(tab);
+	/*
+	Faire deux tableaux: 
+		1 de t_file pour stocker les donnees.
+		1 de pointeurs sur de t_file qui sera trie
+	*/
 }
 
 int			main(int argc, char **argv)
@@ -500,7 +547,6 @@ int			main(int argc, char **argv)
 			return (0);
 		}
 		arg_to_tab(argc - opt.nbarg, argv + opt.nbarg);
-		ft_sort_qck((void **)argv + opt.nbarg, argc - opt.nbarg, arg_cmp);
 		if (opt.nbarg + 1 == argc)
 			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
 		else
