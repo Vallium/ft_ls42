@@ -52,6 +52,13 @@ typedef struct		s_print
 	struct passwd	*ps;
 }					t_print;
 
+typedef struct		s_llu
+{
+	int				i;
+	int				size;
+	long long		total;
+}					t_llu;
+
 int					ft_get_opt(int argc, char **argv, t_opt *opt);
 void				usage(void);
 void				print_type(int mode);

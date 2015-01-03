@@ -14,13 +14,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int		a = 0;
-int		l = 0;
-int		R = 0;
-int		r = 0;
-int		t = 0;
+int		g_a = 0;
+int		g_l = 0;
+int		g_re = 0;
+int		g_r = 0;
+int		g_t = 0;
 
-int		ft_intlen(int i)
+int			ft_intlen(int i)
 {
 	int ret;
 
@@ -30,7 +30,7 @@ int		ft_intlen(int i)
 	return (ret);
 }
 
-int		ft_llilen(long long int i)
+int			ft_llilen(long long int i)
 {
 	int ret;
 
@@ -40,7 +40,7 @@ int		ft_llilen(long long int i)
 	return (ret);
 }
 
-void	to_wedge(const char *str, int n)
+void		to_wedge(const char *str, int n)
 {
 	int		i;
 	int		l;
@@ -58,7 +58,7 @@ void	to_wedge(const char *str, int n)
 		ft_putchar(*str++);
 }
 
-void	to_wedge2(const char *str, int n)
+void		to_wedge2(const char *str, int n)
 {
 	int		l;
 
@@ -71,7 +71,7 @@ void	to_wedge2(const char *str, int n)
 		ft_putchar(' ');
 }
 
-void	to_wedge_lli2(long long int nb, int n)
+void		to_wedge_lli2(long long int nb, int n)
 {
 	int		l;
 
@@ -81,7 +81,7 @@ void	to_wedge_lli2(long long int nb, int n)
 		ft_putchar(' ');
 }
 
-void	to_wedge_lli(long long int nb, int n)
+void		to_wedge_lli(long long int nb, int n)
 {
 	int		i;
 	int		l;
@@ -96,7 +96,7 @@ void	to_wedge_lli(long long int nb, int n)
 	ft_putnbrll(nb);
 }
 
-int		file_size_cmp(void *ptr1, void *ptr2)
+int			file_size_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1;
 	t_file *f2;
@@ -110,7 +110,7 @@ int		file_size_cmp(void *ptr1, void *ptr2)
 	return (0);
 }
 
-int		file_name_cmp(void *ptr1, void *ptr2)
+int			file_name_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1;
 	t_file *f2;
@@ -120,7 +120,7 @@ int		file_name_cmp(void *ptr1, void *ptr2)
 	return (ft_strcmp(f1->name, f2->name));
 }
 
-int		file_r_name_cmp(void *ptr1, void *ptr2)
+int			file_r_name_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1;
 	t_file *f2;
@@ -130,7 +130,7 @@ int		file_r_name_cmp(void *ptr1, void *ptr2)
 	return (ft_strcmp(f2->name, f1->name));
 }
 
-int		file_time_cmp(void *ptr1, void *ptr2)
+int			file_time_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1;
 	t_file *f2;
@@ -142,7 +142,7 @@ int		file_time_cmp(void *ptr1, void *ptr2)
 	return (f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec);
 }
 
-int		file_r_time_cmp(void *ptr1, void *ptr2)
+int			file_r_time_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1;
 	t_file *f2;
@@ -154,12 +154,12 @@ int		file_r_time_cmp(void *ptr1, void *ptr2)
 	return (f2->stat.st_mtimespec.tv_sec - f1->stat.st_mtimespec.tv_sec);
 }
 
-void	usage(void)
+void		usage(void)
 {
-	ft_putstr_fd("usage: ft_ls [-Ralrt][file ...]\n", 2);
+	ft_putstr_fd("usage: ft_ls [-Ralrt] [file ...]\n", 2);
 }
 
-void	print_type(int mode)
+void		print_type(int mode)
 {
 	if (S_ISDIR(mode))
 		ft_putchar('d');
@@ -177,7 +177,7 @@ void	print_type(int mode)
 		ft_putchar('b');
 }
 
-void	print_rights(int mode)
+void		print_rights(int mode)
 {
 	ft_putchar((mode & 0400) ? 'r' : '-');
 	ft_putchar((mode & 0200) ? 'w' : '-');
@@ -190,7 +190,7 @@ void	print_rights(int mode)
 	ft_putchar((mode & 01) ? 'x' : '-');
 }
 
-void	printdate(t_file *file)
+void		printdate(t_file *file)
 {
 	if (file->stat.st_mtimespec.tv_sec > time(0) - 15778463)
 		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 12);
@@ -200,7 +200,7 @@ void	printdate(t_file *file)
 		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 20, 4);
 }
 
-void	fill_prt(t_file **file, t_print *prt, int i)
+void		fill_prt(t_file **file, t_print *prt, int i)
 {
 	prt->gp = getgrgid(file[i]->stat.st_gid);
 	prt->ps = getpwuid(file[i]->stat.st_uid);
@@ -227,7 +227,7 @@ void	fill_prt(t_file **file, t_print *prt, int i)
 		prt->size_len = prt->tmp;
 }
 
-void			print(t_file **file, t_print *prt, int i)
+void		print(t_file **file, t_print *prt, int i)
 {
 	print_type(file[i]->stat.st_mode);
 	print_rights(file[i]->stat.st_mode);
@@ -255,7 +255,7 @@ void			print(t_file **file, t_print *prt, int i)
 	ft_putchar('\n');
 }
 
-void			prt_init(t_print *prt)
+void		prt_init(t_print *prt)
 {
 	prt->gp_len = 0;
 	prt->ps_len = 0;
@@ -264,35 +264,35 @@ void			prt_init(t_print *prt)
 	prt->link_len = 0;
 }
 
-void			printfilelist(t_file **file, int size)
+void		printfilelist(t_file **file, int size)
 {
 	int			i;
 	t_print		prt;
 
 	prt_init(&prt);
 	i = 0;
-	if (!l)
+	if (!g_l)
 	{
 		while (i++ < size)
-			if (a || *file[i - 1]->name != '.')
+			if (g_a || *file[i - 1]->name != '.')
 				ft_putstr(file[i - 1]->name),
 				ft_putchar('\n');
 	}
 	else
 	{
 		while (i++ < size)
-			if (a || *file[i - 1]->name != '.')
+			if (g_a || *file[i - 1]->name != '.')
 				fill_prt(file, &prt, i - 1);
 		i = 0;
 		while (i++ < size)
-			if (a || *file[i - 1]->name != '.')
+			if (g_a || *file[i - 1]->name != '.')
 				prt.gp = getgrgid(file[i - 1]->stat.st_gid),
 				prt.ps = getpwuid(file[i - 1]->stat.st_uid),
 				print(file, &prt, i - 1);
 	}
 }
 
-t_file			**lst2tab(t_list **lst, int *size)
+t_file		**lst2tab(t_list **lst, int *size)
 {
 	t_list *tmp;
 	t_file **tab;
@@ -316,19 +316,17 @@ t_file			**lst2tab(t_list **lst, int *size)
 	return (tab);
 }
 
-void				ls_l(char *arg, char *dir)
+void		ls_l(char *arg, char *dir)
 {
+	struct dirent	*entree;
 	DIR				*ptdir;
 	t_list			*lst;
 	t_file			file;
-	int				size;
-	struct dirent	*entree;
-	long long		total;
 	t_file			**tab;
-	int				i;
+	t_llu			llu;
 
-	i = 0;
-	total = 0;
+	llu.i = 0;
+	llu.total = 0;
 	if (!(ptdir = opendir(arg)))
 	{
 		ft_putstr_fd("ls: ", 2);
@@ -341,110 +339,121 @@ void				ls_l(char *arg, char *dir)
 		ft_strcpy(file.name, entree->d_name);
 		lstat(ft_burger(arg, '/', entree->d_name), &file.stat);
 		readlink(ft_burger(arg, '/', entree->d_name), file.lnkname, MAXLEN);
-		if (!r)
+		if (!g_r)
 			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
 		else
 			ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
-		if (a || *file.name != '.')
-			total += file.stat.st_blocks;
+		if (g_a || *file.name != '.')
+			llu.total += file.stat.st_blocks;
 	}
-	size = 0;
-	tab = lst2tab(&lst, &size);
-	if (!r)
-		ft_sort_qck((void **)tab, size, file_name_cmp);
+	llu.size = 0;
+	tab = lst2tab(&lst, &llu.size);
+	if (!g_r)
+		ft_sort_qck((void **)tab, llu.size, file_name_cmp);
 	else
-		ft_sort_qck((void **)tab, size, file_r_name_cmp);
-	if (t)
+		ft_sort_qck((void **)tab, llu.size, file_r_name_cmp);
+	if (g_t)
 	{
-		if (!r)
-			ft_sort_qck((void **)tab, size, file_time_cmp);
+		if (!g_r)
+			ft_sort_qck((void **)tab, llu.size, file_time_cmp);
 		else
-			ft_sort_qck((void **)tab, size, file_r_time_cmp);
+			ft_sort_qck((void **)tab, llu.size, file_r_time_cmp);
 	}
-	if (l)
+	if (g_l)
 	{
 		ft_putstr("total ");
-		ft_putnbr(total);
+		ft_putnbr(llu.total);
 		ft_putchar('\n');
 	}
-	printfilelist(tab, size);
-	while (i < size)
+	printfilelist(tab, llu.size);
+	while (llu.i < llu.size)
 	{
-		file = *((t_file *)tab[i]);
-		if (a || *file.name != '.')
-			if (R && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".")
+		file = *((t_file *)tab[llu.i]);
+	//	if (g_a || *file.name != '.')
+			if (g_re && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".")
 				&& ft_strcmp(file.name, ".."))
 			{
-				total = 0;
-				printf("\n%s:\n", ft_burger(arg, '/', file.name));
+				llu.total = 0;
+				ft_putchar('\n');
+				ft_putstr(ft_burger(arg, '/', file.name));
+				ft_putendl(":");
 				ls_l(ft_burger(arg, '/', file.name), file.name);
 			}
-		i++;
+		llu.i++;
 	}
-	i = 0;
-	while (i < size)
-		free(tab[i++]);
+	llu.i = 0;
+	while (llu.i < llu.size)
+		free(tab[llu.i++]);
 	free(tab);
 	closedir(ptdir);
 	ft_lstsimpledel(&lst);
 }
 
-int				arg_cmp(void *na1, void *na2)
+int			arg_cmp(void *na1, void *na2)
 {
 	return (ft_strcmp(na1, na2));
 }
 
-int				main(int argc, char **argv)
+void		ls_mult_arg(char *argv)
 {
-	char			c;
+	ft_putstr(argv);
+	ft_putstr(":\n");
+	ls_l(argv, argv);
+}
+
+void		get_opt_assi(int argc, char **argv, t_opt *opt)
+{
+	char	c;
+
+	opt->optstr = "Ralrt";
+	opt->nbarg = 1;
+	while ((c = ft_get_opt(argc, argv, opt)) > 0)
+	{
+		if (c == '?')
+		{
+			ft_putstr_fd("ft_ls: illegal option -- ", 2);
+			ft_putchar_fd(opt->err, 2);
+			ft_putchar_fd('\n', 2);
+			usage();
+			exit (2);
+		}
+		if (c == 'l')
+			g_l = 1;
+		else if (c == 'R')
+			g_re = 1;
+		else if (c == 'a')
+			g_a = 1;
+		else if (c == 'r')
+			g_r = 1;
+		else if (c == 't')
+			g_t = 1;
+	}
+}
+
+int			main(int argc, char **argv)
+{
 	t_opt			opt;
 
-	opt.optstr = "Ralrt";
-	opt.nbarg = 1;
 	if (argc == 1)
 		ls_l(".", ".");
 	else
 	{
-		while ((c = ft_get_opt(argc, argv, &opt)) > 0)
-		{
-			if (c == '?')
-			{
-				printf("ft_ls: illegal option -- %c\n", opt.err);
-				usage();
-				return (0);
-			}
-			if (c == 'l')
-				l = 1;
-			else if (c == 'R')
-				R = 1;
-			else if (c == 'a')
-				a = 1;
-			else if (c == 'r')
-				r = 1;
-			else if (c == 't')
-				t = 1;
-		}
+		get_opt_assi(argc, argv, &opt);
 		if (argc == opt.nbarg)
 		{
 			ls_l(".", ".");
 			return (0);
 		}
-		ft_sort_qck((void **)argv + opt.nbarg, argc - 1 - opt.nbarg, arg_cmp);
+		ft_sort_qck((void **)argv + opt.nbarg, argc - opt.nbarg, arg_cmp);
 		if (opt.nbarg + 1 == argc)
 			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
 		else
 		{
 			while (opt.nbarg < argc - 1)
-			{
-				ft_putstr(argv[opt.nbarg]);
-				ft_putstr(":\n");
-				ls_l(argv[opt.nbarg], argv[opt.nbarg]);
-				ft_putchar('\n');
+				ls_mult_arg(argv[opt.nbarg]),
+				ft_putchar('\n'),
 				opt.nbarg++;
-			}
-			ft_putstr(argv[opt.nbarg]);
-			ft_putstr(":\n");
-			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
+			ls_mult_arg(argv[opt.nbarg]);
 		}
 	}
 	return (0);
