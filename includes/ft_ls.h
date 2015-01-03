@@ -59,6 +59,19 @@ typedef struct		s_llu
 	long long		total;
 }					t_llu;
 
+typedef struct		s_tab
+{
+	char			**data;
+	int				size;
+}					t_tab;
+
+typedef struct		s_argtab
+{
+	t_tab			dir;
+	t_tab			file;
+	t_tab			error;
+}					t_argtab;
+
 int					ft_get_opt(int argc, char **argv, t_opt *opt);
 void				usage(void);
 void				print_type(int mode);

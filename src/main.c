@@ -440,6 +440,51 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 	}
 }
 
+int			get_types(char *arg)
+{
+	DIR				*ptdir;
+	struct stat		stat;
+
+	if ((ptdir = opendir(arg)))
+	{
+		closedir(ptdir);
+		return (1);//directory
+	}
+	else if (!lstat(arg, &stat))
+		return (2);//file
+	else
+		return (3);//error
+}
+
+void		arg_to_tab(int argc, char **argv)
+{
+	t_argtab		tab;
+	int				get;
+	int				i;
+
+	i = 0;
+	tab.file.size = 0;
+	tab.dir.size = 0;
+	tab.error.size = 0;
+	tab.file.data = (char **)malloc(sizeof(char *) * argc);
+	tab.dir.data = (char **)malloc(sizeof(char *) * argc);
+	tab.error.data = (char **)malloc(sizeof(char *) * argc);
+	while (i < argc)
+	{
+		get = get_types(argv[i]);
+		if (get == 1)
+			tab.dir.data[tab.dir.size++] = argv[i];
+		else if (get == 2)
+			tab.file.data[tab.file.size++] = argv[i];
+		else if (get == 3)
+			tab.error.data[tab.error.size++] = argv[i];
+		i++;
+	}
+	ft_sort_qck((void**)tab.dir.data, tab.dir.size, arg_cmp);
+	ft_sort_qck((void**)tab.file.data, tab.file.size, arg_cmp);
+	ft_sort_qck((void**)tab.error.data, tab.error.size, arg_cmp);
+}
+
 int			main(int argc, char **argv)
 {
 	t_opt			opt;
@@ -454,6 +499,7 @@ int			main(int argc, char **argv)
 			ls_l(".", ".");
 			return (0);
 		}
+		arg_to_tab(argc - opt.nbarg, argv + opt.nbarg);
 		ft_sort_qck((void **)argv + opt.nbarg, argc - opt.nbarg, arg_cmp);
 		if (opt.nbarg + 1 == argc)
 			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
