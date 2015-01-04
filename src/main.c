@@ -264,7 +264,7 @@ void		prt_init(t_print *prt)
 	prt->link_len = 0;
 }
 
-int			printfilelist(t_file **file, int size)
+void		printfilelist(t_file **file, int size)
 {
 	int			i;
 	t_print		prt;
@@ -277,7 +277,6 @@ int			printfilelist(t_file **file, int size)
 			if (g_a || *file[i - 1]->name != '.')
 				ft_putstr(file[i - 1]->name),
 				ft_putchar('\n');
-		return (1);
 	}
 	else
 	{
@@ -290,9 +289,7 @@ int			printfilelist(t_file **file, int size)
 				prt.gp = getgrgid(file[i - 1]->stat.st_gid),
 				prt.ps = getpwuid(file[i - 1]->stat.st_uid),
 				print(file, &prt, i - 1);
-		return (1);
 	}
-	return (0);
 }
 
 t_file		**lst2tab(t_list **lst, int *size)
@@ -467,7 +464,7 @@ int			get_types(char *arg)
 		return (3);
 }
 
-int			print_error(t_argtab tab)
+void		print_error(t_argtab tab)
 {
 	int			i;
 
@@ -477,10 +474,7 @@ int			print_error(t_argtab tab)
 		ft_putstr_fd("ls: ", 2), perror(tab.error.data[i]);
 		i++;
 	}
-	if (!i)
-		return (0);
 	free(tab.error.data);
-	return (1);
 }
 
 void		tab_init(t_argtab *tab, int argc)
@@ -557,8 +551,9 @@ void		arg_to_tab(int argc, char *argv[])
 	tab_init(&tab, argc);
 	tab_fill(&tab, argc, argv);
 	tab_sort(&tab);
-	if ((print_error(tab) && printfilelist(tab.file.ptr, tab.file.size)) ||
-		(print_error(tab) || printfilelist(tab.file.ptr, tab.file.size)))
+	print_error(tab);
+	printfilelist(tab.file.ptr, tab.file.size);
+	if (tab.error.size || tab.file.size)
 		ft_putchar('\n');
 	i = 0;
 	while (i < (tab.dir.size - 1))
