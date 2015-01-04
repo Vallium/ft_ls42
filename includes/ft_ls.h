@@ -62,6 +62,7 @@ typedef struct		s_llu
 typedef struct		s_tab
 {
 	t_file			*data;
+	t_file			**ptr;
 	int				size;
 }					t_tab;
 
@@ -73,7 +74,7 @@ typedef struct		s_tab2
 
 typedef struct		s_argtab
 {
-	t_tab2			dir;
+	t_tab			dir;
 	t_tab			file;
 	t_tab2			error;
 }					t_argtab;

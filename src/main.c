@@ -264,7 +264,7 @@ void		prt_init(t_print *prt)
 	prt->link_len = 0;
 }
 
-void		printfilelist(t_file **file, int size)
+int			printfilelist(t_file **file, int size)
 {
 	int			i;
 	t_print		prt;
@@ -277,6 +277,7 @@ void		printfilelist(t_file **file, int size)
 			if (g_a || *file[i - 1]->name != '.')
 				ft_putstr(file[i - 1]->name),
 				ft_putchar('\n');
+		return (1);
 	}
 	else
 	{
@@ -289,7 +290,9 @@ void		printfilelist(t_file **file, int size)
 				prt.gp = getgrgid(file[i - 1]->stat.st_gid),
 				prt.ps = getpwuid(file[i - 1]->stat.st_uid),
 				print(file, &prt, i - 1);
+		return (1);
 	}
+	return (0);
 }
 
 t_file		**lst2tab(t_list **lst, int *size)
@@ -333,6 +336,11 @@ int			fill_tab(t_file ***tab, char *arg, char *dir, t_llu *llu)
 
 	(void)dir;
 	ptdir = opendir(arg);
+	if (!ptdir)
+	{
+		ft_putstr_fd("ls: ", 2), perror(arg);
+		return (0);
+	}
 	lst = NULL;
 	while ((entree = readdir(ptdir)) != NULL)
 	{
@@ -386,14 +394,17 @@ void		ls_l(char *arg, char *dir)
 			&& ft_strcmp(file.name, ".."))
 		{
 			llu.total = 0;
-			ft_putchar('\n');
-			ft_putstr(ft_burger(arg, '/', file.name));
-			ft_putendl(":");
+			if (llu.i)
+			{
+				ft_putchar('\n');
+				ft_putstr(ft_burger(arg, '/', file.name));
+				ft_putendl(":");
+			}
 			ls_l(ft_burger(arg, '/', file.name), file.name);
 		}
 		llu.i++;
 	}
-//	free_ls(tab, &llu);
+	free_ls(tab, &llu);
 }
 
 int			arg_cmp(void *na1, void *na2)
@@ -401,10 +412,13 @@ int			arg_cmp(void *na1, void *na2)
 	return (ft_strcmp(na1, na2));
 }
 
-void		ls_mult_arg(char *argv)
+void		ls_mult_arg(char *argv, int i)
 {
-	ft_putstr(argv);
-	ft_putstr(":\n");
+	if (i)
+	{
+		ft_putstr(argv);
+		ft_putstr(":\n");
+	}
 	ls_l(argv, argv);
 }
 
@@ -453,7 +467,7 @@ int			get_types(char *arg)
 		return (3);
 }
 
-void		print_error(t_argtab tab)
+int			print_error(t_argtab tab)
 {
 	int			i;
 
@@ -463,73 +477,98 @@ void		print_error(t_argtab tab)
 		ft_putstr_fd("ls: ", 2), perror(tab.error.data[i]);
 		i++;
 	}
+	if (!i)
+		return (0);
 	free(tab.error.data);
+	return (1);
 }
 
-void		printfile(t_file *file, int size)
+void		tab_init(t_argtab *tab, int argc)
 {
-	int			i;
-	t_print		prt;
-
-	prt_init(&prt);
-	i = 0;
-	if (!g_l)
-	{
-		while (i++ < size)
-			if (g_a || file[i - 1]->name != '.')
-				ft_putstr(file[i - 1].name),
-				ft_putchar('\n');
-	}
-	else
-	{
-		while (i++ < size)
-			if (g_a || file[i - 1]->name != '.')
-				fill_prt(file, &prt, i - 1);
-		i = 0;
-		while (i++ < size)
-			if (g_a || *file[i - 1]->name != '.')
-				prt.gp = getgrgid(file[i - 1]->stat.st_gid),
-				prt.ps = getpwuid(file[i - 1]->stat.st_uid),
-				print(file, &prt, i - 1);
-	}
+	tab->file.size = 0;
+	tab->dir.size = 0;
+	tab->error.size = 0;
+	tab->file.data = (t_file *)malloc(sizeof(t_file) * argc);
+	tab->file.ptr = (t_file **)malloc(sizeof(t_file*) * argc);
+	tab->dir.data = (t_file *)malloc(sizeof(t_file) * argc);
+	tab->dir.ptr = (t_file **)malloc(sizeof(t_file *) * argc);
+	tab->error.data = (char **)malloc(sizeof(char *) * argc);
 }
 
-void		arg_to_tab(int argc, char **argv)
+void		tab_fill(t_argtab *tab, int argc, char *argv[])
 {
-	t_argtab		tab;
-	int				get;
-	int				i;
+	int		i;
+	int		get;
 
 	i = 0;
-	tab.file.size = 0;
-	tab.dir.size = 0;
-	tab.error.size = 0;
-	tab.file.data = (t_file *)malloc(sizeof(t_file) * argc);
-	tab.dir.data = (char **)malloc(sizeof(char *) * argc);
-	tab.error.data = (char **)malloc(sizeof(char *) * argc);
 	while (i < argc)
 	{
 		get = get_types(argv[i]);
 		if (get == 1)
-			tab.dir.data[tab.dir.size++] = argv[i];
+		{
+			ft_strcpy(tab->dir.data[tab->dir.size].name, argv[i]);
+			lstat(tab->dir.data[tab->dir.size].name, &tab->dir.data[tab->dir.size].stat);
+			tab->dir.size++;
+		}
 		else if (get == 2)
 		{
-			lstat(tab.file.data[tab.file.size].name, &tab.file.data[tab.file.size].stat);
-			ft_strcpy(tab.file.data[tab.file.size++].name, argv[i]);
+			ft_strcpy(tab->file.data[tab->file.size].name, argv[i]);
+			lstat(tab->file.data[tab->file.size].name, &tab->file.data[tab->file.size].stat);
+			tab->file.size++;
 		}
 		else if (get == 3)
-			tab.error.data[tab.error.size++] = argv[i];
+			tab->error.data[tab->error.size++] = argv[i];
 		i++;
 	}
-	ft_sort_qck((void**)tab.dir.data, tab.dir.size, arg_cmp);
-	ft_sort_qck((void**)tab.file.data, tab.file.size, arg_cmp);
-	ft_sort_qck((void**)tab.error.data, tab.error.size, arg_cmp);
-	print_error(tab);
-	/*
-	Faire deux tableaux: 
-		1 de t_file pour stocker les donnees.
-		1 de pointeurs sur de t_file qui sera trie
-	*/
+
+	i = 0;
+	while (i++ < tab->file.size)
+		tab->file.ptr[i - 1] = &tab->file.data[i - 1];
+	i = 0;
+	while (i++ < tab->dir.size)
+		tab->dir.ptr[i - 1] = &tab->dir.data[i - 1];
+
+}
+
+void		tab_sort(t_argtab *tab)
+{
+	if (!g_r)
+		ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_name_cmp),
+		ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_name_cmp);
+	else
+		ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_name_cmp),
+		ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_name_cmp);
+	if (g_t)
+	{
+		if (!g_r)
+			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_time_cmp),
+			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_time_cmp);
+		else
+			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_time_cmp),
+			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_time_cmp);
+	}
+}
+
+void		arg_to_tab(int argc, char *argv[])
+{
+	t_argtab		tab;
+	int				i;
+
+	tab_init(&tab, argc);
+	tab_fill(&tab, argc, argv);
+	tab_sort(&tab);
+	if ((print_error(tab) && printfilelist(tab.file.ptr, tab.file.size)) ||
+		(print_error(tab) || printfilelist(tab.file.ptr, tab.file.size)))
+		ft_putchar('\n');
+	i = 0;
+	while (i < (tab.dir.size - 1))
+	{
+		ls_mult_arg(tab.dir.ptr[i]->name, i);
+		ft_putchar('\n');
+		i++;
+	}
+	ls_mult_arg(tab.dir.ptr[i]->name, i);
+	exit(0);
 }
 
 int			main(int argc, char **argv)
@@ -547,16 +586,6 @@ int			main(int argc, char **argv)
 			return (0);
 		}
 		arg_to_tab(argc - opt.nbarg, argv + opt.nbarg);
-		if (opt.nbarg + 1 == argc)
-			ls_l(argv[opt.nbarg], argv[opt.nbarg]);
-		else
-		{
-			while (opt.nbarg < argc - 1)
-				ls_mult_arg(argv[opt.nbarg]),
-				ft_putchar('\n'),
-				opt.nbarg++;
-			ls_mult_arg(argv[opt.nbarg]);
-		}
 	}
 	return (0);
 }

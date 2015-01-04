@@ -48,7 +48,7 @@ $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
 $(LIBFT):
 	make -C libft
 
-.PHONY: clean fclean re debug norm
+.PHONY: clean fclean re debug norme
 
 clean:
 	make -C libft clean
@@ -58,8 +58,8 @@ fclean: clean
 	make -C libft fclean
 	rm -f $(STATIC_EXE) $(DEBUG_EXE)
 
-norm:
-	make -C libft norm
+norme:
+	make -C libft norme
 	norminette $(patsubst %,$(SRC_DIR)/%,$(SRC)) $(HEAD_DIR)/ft_ls.h
 
 re: fclean all

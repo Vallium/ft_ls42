@@ -129,7 +129,7 @@ $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
 $(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -fPIC -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
 
-.PHONY: clean fclean re
+.PHONY: clean fclean re norme
 
 clean:
 	rm -f $(STATIC_OBJ) $(DYNAMIC_OBJ) $(DEBUG_OBJ)
@@ -137,7 +137,7 @@ clean:
 fclean: clean
 	rm -f $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)
 
-norm:
+norme:
 	norminette $(patsubst %,$(SRC_DIR)/%,$(SRC)) $(HEAD_DIR)/libft.h $(HEAD_DIR)/get_next_line.h
 
 re: fclean all
