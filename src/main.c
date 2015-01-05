@@ -511,12 +511,16 @@ void		tab_fill(t_argtab *tab, int argc, char *argv[])
 		{
 			ft_strcpy(tab->dir.data[tab->dir.size].name, argv[i]);
 			lstat(tab->dir.data[tab->dir.size].name, &tab->dir.data[tab->dir.size].stat);
+			tab->dir.data[tab->dir.size].lnkname[readlink(argv[i],
+			tab->dir.data[tab->dir.size].lnkname, MAXLEN)] = 0;
 			tab->dir.size++;
 		}
 		else if (get == 2)
 		{
 			ft_strcpy(tab->file.data[tab->file.size].name, argv[i]);
 			lstat(tab->file.data[tab->file.size].name, &tab->file.data[tab->file.size].stat);
+			tab->file.data[tab->file.size].lnkname[readlink(argv[i],
+			tab->file.data[tab->file.size].lnkname, MAXLEN)] = 0;
 			tab->file.size++;
 		}
 		else if (get == 3)
