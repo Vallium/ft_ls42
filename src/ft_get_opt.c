@@ -33,7 +33,14 @@ int				ft_get_opt(int argc, char **argv, t_opt *opt)
 		else
 		{
 			if (argv[opt->nbarg][0] == '-' && argv[opt->nbarg][1] == '-')
+			{
+				if (argv[opt->nbarg][2])
+				{
+					opt->err = '-';
+					return ('?');
+				}
 				opt->nbarg++;
+			}
 			return (-1);
 		}
 	}

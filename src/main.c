@@ -138,8 +138,8 @@ int			file_r_time_cmp(void *ptr1, void *ptr2)
 	f1 = (t_file *)ptr1;
 	f2 = (t_file *)ptr2;
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-		return (f1->stat.st_mtimespec.tv_nsec - f2->stat.st_mtimespec.tv_nsec);
-	return (f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec);
+		return (f1->stat.st_mtimespec.tv_nsec - f2->stat.st_mtimespec.tv_nsec ? f1->stat.st_mtimespec.tv_nsec - f2->stat.st_mtimespec.tv_nsec : file_name_cmp(ptr1, ptr2));
+	return (f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec ? f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec : file_name_cmp(ptr1, ptr2));
 }
 
 int			file_time_cmp(void *ptr1, void *ptr2)
@@ -150,8 +150,8 @@ int			file_time_cmp(void *ptr1, void *ptr2)
 	f1 = (t_file *)ptr1;
 	f2 = (t_file *)ptr2;
 	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-		return (f2->stat.st_mtimespec.tv_nsec - f1->stat.st_mtimespec.tv_nsec);
-	return (f2->stat.st_mtimespec.tv_sec - f1->stat.st_mtimespec.tv_sec);
+		return (f2->stat.st_mtimespec.tv_nsec - f1->stat.st_mtimespec.tv_nsec ? f2->stat.st_mtimespec.tv_nsec - f1->stat.st_mtimespec.tv_nsec : file_name_cmp(ptr1, ptr2));
+	return (f2->stat.st_mtimespec.tv_sec - f1->stat.st_mtimespec.tv_sec ? f2->stat.st_mtimespec.tv_sec - f1->stat.st_mtimespec.tv_sec : file_name_cmp(ptr1, ptr2));
 }
 
 void		usage(void)
@@ -201,7 +201,8 @@ void		print_rights(int mode)
 
 void		printdate(t_file *file)
 {
-	if (file->stat.st_mtimespec.tv_sec > time(0) - 15778463)
+	if (file->stat.st_mtimespec.tv_sec > time(0) - 15778463 &&
+		file->stat.st_mtimespec.tv_sec < time(0) + 15778463)
 		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 12);
 	else
 		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 7),
@@ -397,15 +398,15 @@ void		ls_l(char *arg, char *dir)
 	{
 		file = *((t_file *)tab[llu.i]);
 		if (g_re && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".")
-			&& ft_strcmp(file.name, ".."))
+			&& ft_strcmp(file.name, "..") && (g_a || *file.name != '.'))
 		{
 			llu.total = 0;
-			if (llu.i)
-			{
+			//if (llu.i)
+			//{
 				ft_putchar('\n');
 				ft_putstr(ft_burger(arg, '/', file.name));
 				ft_putendl(":");
-			}
+			//}
 			ls_l(ft_burger(arg, '/', file.name), file.name);
 		}
 		llu.i++;
@@ -432,7 +433,7 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 {
 	char	c;
 
-	opt->optstr = "Ralrt";
+	opt->optstr = "Ralrt1";
 	opt->nbarg = 1;
 	while ((c = ft_get_opt(argc, argv, opt)) > 0)
 	{
@@ -459,18 +460,14 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 
 int			get_types(char *arg)
 {
-	DIR				*ptdir;
 	struct stat		stat;
 
-	if ((ptdir = opendir(arg)))
-	{
-		closedir(ptdir);
-		return (1);
-	}
-	else if (!lstat(arg, &stat))
-		return (2);
-	else
+	if (lstat(arg, &stat) == -1)
 		return (3);
+	else if (S_ISDIR(stat.st_mode))
+		return (1);
+	else
+		return (2);
 }
 
 void		print_error(t_argtab tab)
@@ -480,7 +477,9 @@ void		print_error(t_argtab tab)
 	i = 0;
 	while (i < tab.error.size)
 	{
-		ft_putstr_fd("ls: ", 2), perror(tab.error.data[i]);
+		ft_putstr_fd("ls: ", 2);
+		ft_putstr_fd(tab.error.data[i], 2);
+		ft_putendl_fd(": No such file or directory", 2);
 		i++;
 	}
 	free(tab.error.data);
@@ -566,16 +565,23 @@ void		arg_to_tab(int argc, char *argv[])
 	tab_sort(&tab);
 	print_error(tab);
 	printfilelist(tab.file.ptr, tab.file.size);
+	if (!tab.dir.size)
+		return ;
 	if (tab.error.size || tab.file.size)
 		ft_putchar('\n');
+	if (tab.dir.size != 1)
+	{
+		ft_putstr(tab.dir.ptr[0]->name);
+		ft_putendl(":");
+	}
 	i = 0;
-	while (i < (tab.dir.size - 1))
+	while (i < (tab.dir.size))
 	{
 		ls_mult_arg(tab.dir.ptr[i]->name, i);
-		ft_putchar('\n');
+		if (i != (tab.dir.size - 1))
+			ft_putchar('\n');
 		i++;
 	}
-	ls_mult_arg(tab.dir.ptr[i]->name, i);
 	exit(0);
 }
 
