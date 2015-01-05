@@ -130,7 +130,7 @@ int			file_r_name_cmp(void *ptr1, void *ptr2)
 	return (ft_strcmp(f2->name, f1->name));
 }
 
-int			file_time_cmp(void *ptr1, void *ptr2)
+int			file_r_time_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1;
 	t_file *f2;
@@ -142,7 +142,7 @@ int			file_time_cmp(void *ptr1, void *ptr2)
 	return (f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec);
 }
 
-int			file_r_time_cmp(void *ptr1, void *ptr2)
+int			file_time_cmp(void *ptr1, void *ptr2)
 {
 	t_file *f1;
 	t_file *f2;
@@ -181,13 +181,22 @@ void		print_rights(int mode)
 {
 	ft_putchar((mode & 0400) ? 'r' : '-');
 	ft_putchar((mode & 0200) ? 'w' : '-');
-	ft_putchar((mode & 0100) ? 'x' : '-');
+	if (mode & 04000)
+		ft_putchar((mode & 0100) ? 's' : 'S');
+	else
+		ft_putchar((mode & 0100) ? 'x' : '-');
 	ft_putchar((mode & 040) ? 'r' : '-');
 	ft_putchar((mode & 020) ? 'w' : '-');
-	ft_putchar((mode & 010) ? 'x' : '-');
+	if (mode & 02000)
+		ft_putchar((mode & 010) ? 's' : 'S');
+	else
+		ft_putchar((mode & 010) ? 'x' : '-');
 	ft_putchar((mode & 04) ? 'r' : '-');
 	ft_putchar((mode & 02) ? 'w' : '-');
-	ft_putchar((mode & 01) ? 'x' : '-');
+	if (mode & 01000)
+		ft_putchar((mode & 01) ? 't' : 'T');
+	else
+		ft_putchar((mode & 01) ? 'x' : '-');
 }
 
 void		printdate(t_file *file)
