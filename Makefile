@@ -22,11 +22,8 @@ SRC		=	main.c					\
 			file_time_cmp_macos.c	\
 			print_date_macos.c
 
-
-
-ifeq ($(SYSTEM),Linux)
+ifeq ($(UNAME_S),Linux)
 	SRC = $(SRC:macos=linux)
-	echo "hello linux"
 endif
 
 
@@ -46,7 +43,6 @@ FLAGS		= -Wall -Wextra -Werror
 $(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR))
 
 all: $(STATIC_EXE)
-	echo $(SYSTEM)
 
 debug: $(DEBUG_OBJ)
 	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $(DEBUG_EXE) $(DEBUG_OBJ) $(LIBFT) $(FLAGS) -g
