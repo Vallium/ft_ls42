@@ -22,10 +22,10 @@ SRC		=	main.c					\
 			file_time_cmp_macos.c	\
 			print_date_macos.c
 
+UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	SRC = $(SRC:macos=linux)
 endif
-
 
 STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
 DEBUG_OBJ	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
