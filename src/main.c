@@ -161,7 +161,7 @@ void		fill_prt(t_file **file, t_print *prt, int i)
 		prt->tmp = ft_strlen(prt->gp->gr_name);
 	else
 		prt->tmp = ft_intlen(file[i]->stat.st_gid);
-	if (prt->tmp > prt->ps_len)
+	if (prt->tmp > prt->gp_len)
 		prt->gp_len = prt->tmp;
 	prt->tmp = ft_intlen(file[i]->stat.st_size);
 	if (prt->tmp > prt->size_len)
@@ -213,23 +213,19 @@ void		printfilelist(t_file **file, int size)
 	prt_init(&prt);
 	i = 0;
 	if (!g_l)
-	{
 		while (i++ < size)
-			if (g_a || *file[i - 1]->name != '.')
-				ft_putstr(file[i - 1]->name),
-				ft_putchar('\n');
-	}
+			ft_putstr(file[i - 1]->name),
+			ft_putchar('\n');
+
 	else
 	{
 		while (i++ < size)
-			if (g_a || *file[i - 1]->name != '.')
-				fill_prt(file, &prt, i - 1);
+			fill_prt(file, &prt, i - 1);
 		i = 0;
 		while (i++ < size)
-			if (g_a || *file[i - 1]->name != '.')
-				prt.gp = getgrgid(file[i - 1]->stat.st_gid),
-				prt.ps = getpwuid(file[i - 1]->stat.st_uid),
-				print(file, &prt, i - 1);
+			prt.gp = getgrgid(file[i - 1]->stat.st_gid),
+			prt.ps = getpwuid(file[i - 1]->stat.st_uid),
+			print(file, &prt, i - 1);
 	}
 }
 
@@ -286,12 +282,15 @@ int			fill_tab(t_file ***tab, char *arg, char *dir, t_llu *llu)
 		lstat(ft_burger(arg, '/', entree->d_name), &(file.stat));
 		file.lnkname[readlink(ft_burger(arg, '/', entree->d_name),
 		file.lnkname, MAXLEN)] = 0;
-		if (!g_r)
-			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
-		else
-			ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
 		if (g_a || *(file.name) != '.')
-			llu->total += file.stat.st_blocks;
+		{
+			if (!g_r)
+				ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
+			else
+				ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
+			if (g_a || *(file.name) != '.')
+				llu->total += file.stat.st_blocks;
+		}
 	}
 	closedir(ptdir), *tab = lst2tab(&lst, &(llu->size)), ft_lstsimpledel(&lst);
 	return (1);
@@ -329,7 +328,7 @@ void		ls_l(char *arg, char *dir)
 	{
 		file = *((t_file *)tab[llu.i]);
 		if (g_re && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".")
-			&& ft_strcmp(file.name, "..") && (g_a || *file.name != '.'))
+			&& ft_strcmp(file.name, ".."))
 		{
 			llu.total = 0;
 			//if (llu.i)
@@ -392,6 +391,8 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 int			get_types(char *arg)
 {
 	struct stat		stat;
+	char			buff[256];
+	int				i;
 
 	if (!*(arg))
 	{
@@ -399,8 +400,18 @@ int			get_types(char *arg)
 		ft_putstr_fd("ls: ", 2), perror("fts_open");
 		exit(1);
 	}
+
 	if (lstat(arg, &stat) == -1)
 		return (3);
+
+	if (S_ISLNK(stat.st_mode))
+	{
+		i = readlink(arg, buff, 256);
+		buff[i] = 0;
+		lstat(buff, &stat);
+	}
+	if (S_ISDIR(stat.st_mode) && !g_l)
+		return (1);
 	else if (S_ISDIR(stat.st_mode))
 		return (1);
 	else
