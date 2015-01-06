@@ -169,11 +169,12 @@ void		fill_prt(t_file **file, t_print *prt, int i)
 		prt->size_len = prt->tmp;
 }
 
-void		print(t_file **file, t_print *prt, int i)
+void		print(t_file **file, t_print *prt, int i, char *arg)
 {
 	print_type(file[i]->stat.st_mode);
 	print_rights(file[i]->stat.st_mode);
-	ft_putstr(listxattr(file[i]->name , NULL, 256, 1) > 0 ? "@ " : "  ");
+	ft_putstr(listxattr(
+		ft_burger(arg, '/', file[i]->name) , NULL, 256, 1) > 0 ? "@ " : "  ");
 	to_wedge_lli(file[i]->stat.st_nlink, prt->link_len);
 	ft_putchar(' ');
 	if (prt->ps)
@@ -206,7 +207,7 @@ void		prt_init(t_print *prt)
 	prt->link_len = 0;
 }
 
-void		printfilelist(t_file **file, int size)
+void		printfilelist(t_file **file, int size, char *arg)
 {
 	int			i;
 	t_print		prt;
@@ -226,7 +227,7 @@ void		printfilelist(t_file **file, int size)
 		while (i++ < size)
 			prt.gp = getgrgid(file[i - 1]->stat.st_gid),
 			prt.ps = getpwuid(file[i - 1]->stat.st_uid),
-			print(file, &prt, i - 1);
+			print(file, &prt, i - 1, arg);
 	}
 }
 
@@ -323,7 +324,7 @@ void		ls_l(char *arg, char *dir)
 		ft_putnbr(llu.total);
 		ft_putchar('\n');
 	}
-	printfilelist(tab, llu.size);
+	printfilelist(tab, llu.size, arg);
 	llu.i = 0;
 	while (llu.i < llu.size)
 	{
@@ -332,12 +333,9 @@ void		ls_l(char *arg, char *dir)
 			&& ft_strcmp(file.name, ".."))
 		{
 			llu.total = 0;
-			//if (llu.i)
-			//{
-				ft_putchar('\n');
-				ft_putstr(ft_burger(arg, '/', file.name));
-				ft_putendl(":");
-			//}
+			ft_putchar('\n');
+			ft_putstr(ft_burger(arg, '/', file.name));
+			ft_putendl(":");
 			ls_l(ft_burger(arg, '/', file.name), file.name);
 		}
 		llu.i++;
@@ -513,7 +511,7 @@ void		arg_to_tab(int argc, char *argv[])
 	tab_fill(&tab, argc, argv);
 	tab_sort(&tab);
 	print_error(tab);
-	printfilelist(tab.file.ptr, tab.file.size);
+	printfilelist(tab.file.ptr, tab.file.size, "");
 	if (!tab.dir.size)
 		return ;
 	if (tab.error.size || tab.file.size)
