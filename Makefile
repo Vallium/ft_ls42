@@ -24,6 +24,7 @@ SRC		=	main.c					\
 
 ifeq ($(SYSTEM),Linux)
 	SRC = $(SRC:macos=linux)
+	echo "hello linux"
 endif
 
 
