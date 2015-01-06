@@ -16,15 +16,23 @@ DEBUG_EXE	= ft_ls_debug
 SRC		=	main.c					\
 			ft_get_opt.c			\
 			file_name_cmp.c			\
-			file_r_name_cmp.c		\
-			file_r_time_cmp_macos.c	\
-			file_size_cmp.c			\
-			file_time_cmp_macos.c	\
-			print_date_macos.c
+			file_r_name_cmp.c
 
 UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-	SRC = $(patsubst %macos.c,%linux.c,$(SRC))
+
+ifeq ($(SYSTEM),Linux)
+
+SRC	+= 							\
+		file_r_time_cmp_linux.c	\
+		file_time_cmp_linux.c	\
+		print_date_linux.c
+
+endif
+ifeq ($(SYSTEM),Darwin)
+SRC	+=							\
+		file_r_time_cmp_macos.c	\
+		file_time_cmp_ macos.c	\
+		print_date_ macos.c
 endif
 
 STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))

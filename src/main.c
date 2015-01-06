@@ -317,7 +317,7 @@ void		ls_l(char *arg, char *dir)
 		else
 			ft_sort_qck((void **)tab, llu.size, file_r_time_cmp);
 	}
-	if (g_l)
+	if (g_l && llu.size)
 	{
 		ft_putstr("total ");
 		ft_putnbr(llu.total);
