@@ -20,7 +20,7 @@ SRC		=	main.c					\
 
 UNAME_S := $(shell uname -s)
 
-ifeq ($(SYSTEM),Linux)
+ifeq ($(UNAME_S),Linux)
 
 SRC	+= 							\
 		file_r_time_cmp_linux.c	\
@@ -28,7 +28,7 @@ SRC	+= 							\
 		print_date_linux.c
 
 endif
-ifeq ($(SYSTEM),Darwin)
+ifeq ($(UNAME_S),Darwin)
 SRC	+=							\
 		file_r_time_cmp_macos.c	\
 		file_time_cmp_macos.c	\
