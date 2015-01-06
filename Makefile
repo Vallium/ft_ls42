@@ -24,7 +24,7 @@ SRC		=	main.c					\
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
-	SRC = $(SRC:macos.c=linux.c)
+	SRC = $(patsubst %macos.c,%linux.c,$(SRC))
 endif
 
 STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
