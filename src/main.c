@@ -13,6 +13,7 @@
 #include "ft_ls.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/xattr.h>
 
 int		g_a = 0;
 int		g_l = 0;
@@ -172,7 +173,7 @@ void		print(t_file **file, t_print *prt, int i)
 {
 	print_type(file[i]->stat.st_mode);
 	print_rights(file[i]->stat.st_mode);
-	ft_putstr("  ");
+	ft_putstr(listxattr(file[i]->name , NULL, 256, 1) > 0 ? "@ " : "  ");
 	to_wedge_lli(file[i]->stat.st_nlink, prt->link_len);
 	ft_putchar(' ');
 	if (prt->ps)
