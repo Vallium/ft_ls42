@@ -83,5 +83,12 @@ int					ft_get_opt(int argc, char **argv, t_opt *opt);
 void				usage(void);
 void				print_type(int mode);
 void				print_rights(int mode);
+int					file_name_cmp(void *ptr1, void *ptr2);
+int					file_r_name_cmp(void *ptr1, void *ptr2);
+int					file_r_time_cmp(void *ptr1, void *ptr2);
+int					file_size_cmp(void *ptr1, void *ptr2);
+int					file_time_cmp(void *ptr1, void *ptr2);
+
+
 
 #endif

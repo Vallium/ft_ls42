@@ -96,64 +96,6 @@ void		to_wedge_lli(long long int nb, int n)
 	ft_putnbrll(nb);
 }
 
-int			file_size_cmp(void *ptr1, void *ptr2)
-{
-	t_file *f1;
-	t_file *f2;
-
-	f1 = (t_file *)ptr1;
-	f2 = (t_file *)ptr2;
-	if (f1->stat.st_size > f2->stat.st_size)
-		return (1);
-	else if (f1->stat.st_size < f2->stat.st_size)
-		return (-1);
-	return (0);
-}
-
-int			file_name_cmp(void *ptr1, void *ptr2)
-{
-	t_file *f1;
-	t_file *f2;
-
-	f1 = (t_file *)ptr1;
-	f2 = (t_file *)ptr2;
-	return (ft_strcmp(f1->name, f2->name));
-}
-
-int			file_r_name_cmp(void *ptr1, void *ptr2)
-{
-	t_file *f1;
-	t_file *f2;
-
-	f1 = (t_file *)ptr1;
-	f2 = (t_file *)ptr2;
-	return (ft_strcmp(f2->name, f1->name));
-}
-
-int			file_r_time_cmp(void *ptr1, void *ptr2)
-{
-	t_file *f1;
-	t_file *f2;
-
-	f1 = (t_file *)ptr1;
-	f2 = (t_file *)ptr2;
-	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-		return (f1->stat.st_mtimespec.tv_nsec - f2->stat.st_mtimespec.tv_nsec ? f1->stat.st_mtimespec.tv_nsec - f2->stat.st_mtimespec.tv_nsec : file_name_cmp(ptr1, ptr2));
-	return (f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec ? f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec : file_name_cmp(ptr1, ptr2));
-}
-
-int			file_time_cmp(void *ptr1, void *ptr2)
-{
-	t_file *f1;
-	t_file *f2;
-
-	f1 = (t_file *)ptr1;
-	f2 = (t_file *)ptr2;
-	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-		return (f2->stat.st_mtimespec.tv_nsec - f1->stat.st_mtimespec.tv_nsec ? f2->stat.st_mtimespec.tv_nsec - f1->stat.st_mtimespec.tv_nsec : file_name_cmp(ptr1, ptr2));
-	return (f2->stat.st_mtimespec.tv_sec - f1->stat.st_mtimespec.tv_sec ? f2->stat.st_mtimespec.tv_sec - f1->stat.st_mtimespec.tv_sec : file_name_cmp(ptr1, ptr2));
-}
-
 void		usage(void)
 {
 	ft_putstr_fd("usage: ft_ls [-Ralrt] [file ...]\n", 2);

@@ -13,8 +13,18 @@
 STATIC_EXE	= ft_ls
 DEBUG_EXE	= ft_ls_debug
 
-SRC		=	main.c			\
-			ft_get_opt.c
+SRC		=	main.c					\
+			ft_get_opt.c			\
+			file_name_cmp.c			\
+			file_r_name_cmp.c		\
+			file_r_time_cmp_macos.c	\
+			file_size_cmp.c			\
+			file_time_cmp_macos.c
+
+ifeq ($(SYSTEM),Linux)
+	SRC = $(SRC:macos=unix)
+endif
+
 
 STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
 DEBUG_OBJ	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
