@@ -20,6 +20,8 @@ int				ft_get_opt(int argc, char **argv, t_opt *opt)
 
 	if (!argv[opt->nbarg][i])
 	{
+		if (!i)
+			return (0);
 		i = 0;
 		opt->nbarg++;
 		if (opt->nbarg == argc)

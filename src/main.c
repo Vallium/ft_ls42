@@ -393,6 +393,12 @@ int			get_types(char *arg)
 {
 	struct stat		stat;
 
+	if (!*(arg))
+	{
+		lstat(arg, &stat);
+		ft_putstr_fd("ls: ", 2), perror("fts_open");
+		exit(1);
+	}
 	if (lstat(arg, &stat) == -1)
 		return (3);
 	else if (S_ISDIR(stat.st_mode))
