@@ -141,17 +141,6 @@ void		print_rights(int mode)
 		ft_putchar((mode & 01) ? 'x' : '-');
 }
 
-void		printdate(t_file *file)
-{
-	if (file->stat.st_mtimespec.tv_sec > time(0) - 15778463 &&
-		file->stat.st_mtimespec.tv_sec < time(0) + 15778463)
-		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 12);
-	else
-		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 4, 7),
-		ft_putchar(' '),
-		ft_putstr_sub(ctime(&file->stat.st_mtimespec.tv_sec), 20, 4);
-}
-
 void		fill_prt(t_file **file, t_print *prt, int i)
 {
 	prt->gp = getgrgid(file[i]->stat.st_gid);
@@ -198,7 +187,7 @@ void		print(t_file **file, t_print *prt, int i)
 	ft_putstr("  ");
 	to_wedge_lli(file[i]->stat.st_size, prt->size_len);
 	ft_putchar(' ');
-	printdate(file[i]);
+	print_date(file[i]);
 	ft_putchar(' ');
 	ft_putstr(file[i]->name);
 	if (S_ISLNK(file[i]->stat.st_mode))

@@ -88,7 +88,6 @@ int					file_r_name_cmp(void *ptr1, void *ptr2);
 int					file_r_time_cmp(void *ptr1, void *ptr2);
 int					file_size_cmp(void *ptr1, void *ptr2);
 int					file_time_cmp(void *ptr1, void *ptr2);
-
-
+void				print_date(t_file *file);
 
 #endif

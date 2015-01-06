@@ -19,10 +19,11 @@ SRC		=	main.c					\
 			file_r_name_cmp.c		\
 			file_r_time_cmp_macos.c	\
 			file_size_cmp.c			\
-			file_time_cmp_macos.c
+			file_time_cmp_macos.c	\
+			print_date_macos.c
 
 ifeq ($(SYSTEM),Linux)
-	SRC = $(SRC:macos=unix)
+	SRC = $(SRC:macos=linux)
 endif
 
 
