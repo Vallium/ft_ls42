@@ -31,8 +31,8 @@ endif
 ifeq ($(SYSTEM),Darwin)
 SRC	+=							\
 		file_r_time_cmp_macos.c	\
-		file_time_cmp_ macos.c	\
-		print_date_ macos.c
+		file_time_cmp_macos.c	\
+		print_date_macos.c
 endif
 
 STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
