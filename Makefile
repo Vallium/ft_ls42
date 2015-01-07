@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-statsIC_EXE	= ft_ls
+STATIC_EXE	= ft_ls
 DEBUG_EXE	= ft_ls_debug
 
 SRC		=	main.c					\
@@ -35,30 +35,30 @@ SRC	+=							\
 		print_date_macos.c
 endif
 
-statsIC_OBJ	= $(patsubst %.c,$(statsIC_DIR)/%.o,$(SRC))
+STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
 DEBUG_OBJ	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
 
 HEAD_DIR	= includes
 SRC_DIR		= src
 DEBUG_DIR	= debug
-statsIC_DIR	= statsic
+STATIC_DIR	= static
 LIBFT		= libft/libft.a
 LIBFT_HEAD	= libft/includes/
 
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 
-$(shell mkdir -p $(statsIC_DIR) $(DEBUG_DIR))
+$(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR))
 
-all: $(statsIC_EXE)
+all: $(STATIC_EXE)
 
 debug: $(DEBUG_OBJ)
 	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $(DEBUG_EXE) $(DEBUG_OBJ) $(LIBFT) $(FLAGS) -g
 
-$(statsIC_EXE): $(statsIC_OBJ)
-	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(statsIC_OBJ) $(LIBFT) $(FLAGS)
+$(STATIC_EXE): $(STATIC_OBJ)
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(STATIC_OBJ) $(LIBFT) $(FLAGS)
 
-$(statsIC_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
+$(STATIC_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
 	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
@@ -71,11 +71,11 @@ $(LIBFT):
 
 clean:
 	make -C libft clean
-	rm -f $(statsIC_OBJ) $(DEBUG_OBJ)
+	rm -f $(STATIC_OBJ) $(DEBUG_OBJ)
 
 fclean: clean
 	make -C libft fclean
-	rm -f $(statsIC_EXE) $(DEBUG_EXE)
+	rm -f $(STATIC_EXE) $(DEBUG_EXE)
 
 norme:
 	make -C libft norme
