@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/xattr.h>
+#include <sys/acl.h>
 
 int		g_a = 0;
 int		g_l = 0;
@@ -169,12 +170,22 @@ void		fill_prt(t_file **file, t_print *prt, int i)
 		prt->size_len = prt->tmp;
 }
 
+void		print_acl_attr(t_file **file, int i, char *arg)
+{
+	if (listxattr(ft_burger(arg, '/', file[i]->name) , NULL, 256, 1) > 0)
+		ft_putstr("@ ");
+	else if (acl_get_link_np(ft_burger(arg, '/', file[i]->name),
+										ACL_TYPE_EXTENDED))
+		ft_putstr("+ ");
+	else
+		ft_putstr("  ");
+}
+
 void		print(t_file **file, t_print *prt, int i, char *arg)
 {
 	print_type(file[i]->stat.st_mode);
 	print_rights(file[i]->stat.st_mode);
-	ft_putstr(listxattr(
-		ft_burger(arg, '/', file[i]->name) , NULL, 256, 1) > 0 ? "@ " : "  ");
+	print_acl_attr(file, i, arg);
 	to_wedge_lli(file[i]->stat.st_nlink, prt->link_len);
 	ft_putchar(' ');
 	if (prt->ps)
@@ -263,14 +274,13 @@ void		free_ls(t_file **tab, t_llu *llu)
 	free(tab);
 }
 
-int			fill_tab(t_file ***tab, char *arg, char *dir, t_llu *llu)
+int			fill_tab(t_file ***tab, char *arg, t_llu *llu)
 {
 	struct dirent	*entree;
 	DIR				*ptdir;
 	t_list			*lst;
 	t_file			file;
 
-	(void)dir;
 	ptdir = opendir(arg);
 	if (!ptdir)
 	{
@@ -290,54 +300,61 @@ int			fill_tab(t_file ***tab, char *arg, char *dir, t_llu *llu)
 				ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
 			else
 				ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
-			if (g_a || *(file.name) != '.')
-				llu->total += file.stat.st_blocks;
+			llu->total += file.stat.st_blocks;
 		}
 	}
 	closedir(ptdir), *tab = lst2tab(&lst, &(llu->size)), ft_lstsimpledel(&lst);
 	return (1);
 }
 
-void		ls_l(char *arg, char *dir)
+void		sort_tab(t_file ***tab, t_llu *llu)
+{
+	if (!g_r)
+		ft_sort_qck((void **)*tab, llu->size, file_name_cmp);
+	else
+		ft_sort_qck((void **)*tab, llu->size, file_r_name_cmp);
+	if (g_t)
+	{
+		if (!g_r)
+			ft_sort_qck((void **)*tab, llu->size, file_time_cmp);
+		else
+			ft_sort_qck((void **)*tab, llu->size, file_r_time_cmp);
+	}
+}
+
+void		print_total(t_llu *llu)
+{
+	if (g_l && llu->size)
+	{
+		ft_putstr("total ");
+		ft_putnbr(llu->total);
+		ft_putchar('\n');
+	}
+}
+
+void		ls_l(char *arg)
 {
 	t_file			file;
 	t_file			**tab;
 	t_llu			llu;
 
 	llu.total = 0;
-	if (!(fill_tab(&tab, arg, dir, &llu)))
+	if (!(fill_tab(&tab, arg, &llu)))
 		return ;
-	if (!g_r)
-		ft_sort_qck((void **)tab, llu.size, file_name_cmp);
-	else
-		ft_sort_qck((void **)tab, llu.size, file_r_name_cmp);
-	if (g_t)
-	{
-		if (!g_r)
-			ft_sort_qck((void **)tab, llu.size, file_time_cmp);
-		else
-			ft_sort_qck((void **)tab, llu.size, file_r_time_cmp);
-	}
-	if (g_l && llu.size)
-	{
-		ft_putstr("total ");
-		ft_putnbr(llu.total);
-		ft_putchar('\n');
-	}
+	sort_tab(&tab, &llu);
+	print_total(&llu);
 	printfilelist(tab, llu.size, arg);
 	llu.i = 0;
 	while (llu.i < llu.size)
 	{
 		file = *((t_file *)tab[llu.i]);
 		if (g_re && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".")
-			&& ft_strcmp(file.name, ".."))
-		{
-			llu.total = 0;
-			ft_putchar('\n');
-			ft_putstr(ft_burger(arg, '/', file.name));
-			ft_putendl(":");
-			ls_l(ft_burger(arg, '/', file.name), file.name);
-		}
+				&& ft_strcmp(file.name, ".."))
+			llu.total = 0,
+			ft_putchar('\n'),
+			ft_putstr(ft_burger(arg, '/', file.name)),
+			ft_putendl(":"),
+			ls_l(ft_burger(arg, '/', file.name));
 		llu.i++;
 	}
 	free_ls(tab, &llu);
@@ -355,7 +372,7 @@ void		ls_mult_arg(char *argv, int i)
 		ft_putstr(argv);
 		ft_putstr(":\n");
 	}
-	ls_l(argv, argv);
+	ls_l(argv);
 }
 
 void		get_opt_assi(int argc, char **argv, t_opt *opt)
@@ -444,6 +461,26 @@ void		tab_init(t_argtab *tab, int argc)
 	tab->error.data = (char **)malloc(sizeof(char *) * argc);
 }
 
+void		tab_distrib(t_argtab *tab, int get, char *argv)
+{
+	if (get == 1)
+	{
+		ft_strcpy(tab->dir.data[tab->dir.size].name, argv);
+		lstat(tab->dir.data[tab->dir.size].name, &tab->dir.data[tab->dir.size].stat);
+		tab->dir.data[tab->dir.size].lnkname[readlink(argv,
+		tab->dir.data[tab->dir.size].lnkname, MAXLEN)] = 0;
+		tab->dir.size++;
+	}
+	else if (get == 2)
+	{
+		ft_strcpy(tab->file.data[tab->file.size].name, argv);
+		lstat(tab->file.data[tab->file.size].name, &tab->file.data[tab->file.size].stat);
+		tab->file.data[tab->file.size].lnkname[readlink(argv,
+		tab->file.data[tab->file.size].lnkname, MAXLEN)] = 0;
+		tab->file.size++;
+	}
+}
+
 void		tab_fill(t_argtab *tab, int argc, char *argv[])
 {
 	int		i;
@@ -453,23 +490,8 @@ void		tab_fill(t_argtab *tab, int argc, char *argv[])
 	while (i < argc)
 	{
 		get = get_types(argv[i]);
-		if (get == 1)
-		{
-			ft_strcpy(tab->dir.data[tab->dir.size].name, argv[i]);
-			lstat(tab->dir.data[tab->dir.size].name, &tab->dir.data[tab->dir.size].stat);
-			tab->dir.data[tab->dir.size].lnkname[readlink(argv[i],
-			tab->dir.data[tab->dir.size].lnkname, MAXLEN)] = 0;
-			tab->dir.size++;
-		}
-		else if (get == 2)
-		{
-			ft_strcpy(tab->file.data[tab->file.size].name, argv[i]);
-			lstat(tab->file.data[tab->file.size].name, &tab->file.data[tab->file.size].stat);
-			tab->file.data[tab->file.size].lnkname[readlink(argv[i],
-			tab->file.data[tab->file.size].lnkname, MAXLEN)] = 0;
-			tab->file.size++;
-		}
-		else if (get == 3)
+		tab_distrib(tab, get, argv[i]);
+		if (get == 3)
 			tab->error.data[tab->error.size++] = argv[i];
 		i++;
 	}
@@ -537,13 +559,13 @@ int			main(int argc, char **argv)
 	t_opt			opt;
 
 	if (argc == 1)
-		ls_l(".", ".");
+		ls_l(".");
 	else
 	{
 		get_opt_assi(argc, argv, &opt);
 		if (argc == opt.nbarg)
 		{
-			ls_l(".", ".");
+			ls_l(".");
 			return (0);
 		}
 		arg_to_tab(argc - opt.nbarg, argv + opt.nbarg);
