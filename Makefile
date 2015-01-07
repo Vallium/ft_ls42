@@ -13,10 +13,17 @@
 STATIC_EXE	= ft_ls
 DEBUG_EXE	= ft_ls_debug
 
-SRC		=	main.c					\
-			ft_get_opt.c			\
-			file_name_cmp.c			\
-			file_r_name_cmp.c
+SRC		=	main.c				\
+			ft_get_opt.c		\
+			file_name_cmp.c		\
+			file_r_name_cmp.c	\
+			len.c				\
+			ls_l.c				\
+			print1.c			\
+			print2.c			\
+			tab1.c				\
+			tab2.c				\
+			to_wedge.c
 
 UNAME_S := $(shell uname -s)
 

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-#include <stdio.h>
 
 int				get_opt(char *av[], t_opt *opt, int *i)
 {
