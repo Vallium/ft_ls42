@@ -19,7 +19,7 @@ int			file_time_cmp(void *ptr1, void *ptr2)
 
 	f1 = (t_file *)ptr1;
 	f2 = (t_file *)ptr2;
-	return (f2->stat.st_mtime - f1->stat.st_mtime ?
-	f2->stat.st_mtime - f1->stat.st_mtime :
+	return (f2->stats.st_mtime - f1->stats.st_mtime ?
+	f2->stats.st_mtime - f1->stats.st_mtime :
 	file_name_cmp(ptr1, ptr2));
 }

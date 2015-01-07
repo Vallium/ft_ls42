@@ -145,9 +145,9 @@ void		print_rights(int mode)
 
 void		fill_prt(t_file **file, t_print *prt, int i)
 {
-	prt->gp = getgrgid(file[i]->stat.st_gid);
-	prt->ps = getpwuid(file[i]->stat.st_uid);
-	prt->tmp = ft_intlen(file[i]->stat.st_nlink);
+	prt->gp = getgrgid(file[i]->stats.st_gid);
+	prt->ps = getpwuid(file[i]->stats.st_uid);
+	prt->tmp = ft_intlen(file[i]->stats.st_nlink);
 	if (prt->tmp > prt->link_len)
 		prt->link_len = prt->tmp;
 	prt->tmp = ft_strlen(file[i]->name);
@@ -156,16 +156,16 @@ void		fill_prt(t_file **file, t_print *prt, int i)
 	if (prt->ps)
 		prt->tmp = ft_strlen(prt->ps->pw_name);
 	else
-		prt->tmp = ft_intlen(file[i]->stat.st_uid);
+		prt->tmp = ft_intlen(file[i]->stats.st_uid);
 	if (prt->tmp > prt->ps_len)
 		prt->ps_len = prt->tmp;
 	if (prt->gp)
 		prt->tmp = ft_strlen(prt->gp->gr_name);
 	else
-		prt->tmp = ft_intlen(file[i]->stat.st_gid);
+		prt->tmp = ft_intlen(file[i]->stats.st_gid);
 	if (prt->tmp > prt->gp_len)
 		prt->gp_len = prt->tmp;
-	prt->tmp = ft_intlen(file[i]->stat.st_size);
+	prt->tmp = ft_intlen(file[i]->stats.st_size);
 	if (prt->tmp > prt->size_len)
 		prt->size_len = prt->tmp;
 }
@@ -183,27 +183,27 @@ void		print_acl_attr(t_file **file, int i, char *arg)
 
 void		print(t_file **file, t_print *prt, int i, char *arg)
 {
-	print_type(file[i]->stat.st_mode);
-	print_rights(file[i]->stat.st_mode);
+	print_type(file[i]->stats.st_mode);
+	print_rights(file[i]->stats.st_mode);
 	print_acl_attr(file, i, arg);
-	to_wedge_lli(file[i]->stat.st_nlink, prt->link_len);
+	to_wedge_lli(file[i]->stats.st_nlink, prt->link_len);
 	ft_putchar(' ');
 	if (prt->ps)
 		to_wedge2(prt->ps->pw_name, prt->ps_len);
 	else
-		to_wedge_lli2(file[i]->stat.st_uid, prt->ps_len);
+		to_wedge_lli2(file[i]->stats.st_uid, prt->ps_len);
 	ft_putstr("  ");
 	if (prt->gp)
 		to_wedge2(prt->gp->gr_name, prt->gp_len);
 	else
-		to_wedge_lli2(file[i]->stat.st_gid, prt->gp_len);
+		to_wedge_lli2(file[i]->stats.st_gid, prt->gp_len);
 	ft_putstr("  ");
-	to_wedge_lli(file[i]->stat.st_size, prt->size_len);
+	to_wedge_lli(file[i]->stats.st_size, prt->size_len);
 	ft_putchar(' ');
 	print_date(file[i]);
 	ft_putchar(' ');
 	ft_putstr(file[i]->name);
-	if (S_ISLNK(file[i]->stat.st_mode))
+	if (S_ISLNK(file[i]->stats.st_mode))
 		ft_putstr(" -> "),
 		ft_putstr(file[i]->lnkname);
 	ft_putchar('\n');
@@ -227,17 +227,21 @@ void		printfilelist(t_file **file, int size, char *arg)
 	i = 0;
 	if (!g_l)
 		while (i++ < size)
-			ft_putstr(file[i - 1]->name),
+		{
+			ft_putstr(file[i - 1]->name);
 			ft_putchar('\n');
+		}
 	else
 	{
 		while (i++ < size)
 			fill_prt(file, &prt, i - 1);
 		i = 0;
 		while (i++ < size)
-			prt.gp = getgrgid(file[i - 1]->stat.st_gid),
-			prt.ps = getpwuid(file[i - 1]->stat.st_uid),
+		{
+			prt.gp = getgrgid(file[i - 1]->stats.st_gid);
+			prt.ps = getpwuid(file[i - 1]->stats.st_uid);
 			print(file, &prt, i - 1, arg);
+		}
 	}
 }
 
@@ -290,17 +294,12 @@ int			fill_tab(t_file ***tab, char *arg, t_llu *llu)
 	while ((entree = readdir(ptdir)) != NULL)
 	{
 		ft_strcpy(file.name, entree->d_name);
-		lstat(ft_burger(arg, '/', entree->d_name), &(file.stat));
+		lstat(ft_burger(arg, '/', entree->d_name), &(file.stats));
 		file.lnkname[readlink(ft_burger(arg, '/', entree->d_name),
 		file.lnkname, MAXLEN)] = 0;
 		if (g_a || *(file.name) != '.')
-		{
-			if (!g_r)
-				ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file)));
-			else
-				ft_lstadd(&lst, ft_lstnew(&file, sizeof(t_file)));
-			llu->total += file.stat.st_blocks;
-		}
+			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file))),
+			llu->total += file.stats.st_blocks;
 	}
 	closedir(ptdir), *tab = lst2tab(&lst, &(llu->size)), ft_lstsimpledel(&lst);
 	return (1);
@@ -308,17 +307,11 @@ int			fill_tab(t_file ***tab, char *arg, t_llu *llu)
 
 void		sort_tab(t_file ***tab, t_llu *llu)
 {
-	if (!g_r)
-		ft_sort_qck((void **)*tab, llu->size, file_name_cmp);
-	else
-		ft_sort_qck((void **)*tab, llu->size, file_r_name_cmp);
+	ft_sort_qck((void **)*tab, llu->size, !g_r ?
+				file_name_cmp : file_r_name_cmp);
 	if (g_t)
-	{
-		if (!g_r)
-			ft_sort_qck((void **)*tab, llu->size, file_time_cmp);
-		else
-			ft_sort_qck((void **)*tab, llu->size, file_r_time_cmp);
-	}
+		ft_sort_qck((void **)*tab, llu->size, !g_r ?
+					file_time_cmp : file_r_time_cmp);
 }
 
 void		print_total(t_llu *llu)
@@ -347,7 +340,7 @@ void		ls_l(char *arg)
 	while (llu.i < llu.size)
 	{
 		file = *((t_file *)tab[llu.i]);
-		if (g_re && S_ISDIR(file.stat.st_mode) && ft_strcmp(file.name, ".")
+		if (g_re && S_ISDIR(file.stats.st_mode) && ft_strcmp(file.name, ".")
 				&& ft_strcmp(file.name, ".."))
 			llu.total = 0,
 			ft_putchar('\n'),
@@ -379,7 +372,7 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 	char	c;
 
 	opt->optstr = "Ralrt1";
-	opt->nbarg = 1;
+	opt->nb = 1;
 	while ((c = ft_get_opt(argc, argv, opt)) > 0)
 	{
 		if (c == '?')
@@ -405,27 +398,27 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 
 int			get_types(char *arg)
 {
-	struct stat		stat;
 	char			buff[256];
 	int				i;
+	struct stat		stats;
 
 	if (!*(arg))
 	{
-		lstat(arg, &stat);
+		lstat(arg, &stats);
 		ft_putstr_fd("ls: ", 2), perror("fts_open");
 		exit(1);
 	}
-	if (lstat(arg, &stat) == -1)
+	if (lstat(arg, &stats) == -1)
 		return (3);
-	if (S_ISLNK(stat.st_mode))
+	if (S_ISLNK(stats.st_mode))
 	{
 		i = readlink(arg, buff, 256);
 		buff[i] = 0;
-		lstat(buff, &stat);
+		lstat(buff, &stats);
 	}
-	if (S_ISDIR(stat.st_mode) && !g_l)
+	if (S_ISDIR(stats.st_mode) && !g_l)
 		return (1);
-	else if (S_ISDIR(stat.st_mode))
+	else if (S_ISDIR(stats.st_mode))
 		return (1);
 	else
 		return (2);
@@ -464,7 +457,7 @@ void		tab_distrib(t_argtab *tab, int get, char *argv)
 	{
 		ft_strcpy(tab->dir.data[tab->dir.size].name, argv);
 		lstat(tab->dir.data[tab->dir.size].name,
-		&tab->dir.data[tab->dir.size].stat);
+		&tab->dir.data[tab->dir.size].stats);
 		tab->dir.data[tab->dir.size].lnkname[readlink(argv,
 		tab->dir.data[tab->dir.size].lnkname, MAXLEN)] = 0;
 		tab->dir.size++;
@@ -473,7 +466,7 @@ void		tab_distrib(t_argtab *tab, int get, char *argv)
 	{
 		ft_strcpy(tab->file.data[tab->file.size].name, argv);
 		lstat(tab->file.data[tab->file.size].name,
-		&tab->file.data[tab->file.size].stat);
+		&tab->file.data[tab->file.size].stats);
 		tab->file.data[tab->file.size].lnkname[readlink(argv,
 		tab->file.data[tab->file.size].lnkname, MAXLEN)] = 0;
 		tab->file.size++;
@@ -558,12 +551,12 @@ int			main(int argc, char **argv)
 	else
 	{
 		get_opt_assi(argc, argv, &opt);
-		if (argc == opt.nbarg)
+		if (argc == opt.nb)
 		{
 			ls_l(".");
 			return (0);
 		}
-		arg_to_tab(argc - opt.nbarg, argv + opt.nbarg);
+		arg_to_tab(argc - opt.nb, argv + opt.nb);
 	}
 	return (0);
 }

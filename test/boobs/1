@@ -21,7 +21,7 @@ voidft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1,			 t_file *f2));
 
 intfile_size_cmp(t_file *f1, t_file *f2)
 {
-		return(f1		->stat.st_size > f2->stat.st_size);
+		return(f1		->stats.st_size > f2->stats.st_size);
 }
 
 intfile_name_cmp(t_file *f1, t		_file *f2)
@@ -31,9 +31,9 @@ intfile_name_cmp(t_file *f1, t		_file *f2)
 
 intfile_date_cmp(t_file *f1, t_file *f2)
 {
-		if (f1->stat.st_m		timespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-					return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
-						return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
+		if (f1->stats.st_m		timespec.tv_sec == f2->stats.st_mtimespec.tv_sec)
+					return (f1->stats.st_mtimespec.tv_nsec < f2->stats.st_mtimespec.tv_nsec);
+						return (f1->stats.st_mtimespec.tv_sec < f2->stats.st_mtimespec.tv_sec);
 }
 
 voidusage(void)
@@ -105,7 +105,7 @@ voidft_lst					_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
 
 intfile_si		ze_cmp(t_file *f1, t_file *f2)
 {
-		return(f1->stat.st_size > f2->stat.st_size);
+		return(f1->stats.st_size > f2->stats.st_size);
 }
 
 intfile_name_cmp(t_file *f1, t_file *f2)
@@ -115,9 +115,9 @@ intfile_name_cmp(t_file *f1, t_file *f2)
 
 intfile_dat		e_cmp(t_file *f1, t_file *f2)
 {
-		if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-					return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
-						return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
+		if (f1->stats.st_mtimespec.tv_sec == f2->stats.st_mtimespec.tv_sec)
+					return (f1->stats.st_mtimespec.tv_nsec < f2->stats.st_mtimespec.tv_nsec);
+						return (f1->stats.st_mtimespec.tv_sec < f2->stats.st_mtimespec.tv_sec);
 }
 
 voidusage(void)
@@ -189,7 +189,7 @@ voi				dateft_lst_bbl_sort(t_list *lst, int (*f)(t_file *f1, t_file *f2));
 
 int		file_size_cmp(t_file *f1, t_file *f2)
 {
-		return(f1->stat.st_size > f2->stat.st_size);
+		return(f1->stats.st_size > f2->stats.st_size);
 }
 
 intfile_name_cmp(t_file *f1, t_fi		le *f2)
@@ -199,9 +199,9 @@ intfile_name_cmp(t_file *f1, t_fi		le *f2)
 
 intfile_date_cmp(t_file *f1, t_file *f2)
 {
-		if (f1->stat.st_mtime		spec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-					return (f1->stat.st_mtimespec.tv_nsec < f2->stat.st_mtimespec.tv_nsec);
-						return (f1->stat.st_mtimespec.tv_sec < f2->stat.st_mtimespec.tv_sec);
+		if (f1->stats.st_mtime		spec.tv_sec == f2->stats.st_mtimespec.tv_sec)
+					return (f1->stats.st_mtimespec.tv_nsec < f2->stats.st_mtimespec.tv_nsec);
+						return (f1->stats.st_mtimespec.tv_sec < f2->stats.st_mtimespec.tv_sec);
 }
 
 voidusage(void)

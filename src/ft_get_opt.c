@@ -13,40 +13,45 @@
 #include "ft_ls.h"
 #include <stdio.h>
 
-int				ft_get_opt(int argc, char **argv, t_opt *opt)
+int				get_opt(char *av[], t_opt *opt, int *i)
 {
-	static int	i = 0;
 	char		*ret;
 
-	if (!argv[opt->nbarg][i])
+	if (!(*i))
 	{
-		if (!i)
-			return (0);
-		i = 0;
-		opt->nbarg++;
-		if (opt->nbarg == argc)
-			return (-1);
-	}
-	if (!i)
-	{
-		if (argv[opt->nbarg][0] == '-' && argv[opt->nbarg][1] != '-'
-			&& argv[opt->nbarg][1])
-			i++;
+		if (av[opt->nb][0] == '-' && av[opt->nb][1] != '-' && av[opt->nb][1])
+			(*i)++;
 		else
 		{
-			if (argv[opt->nbarg][0] == '-' && argv[opt->nbarg][1] == '-')
+			if (av[opt->nb][0] == '-' && av[opt->nb][1] == '-')
 			{
-				if (argv[opt->nbarg][2])
+				if (av[opt->nb][2])
 				{
 					opt->err = '-';
 					return ('?');
 				}
-				opt->nbarg++;
+				opt->nb++;
 			}
 			return (-1);
 		}
 	}
-	if (!(ret = ft_strchr(opt->optstr, argv[opt->nbarg][i++])))
-		opt->err = argv[opt->nbarg][i - 1];
+	if (!(ret = ft_strchr(opt->optstr, av[opt->nb][(*i)++])))
+		opt->err = av[opt->nb][(*i) - 1];
 	return (!ret ? '?' : *ret);
+}
+
+int				ft_get_opt(int argc, char *av[], t_opt *opt)
+{
+	static int	i = 0;
+
+	if (!av[opt->nb][i])
+	{
+		if (!i)
+			return (0);
+		i = 0;
+		opt->nb++;
+		if (opt->nb == argc)
+			return (-1);
+	}
+	return (get_opt(av, opt, &i));
 }

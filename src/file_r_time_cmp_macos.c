@@ -19,11 +19,11 @@ int			file_r_time_cmp(void *ptr1, void *ptr2)
 
 	f1 = (t_file *)ptr1;
 	f2 = (t_file *)ptr2;
-	if (f1->stat.st_mtimespec.tv_sec == f2->stat.st_mtimespec.tv_sec)
-		return (f1->stat.st_mtimespec.tv_nsec - f2->stat.st_mtimespec.tv_nsec ?
-		f1->stat.st_mtimespec.tv_nsec - f2->stat.st_mtimespec.tv_nsec :
+	if (f1->stats.st_mtimespec.tv_sec == f2->stats.st_mtimespec.tv_sec)
+		return (f1->stats.st_mtimespec.tv_nsec - f2->stats.st_mtimespec.tv_nsec
+		? f1->stats.st_mtimespec.tv_nsec - f2->stats.st_mtimespec.tv_nsec :
 		file_name_cmp(ptr1, ptr2));
-	return (f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec ?
-	f1->stat.st_mtimespec.tv_sec - f2->stat.st_mtimespec.tv_sec :
+	return (f1->stats.st_mtimespec.tv_sec - f2->stats.st_mtimespec.tv_sec ?
+	f1->stats.st_mtimespec.tv_sec - f2->stats.st_mtimespec.tv_sec :
 	file_name_cmp(ptr1, ptr2));
 }

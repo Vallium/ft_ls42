@@ -14,11 +14,11 @@
 
 void		print_date(t_file *file)
 {
-	if (file->stat.st_mtime > time(0) - 15778463 &&
-		file->stat.st_mtime < time(0) + 15778463)
-		ft_putstr_sub(ctime(&file->stat.st_mtime), 4, 12);
+	if (file->stats.st_mtime > time(0) - 15778463 &&
+		file->stats.st_mtime < time(0) + 15778463)
+		ft_putstr_sub(ctime(&file->stats.st_mtime), 4, 12);
 	else
-		ft_putstr_sub(ctime(&file->stat.st_mtime), 4, 7),
+		ft_putstr_sub(ctime(&file->stats.st_mtime), 4, 7),
 		ft_putchar(' '),
-		ft_putstr_sub(ctime(&file->stat.st_mtime), 20, 4);
+		ft_putstr_sub(ctime(&file->stats.st_mtime), 20, 4);
 }

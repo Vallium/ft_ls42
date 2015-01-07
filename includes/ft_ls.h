@@ -28,7 +28,7 @@
 
 typedef struct		s_opt
 {
-	int				nbarg;
+	int				nb;
 	char			err;
 	char			*optstr;
 }					t_opt;
@@ -37,7 +37,7 @@ typedef struct		s_file
 {
 	char			name[256];
 	char			lnkname[MAXLEN];
-	struct stat		stat;
+	struct stat		stats;
 }					t_file;
 
 typedef struct		s_print
