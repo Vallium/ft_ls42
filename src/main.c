@@ -172,7 +172,7 @@ void		fill_prt(t_file **file, t_print *prt, int i)
 
 void		print_acl_attr(t_file **file, int i, char *arg)
 {
-	if (listxattr(ft_burger(arg, '/', file[i]->name) , NULL, 256, 1) > 0)
+	if (listxattr(ft_burger(arg, '/', file[i]->name), NULL, 256, 1) > 0)
 		ft_putstr("@ ");
 	else if (acl_get_link_np(ft_burger(arg, '/', file[i]->name),
 										ACL_TYPE_EXTENDED))
@@ -229,7 +229,6 @@ void		printfilelist(t_file **file, int size, char *arg)
 		while (i++ < size)
 			ft_putstr(file[i - 1]->name),
 			ft_putchar('\n');
-
 	else
 	{
 		while (i++ < size)
@@ -416,10 +415,8 @@ int			get_types(char *arg)
 		ft_putstr_fd("ls: ", 2), perror("fts_open");
 		exit(1);
 	}
-
 	if (lstat(arg, &stat) == -1)
 		return (3);
-
 	if (S_ISLNK(stat.st_mode))
 	{
 		i = readlink(arg, buff, 256);
@@ -466,7 +463,8 @@ void		tab_distrib(t_argtab *tab, int get, char *argv)
 	if (get == 1)
 	{
 		ft_strcpy(tab->dir.data[tab->dir.size].name, argv);
-		lstat(tab->dir.data[tab->dir.size].name, &tab->dir.data[tab->dir.size].stat);
+		lstat(tab->dir.data[tab->dir.size].name,
+		&tab->dir.data[tab->dir.size].stat);
 		tab->dir.data[tab->dir.size].lnkname[readlink(argv,
 		tab->dir.data[tab->dir.size].lnkname, MAXLEN)] = 0;
 		tab->dir.size++;
@@ -474,7 +472,8 @@ void		tab_distrib(t_argtab *tab, int get, char *argv)
 	else if (get == 2)
 	{
 		ft_strcpy(tab->file.data[tab->file.size].name, argv);
-		lstat(tab->file.data[tab->file.size].name, &tab->file.data[tab->file.size].stat);
+		lstat(tab->file.data[tab->file.size].name,
+		&tab->file.data[tab->file.size].stat);
 		tab->file.data[tab->file.size].lnkname[readlink(argv,
 		tab->file.data[tab->file.size].lnkname, MAXLEN)] = 0;
 		tab->file.size++;
@@ -495,14 +494,12 @@ void		tab_fill(t_argtab *tab, int argc, char *argv[])
 			tab->error.data[tab->error.size++] = argv[i];
 		i++;
 	}
-
 	i = 0;
 	while (i++ < tab->file.size)
 		tab->file.ptr[i - 1] = &tab->file.data[i - 1];
 	i = 0;
 	while (i++ < tab->dir.size)
 		tab->dir.ptr[i - 1] = &tab->dir.data[i - 1];
-
 }
 
 void		tab_sort(t_argtab *tab)
@@ -539,10 +536,8 @@ void		arg_to_tab(int argc, char *argv[])
 	if (tab.error.size || tab.file.size)
 		ft_putchar('\n');
 	if (tab.dir.size != 1)
-	{
-		ft_putstr(tab.dir.ptr[0]->name);
+		ft_putstr(tab.dir.ptr[0]->name),
 		ft_putendl(":");
-	}
 	i = 0;
 	while (i < (tab.dir.size))
 	{
