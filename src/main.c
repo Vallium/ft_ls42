@@ -11,10 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/xattr.h>
-#include <sys/acl.h>
 
 int		g_a = 0;
 int		g_l = 0;
@@ -514,6 +510,14 @@ void		tab_sort(t_argtab *tab)
 	}
 }
 
+void		tab_free(t_argtab *tab)
+{
+	free(tab->file.data);
+	free(tab->file.ptr);
+	free(tab->dir.data);
+	free(tab->dir.ptr);
+}
+
 void		arg_to_tab(int argc, char *argv[])
 {
 	t_argtab		tab;
@@ -539,6 +543,7 @@ void		arg_to_tab(int argc, char *argv[])
 			ft_putchar('\n');
 		i++;
 	}
+	tab_free(&tab);
 	exit(0);
 }
 

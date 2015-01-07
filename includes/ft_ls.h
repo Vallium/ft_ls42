@@ -19,12 +19,15 @@
 # include "libft.h"
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/xattr.h>
+# include <sys/acl.h>
 # include <dirent.h>
 # include <unistd.h>
 # include <grp.h>
-# include <sys/types.h>
 # include <pwd.h>
 # include <time.h>
+# include <stdio.h>
+# include <stdlib.h>
 
 typedef struct		s_opt
 {
@@ -79,7 +82,7 @@ typedef struct		s_argtab
 	t_tab2			error;
 }					t_argtab;
 
-int					ft_get_opt(int argc, char **argv, t_opt *opt);
+int					ft_get_opt(int argc, char **argv, t_opt *opt);;
 void				usage(void);
 void				print_type(int mode);
 void				print_rights(int mode);
@@ -89,5 +92,36 @@ int					file_r_time_cmp(void *ptr1, void *ptr2);
 int					file_size_cmp(void *ptr1, void *ptr2);
 int					file_time_cmp(void *ptr1, void *ptr2);
 void				print_date(t_file *file);
+int					ft_intlen(int i);
+int					ft_llilen(long long int i);
+void				to_wedge(const char *str, int n);
+void				to_wedge2(const char *str, int n);
+void				to_wedge_lli2(long long int nb, int n);
+void				to_wedge_lli(long long int nb, int n);
+void				usage(void);
+void				print_type(int mode);
+void				print_rights(int mode);
+void				fill_prt(t_file **file, t_print *prt, int i);
+void				print_acl_attr(t_file **file, int i, char *arg);
+void				print(t_file **file, t_print *prt, int i, char *arg);
+void				prt_init(t_print *prt);
+void				printfilelist(t_file **file, int size, char *arg);
+t_file				**lst2tab(t_list **lst, int *size);
+void				free_ls(t_file **tab, t_llu *llu);
+int					fill_tab(t_file ***tab, char *arg, t_llu *llu);
+void				sort_tab(t_file ***tab, t_llu *llu);
+void				print_total(t_llu *llu);
+void				ls_l(char *arg);
+int					arg_cmp(void *na1, void *na2);
+void				ls_mult_arg(char *argv, int i);
+void				get_opt_assi(int argc, char **argv, t_opt *opt);
+int					get_types(char *arg);
+void				print_error(t_argtab tab);
+void				tab_init(t_argtab *tab, int argc);
+void				tab_distrib(t_argtab *tab, int get, char *argv);
+void				tab_fill(t_argtab *tab, int argc, char *argv[]);
+void				tab_sort(t_argtab *tab);
+void				arg_to_tab(int argc, char *argv[]);
+void				tab_free(t_argtab *tab);
 
 #endif
