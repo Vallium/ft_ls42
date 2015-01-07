@@ -118,16 +118,16 @@ $(DEBUG_LIB): $(DEBUG_OBJ)
 	ranlib $@
 
 $(DYNAMIC_LIB): $(DYNAMIC_OBJ)
-	$(CC) -shared -o $@ $(DYNAMIC_OBJ)
+	$(CC) -O3 -shared -o $@ $(DYNAMIC_OBJ)
 
 $(STATIC_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
+	$(CC) -O3 -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS) -g
+	$(CC) -O3 -I $(HEAD_DIR) -o $@ -c $< $(FLAGS) -g
 
 $(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) -fPIC -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
+	$(CC) -O3 -fPIC -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
 
 .PHONY: clean fclean re norme
 
