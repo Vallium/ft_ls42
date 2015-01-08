@@ -102,9 +102,9 @@ CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 NORMINETTE	= lua ~/project/colorminette/main.lua
 
-#ifeq ($(SYSTEM),Linux)
-#	FLAGS	= -Wall -Wextra #-Werror
-#endif
+ifeq ($(SYSTEM),Linux)
+	FLAGS	= -Wall -Wextra #-Werror
+endif
 
 $(shell mkdir -p $(STATIC_DIR) $(DYNAMIC_DIR) $(DEBUG_DIR))
 
