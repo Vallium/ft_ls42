@@ -102,7 +102,9 @@ CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 NORMINETTE	= lua ~/project/colorminette/main.lua
 
-ifeq ($(SYSTEM),Linux)
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Linux)
 	FLAGS	= -Wall -Wextra #-Werror
 endif
 
