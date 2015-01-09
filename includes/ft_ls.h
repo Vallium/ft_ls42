@@ -35,6 +35,7 @@ int		g_re;
 int		g_r;
 int		g_t;
 int		g_p;
+int		g_ss;
 
 typedef struct		s_opt
 {
@@ -94,6 +95,7 @@ int					file_r_name_cmp(void *ptr1, void *ptr2);
 int					file_time_cmp(void *ptr1, void *ptr2);
 int					file_r_time_cmp(void *ptr1, void *ptr2);
 int					file_size_cmp(void *ptr1, void *ptr2);
+int					file_r_size_cmp(void *ptr1, void *ptr2);
 int					arg_cmp(void *na1, void *na2);
 
 int					ft_get_opt(int argc, char **argv, t_opt *opt);

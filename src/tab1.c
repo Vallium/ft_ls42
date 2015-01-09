@@ -44,7 +44,10 @@ void		sort_tab(t_file ***tab, t_llu *llu)
 {
 	ft_sort_qck((void **)*tab, llu->size, !g_r ?
 				file_name_cmp : file_r_name_cmp);
-	if (g_t)
+	if (g_ss)
+		ft_sort_qck((void **)*tab, llu->size, !g_r ?
+					file_size_cmp : file_r_size_cmp);
+	else if (g_t)
 		ft_sort_qck((void **)*tab, llu->size, !g_r ?
 					file_time_cmp : file_r_time_cmp);
 }

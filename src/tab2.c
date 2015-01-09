@@ -51,6 +51,15 @@ void		tab_sort(t_argtab *tab)
 			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_time_cmp),
 			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_time_cmp);
 	}
+	if (g_ss)
+	{
+		if (!g_r)
+			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_size_cmp),
+			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_size_cmp);
+		else
+			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_size_cmp),
+			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_size_cmp);
+	}
 }
 
 void		tab_free(t_argtab *tab)
