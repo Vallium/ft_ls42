@@ -36,6 +36,8 @@ int		g_r;
 int		g_t;
 int		g_p;
 int		g_ss;
+int		g_g;
+int		g_o;
 
 typedef struct		s_opt
 {

@@ -70,10 +70,10 @@ void		print(t_file **file, t_print *prt, int i, char *arg)
 	print_acl_attr(file, i, arg);
 	to_wedge_lli(file[i]->stats.st_nlink, prt->link_len);
 	ft_putchar(' ');
-	prt->ps ? to_wedge2(prt->ps->pw_name, prt->ps_len) :
+	(!g_o && prt->ps) ? to_wedge2(prt->ps->pw_name, prt->ps_len) :
 			to_wedge_lli2(file[i]->stats.st_uid, prt->ps_len);
 	ft_putstr("  ");
-	prt->gp ? to_wedge2(prt->gp->gr_name, prt->gp_len) :
+	(!g_g && prt->gp) ? to_wedge2(prt->gp->gr_name, prt->gp_len) :
 			to_wedge_lli2(file[i]->stats.st_gid, prt->gp_len);
 	ft_putstr("  ");
 	to_wedge_lli(file[i]->stats.st_size, prt->size_len);
