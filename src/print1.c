@@ -70,22 +70,20 @@ void		print(t_file **file, t_print *prt, int i, char *arg)
 	print_acl_attr(file, i, arg);
 	to_wedge_lli(file[i]->stats.st_nlink, prt->link_len);
 	ft_putchar(' ');
-	if (prt->ps)
-		to_wedge2(prt->ps->pw_name, prt->ps_len);
-	else
-		to_wedge_lli2(file[i]->stats.st_uid, prt->ps_len);
+	prt->ps ? to_wedge2(prt->ps->pw_name, prt->ps_len) :
+			to_wedge_lli2(file[i]->stats.st_uid, prt->ps_len);
 	ft_putstr("  ");
-	if (prt->gp)
-		to_wedge2(prt->gp->gr_name, prt->gp_len);
-	else
-		to_wedge_lli2(file[i]->stats.st_gid, prt->gp_len);
+	prt->gp ? to_wedge2(prt->gp->gr_name, prt->gp_len) :
+			to_wedge_lli2(file[i]->stats.st_gid, prt->gp_len);
 	ft_putstr("  ");
 	to_wedge_lli(file[i]->stats.st_size, prt->size_len);
 	ft_putchar(' ');
 	print_date(file[i]);
 	ft_putchar(' ');
 	ft_putstr(file[i]->name);
-	if (S_ISLNK(file[i]->stats.st_mode))
+	if (g_p && S_ISDIR(file[i]->stats.st_mode))
+		ft_putchar('/');
+	else if (S_ISLNK(file[i]->stats.st_mode))
 		ft_putstr(" -> "),
 		ft_putstr(file[i]->lnkname);
 	ft_putchar('\n');

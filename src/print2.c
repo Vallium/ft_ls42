@@ -23,6 +23,8 @@ void		printfilelist(t_file **file, int size, char *arg)
 		while (i++ < size)
 		{
 			ft_putstr(file[i - 1]->name);
+			if (g_p && S_ISDIR(file[i - 1]->stats.st_mode))
+				ft_putchar('/');
 			ft_putchar('\n');
 		}
 	else
