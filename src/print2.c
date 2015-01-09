@@ -66,6 +66,15 @@ void		print_error(t_argtab tab)
 	free(tab.error.data);
 }
 
+void		prt_init(t_print *prt)
+{
+	prt->gp_len = 0;
+	prt->ps_len = 0;
+	prt->name_len = 0;
+	prt->size_len = 0;
+	prt->link_len = 0;
+}
+
 void		fill_prt(t_file **file, t_print *prt, int i)
 {
 	prt->gp = getgrgid(file[i]->stats.st_gid);

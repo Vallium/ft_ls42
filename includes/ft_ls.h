@@ -113,6 +113,7 @@ void				print_acl_attr(t_file **file, int i, char *arg);
 void				print(t_file **file, t_print *prt, int i, char *arg);
 void				printfilelist(t_file **file, int size, char *arg);
 void				print_error(t_argtab tab);
+void				print_gr_ps(t_file *file, t_print *prt);
 
 void				tab_init(t_argtab *tab, int argc);
 void				tab_distrib(t_argtab *tab, int get, char *argv);
