@@ -17,6 +17,8 @@ SRC		=	main.c				\
 			ft_get_opt.c		\
 			file_name_cmp.c		\
 			file_r_name_cmp.c	\
+			file_size_cmp.c		\
+			file_r_size_cmp.c	\
 			len.c				\
 			ls_l.c				\
 			print1.c			\

@@ -23,6 +23,8 @@ void		printfilelist(t_file **file, int size, char *arg)
 		while (i++ < size)
 		{
 			ft_putstr(file[i - 1]->name);
+			if (g_p && S_ISDIR(file[i - 1]->stats.st_mode))
+				ft_putchar('/');
 			ft_putchar('\n');
 		}
 	else
@@ -62,6 +64,15 @@ void		print_error(t_argtab tab)
 		i++;
 	}
 	free(tab.error.data);
+}
+
+void		prt_init(t_print *prt)
+{
+	prt->gp_len = 0;
+	prt->ps_len = 0;
+	prt->name_len = 0;
+	prt->size_len = 0;
+	prt->link_len = 0;
 }
 
 void		fill_prt(t_file **file, t_print *prt, int i)

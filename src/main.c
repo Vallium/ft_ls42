@@ -14,7 +14,7 @@
 
 void		usage(void)
 {
-	ft_putstr_fd("usage: ft_ls [-Ralrt] [file ...]\n", 2);
+	ft_putstr_fd("usage: ft_ls [-RSalprt1] [file ...]\n", 2);
 }
 
 int			arg_cmp(void *na1, void *na2)
@@ -27,27 +27,27 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 	char	c;
 
 	opt->optstr = "Ralrt1u";
+	opt->optstr = "RSagloprt1";
 	opt->nb = 1;
 	while ((c = ft_get_opt(argc, argv, opt)) > 0)
 	{
 		if (c == '?')
 		{
-			ft_putstr_fd("ft_ls: illegal option -- ", 2);
-			ft_putchar_fd(opt->err, 2);
-			ft_putchar_fd('\n', 2);
-			usage();
+			ft_putstr_fd("ft_ls: illegal option -- ", 2),
+			ft_putchar_fd(opt->err, 2),
+			ft_putchar_fd('\n', 2),
+			usage(),
 			exit (2);
 		}
-		if (c == 'l')
-			g_l = 1;
-		else if (c == 'R')
-			g_re = 1;
-		else if (c == 'a')
-			g_a = 1;
-		else if (c == 'r')
-			g_r = 1;
-		else if (c == 't')
-			g_t = 1;
+		g_l = (c == 'l') ? 1 : g_l;
+		g_re = (c == 'R') ? 1 : g_re;
+		g_ss = (c == 'S') ? 1 : g_ss;
+		g_a = (c == 'a') ? 1 : g_a;
+		g_p = (c == 'p') ? 1 : g_p;
+		g_r = (c == 'r') ? 1 : g_r;
+		g_t = (c == 't') ? 1 : g_t;
+		g_g = (c == 'g') ? 1 : g_g;
+		g_o = (c == 'o') ? 1 : g_o;
 	}
 }
 
@@ -60,6 +60,10 @@ int			main(int argc, char **argv)
 	g_re = 0;
 	g_r = 0;
 	g_t = 0;
+	g_p = 0;
+	g_ss = 0;
+	g_g = 0;
+	g_o = 0;
 	if (argc == 1)
 		ls_l(".");
 	else

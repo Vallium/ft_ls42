@@ -34,6 +34,10 @@ int		g_l;
 int		g_re;
 int		g_r;
 int		g_t;
+int		g_p;
+int		g_ss;
+int		g_g;
+int		g_o;
 
 typedef struct		s_opt
 {
@@ -93,6 +97,7 @@ int					file_r_name_cmp(void *ptr1, void *ptr2);
 int					file_time_cmp(void *ptr1, void *ptr2);
 int					file_r_time_cmp(void *ptr1, void *ptr2);
 int					file_size_cmp(void *ptr1, void *ptr2);
+int					file_r_size_cmp(void *ptr1, void *ptr2);
 int					arg_cmp(void *na1, void *na2);
 
 int					ft_get_opt(int argc, char **argv, t_opt *opt);
@@ -108,6 +113,7 @@ void				print_acl_attr(t_file **file, int i, char *arg);
 void				print(t_file **file, t_print *prt, int i, char *arg);
 void				printfilelist(t_file **file, int size, char *arg);
 void				print_error(t_argtab tab);
+void				print_gr_ps(t_file *file, t_print *prt);
 
 void				tab_init(t_argtab *tab, int argc);
 void				tab_distrib(t_argtab *tab, int get, char *argv);
