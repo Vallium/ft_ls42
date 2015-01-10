@@ -45,11 +45,20 @@ void		tab_sort(t_argtab *tab)
 	if (g_t)
 	{
 		if (!g_r)
-			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_time_cmp),
-			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_time_cmp);
+			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_mtime_cmp),
+			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_mtime_cmp);
 		else
-			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_time_cmp),
-			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_time_cmp);
+			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_mtime_cmp),
+			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_mtime_cmp);
+	}
+	if (g_u)
+	{
+		if (!g_r)
+			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_atime_cmp),
+			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_atime_cmp);
+		else
+			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_atime_cmp),
+			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_atime_cmp);
 	}
 }
 
