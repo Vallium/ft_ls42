@@ -56,7 +56,7 @@ LIBFT_HEAD	= libft/includes/
 
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
-NORMINETTE	= lua ~/project/colorminette/main.lua
+NORMINETTE	= ~/project/colorminette/colorminette
 
 $(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR))
 
@@ -72,7 +72,7 @@ $(STATIC_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
 	$(CC) -O3 -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
-	$(CC) -O3 -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS) -g
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS) -g
 
 $(LIBFT):
 	make -C libft
@@ -89,6 +89,6 @@ fclean: clean
 
 norme:
 	make -C libft norme
-	$(NORMINETTE) $(patsubst %,$(SRC_DIR)/%,$(SRC)) $(HEAD_DIR)/ft_ls.h
+	$(NORMINETTE) $(SRC_DIR)/ $(HEAD_DIR)/
 
 re: fclean all

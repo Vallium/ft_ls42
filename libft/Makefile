@@ -100,7 +100,7 @@ DYNAMIC_DIR	= dynamic
 
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
-NORMINETTE	= lua ~/project/colorminette/main.lua
+NORMINETTE	= ~/project/colorminette/colorminette
 
 UNAME_S := $(shell uname -s)
 
@@ -141,6 +141,6 @@ fclean: clean
 	rm -f $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)
 
 norme:
-	$(NORMINETTE) $(patsubst %,$(SRC_DIR)/%,$(SRC)) $(HEAD_DIR)/libft.h $(HEAD_DIR)/get_next_line.h
+	$(NORMINETTE) $(SRC_DIR)/ $(HEAD_DIR)/
 
 re: fclean all
