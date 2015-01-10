@@ -49,7 +49,7 @@ void		sort_tab(t_file ***tab, t_llu *llu)
 					file_size_cmp : file_r_size_cmp);
 	else if (g_t)
 		ft_sort_qck((void **)*tab, llu->size, !g_r ?
-					file_time_cmp : file_r_time_cmp);
+					file_mtime_cmp : file_r_mtime_cmp);
 }
 
 int			get_types(char *arg)

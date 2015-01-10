@@ -38,6 +38,7 @@ int		g_p;
 int		g_ss;
 int		g_g;
 int		g_o;
+int		g_u;
 
 typedef struct		s_opt
 {
@@ -94,8 +95,17 @@ typedef struct		s_argtab
 
 int					file_name_cmp(void *ptr1, void *ptr2);
 int					file_r_name_cmp(void *ptr1, void *ptr2);
-int					file_time_cmp(void *ptr1, void *ptr2);
+
 int					file_r_time_cmp(void *ptr1, void *ptr2);
+
+int					file_mtime_cmp(void *ptr1, void *ptr2);
+int					file_atime_cmp(void *ptr1, void *ptr2);
+int					file_ctime_cmp(void *ptr1, void *ptr2);
+
+int					file_r_mtime_cmp(void *ptr1, void *ptr2);
+int					file_r_atime_cmp(void *ptr1, void *ptr2);
+int					file_r_ctime_cmp(void *ptr1, void *ptr2);
+
 int					file_size_cmp(void *ptr1, void *ptr2);
 int					file_r_size_cmp(void *ptr1, void *ptr2);
 int					arg_cmp(void *na1, void *na2);

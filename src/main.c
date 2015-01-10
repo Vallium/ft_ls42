@@ -26,8 +26,7 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 {
 	char	c;
 
-	opt->optstr = "Ralrt1u";
-	opt->optstr = "RSagloprt1";
+	opt->optstr = "RSagloprt1u";
 	opt->nb = 1;
 	while ((c = ft_get_opt(argc, argv, opt)) > 0)
 	{
@@ -48,6 +47,7 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 		g_t = (c == 't') ? 1 : g_t;
 		g_g = (c == 'g') ? 1 : g_g;
 		g_o = (c == 'o') ? 1 : g_o;
+		g_u = (c == 'u') ? 1 : g_u;
 	}
 }
 
