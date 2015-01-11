@@ -60,7 +60,7 @@ NORMINETTE	= ~/project/colorminette/colorminette
 
 $(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR))
 
-all: $(STATIC_EXE)
+all: $(STATIC_EXE) debug
 
 debug: $(DEBUG_OBJ)
 	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $(DEBUG_EXE) $(DEBUG_OBJ) $(LIBFT) $(FLAGS) -g
@@ -77,7 +77,7 @@ $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
 $(LIBFT):
 	make -C libft
 
-.PHONY: clean fclean re debug norme
+.PHONY: clean fclean re debug norme normeLibft
 
 clean:
 	make -C libft clean
