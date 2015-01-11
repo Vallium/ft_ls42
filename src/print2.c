@@ -78,39 +78,33 @@ void		prt_init(t_print *prt)
 	prt->dev = 0;
 }
 
+void		prt_dev(t_file *file, t_print *prt)
+{
+	prt->dev = 1;
+	prt->tmp = ft_intlen(major(file->stats.st_rdev));
+	prt->maj_len = (prt->tmp > prt->maj_len ? prt->tmp : prt->maj_len);
+	prt->tmp = ft_intlen(minor(file->stats.st_rdev));
+	prt->min_len = (prt->tmp > prt->min_len ? prt->tmp : prt->min_len);
+	prt->tmp = prt->maj_len + prt->min_len + 2;
+}
+
 void		fill_prt(t_file **file, t_print *prt, int i)
 {
 	prt->gp = getgrgid(file[i]->stats.st_gid);
 	prt->ps = getpwuid(file[i]->stats.st_uid);
 	prt->tmp = ft_intlen(file[i]->stats.st_nlink);
-	if (prt->tmp > prt->link_len)
-		prt->link_len = prt->tmp;
+	prt->link_len = (prt->tmp > prt->link_len ? prt->tmp : prt->link_len);
 	prt->tmp = ft_strlen(file[i]->name);
-	if (prt->tmp > prt->name_len)
-		prt->name_len = prt->tmp;
-	if (prt->ps)
-		prt->tmp = ft_strlen(prt->ps->pw_name);
-	else
-		prt->tmp = ft_intlen(file[i]->stats.st_uid);
-	if (prt->tmp > prt->ps_len)
-		prt->ps_len = prt->tmp;
-	if (prt->gp)
-		prt->tmp = ft_strlen(prt->gp->gr_name);
-	else
-		prt->tmp = ft_intlen(file[i]->stats.st_gid);
-	if (prt->tmp > prt->gp_len)
-		prt->gp_len = prt->tmp;
+	prt->name_len = (prt->tmp > prt->name_len ? prt->tmp : prt->name_len);
+	prt->tmp = (prt->ps ? (int)ft_strlen(prt->ps->pw_name) :
+	ft_intlen(file[i]->stats.st_uid));
+	prt->ps_len = (prt->tmp > prt->ps_len ? prt->tmp : prt->ps_len);
+	prt->tmp = (prt->gp ? (int)ft_strlen(prt->gp->gr_name) :
+	ft_intlen(file[i]->stats.st_gid));
+	prt->gp_len = (prt->tmp > prt->gp_len ? prt->tmp : prt->gp_len);
 	if (S_ISCHR(file[i]->stats.st_mode) || S_ISBLK(file[i]->stats.st_mode))
-	{
-		prt->dev = 1;
-		prt->tmp = ft_intlen(major(file[i]->stats.st_rdev));
-		prt->maj_len = (prt->tmp > prt->maj_len ? prt->tmp : prt->maj_len);
-		prt->tmp = ft_intlen(minor(file[i]->stats.st_rdev));
-		prt->min_len = (prt->tmp > prt->min_len ? prt->tmp : prt->min_len);
-		prt->tmp = prt->maj_len + prt->min_len + 2;
-	}
+		prt_dev(file[i], prt);
 	else
 		prt->tmp = ft_intlen(file[i]->stats.st_size);
-	if (prt->tmp > prt->size_len)
-		prt->size_len = prt->tmp;
+	prt->size_len = (prt->tmp > prt->size_len ? prt->tmp : prt->size_len);
 }
