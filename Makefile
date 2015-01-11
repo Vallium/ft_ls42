@@ -51,7 +51,8 @@ HEAD_DIR	= includes
 SRC_DIR		= src
 DEBUG_DIR	= debug
 STATIC_DIR	= static
-LIBFT		= libft/libft.a
+LIBFT_STATIC= libft/libft.a
+LIBFT_DEBUG	= libft/libft_debug.a
 LIBFT_HEAD	= libft/includes/
 
 CC			= gcc
@@ -60,13 +61,13 @@ NORMINETTE	= ~/project/colorminette/colorminette
 
 $(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR))
 
-all: $(STATIC_EXE) debug
+all: $(STATIC_EXE) $(DEBUG_EXE)
 
-debug: $(DEBUG_OBJ)
-	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $(DEBUG_EXE) $(DEBUG_OBJ) $(LIBFT) $(FLAGS) -g
+$(DEBUG_EXE): $(DEBUG_OBJ) $(LIBFT_DEBUG)
+	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $(DEBUG_EXE) $(DEBUG_OBJ) $(LIBFT_DEBUG) $(FLAGS) -g
 
-$(STATIC_EXE): $(STATIC_OBJ)
-	$(CC) -O3 -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(STATIC_OBJ) $(LIBFT) $(FLAGS)
+$(STATIC_EXE): $(STATIC_OBJ) $(LIBFT_STATIC)
+	$(CC) -O3 -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(STATIC_OBJ) $(LIBFT_STATIC) $(FLAGS)
 
 $(STATIC_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
 	$(CC) -O3 -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS)
@@ -74,8 +75,11 @@ $(STATIC_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
 	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS) -g
 
-$(LIBFT):
-	make -C libft
+$(LIBFT_STATIC):
+	make -C libft/ libft.a
+
+$(LIBFT_DEBUG):
+	make -C libft/ libft_debug.a
 
 .PHONY: clean fclean re debug norme normeLibft
 
