@@ -71,8 +71,15 @@ void		print(t_file **file, t_print *prt, int i, char *arg)
 	to_wedge_lli(file[i]->stats.st_nlink, prt->link_len);
 	ft_putchar(' ');
 	print_gr_ps(file[i], prt);
-	ft_putstr("  ");
-	to_wedge_lli(file[i]->stats.st_size, prt->size_len);
+	!prt->dev ? ft_putstr("  ") : ft_putstr("   ");
+	if (S_ISCHR(file[i]->stats.st_mode) || S_ISBLK(file[i]->stats.st_mode))
+	{
+		to_wedge_lli(major(file[i]->stats.st_rdev), prt->maj_len);
+		ft_putstr(", ");
+		to_wedge_lli(minor(file[i]->stats.st_rdev), prt->min_len);
+	}
+	else
+		to_wedge_lli(file[i]->stats.st_size, prt->size_len);
 	ft_putchar(' ');
 	print_date(file[i]);
 	ft_putchar(' ');

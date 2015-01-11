@@ -73,6 +73,9 @@ void		prt_init(t_print *prt)
 	prt->name_len = 0;
 	prt->size_len = 0;
 	prt->link_len = 0;
+	prt->maj_len = 0;
+	prt->min_len = 0;
+	prt->dev = 0;
 }
 
 void		fill_prt(t_file **file, t_print *prt, int i)
@@ -97,7 +100,17 @@ void		fill_prt(t_file **file, t_print *prt, int i)
 		prt->tmp = ft_intlen(file[i]->stats.st_gid);
 	if (prt->tmp > prt->gp_len)
 		prt->gp_len = prt->tmp;
-	prt->tmp = ft_intlen(file[i]->stats.st_size);
+	if (S_ISCHR(file[i]->stats.st_mode) || S_ISBLK(file[i]->stats.st_mode))
+	{
+		prt->dev = 1;
+		prt->tmp = ft_intlen(major(file[i]->stats.st_rdev));
+		prt->maj_len = (prt->tmp > prt->maj_len ? prt->tmp : prt->maj_len);
+		prt->tmp = ft_intlen(minor(file[i]->stats.st_rdev));
+		prt->min_len = (prt->tmp > prt->min_len ? prt->tmp : prt->min_len);
+		prt->tmp = prt->maj_len + prt->min_len + 2;
+	}
+	else
+		prt->tmp = ft_intlen(file[i]->stats.st_size);
 	if (prt->tmp > prt->size_len)
 		prt->size_len = prt->tmp;
 }

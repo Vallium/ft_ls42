@@ -61,6 +61,9 @@ typedef struct		s_print
 	int				name_len;
 	int				size_len;
 	int				link_len;
+	int				maj_len;
+	int				min_len;
+	int				dev;
 	int				tmp;
 	struct group	*gp;
 	struct passwd	*ps;
