@@ -100,7 +100,7 @@ void		print_gr_ps(t_file *file, t_print *prt)
 			to_wedge2(prt->ps->pw_name, prt->ps_len);
 		else
 			to_wedge_lli2(file->stats.st_uid, prt->ps_len);
-			ft_putstr("  ");
+		ft_putstr("  ");
 	}
 	if (!g_o)
 	{

@@ -34,41 +34,21 @@ void		tab_fill(t_argtab *tab, int argc, char *argv[])
 		tab->dir.ptr[i - 1] = &tab->dir.data[i - 1];
 }
 
+void		s_df(t_argtab *tab, int (*f)(void *, void *))
+{
+	ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, f);
+	ft_sort_qck((void**)tab->file.ptr, tab->file.size, f);
+}
+
 void		tab_sort(t_argtab *tab)
 {
-	if (!g_r)
-		ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_name_cmp),
-		ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_name_cmp);
-	else
-		ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_name_cmp),
-		ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_name_cmp);
+	!g_r ? s_df(tab, file_name_cmp) : s_df(tab, file_r_name_cmp);
 	if (g_t)
-	{
-		if (!g_r)
-			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_mtime_cmp),
-			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_mtime_cmp);
-		else
-			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_mtime_cmp),
-			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_mtime_cmp);
-	}
+		!g_r ? s_df(tab, file_mtime_cmp) : s_df(tab, file_r_mtime_cmp);
 	if (g_u)
-	{
-		if (!g_r)
-			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_atime_cmp),
-			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_atime_cmp);
-		else
-			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_atime_cmp),
-			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_atime_cmp);
-	}
+		!g_r ? s_df(tab, file_atime_cmp) : s_df(tab, file_r_atime_cmp);
 	if (g_ss)
-	{
-		if (!g_r)
-			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_size_cmp),
-			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_size_cmp);
-		else
-			ft_sort_qck((void**)tab->dir.ptr, tab->dir.size, file_r_size_cmp),
-			ft_sort_qck((void**)tab->file.ptr, tab->file.size, file_r_size_cmp);
-	}
+		!g_r ? s_df(tab, file_size_cmp) : s_df(tab, file_r_size_cmp);
 }
 
 void		tab_free(t_argtab *tab)
