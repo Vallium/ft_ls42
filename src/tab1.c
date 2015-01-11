@@ -47,9 +47,12 @@ void		sort_tab(t_file ***tab, t_llu *llu)
 	if (g_ss)
 		ft_sort_qck((void **)*tab, llu->size, !g_r ?
 					file_size_cmp : file_r_size_cmp);
-	else if (g_t)
+	if (g_t)
 		ft_sort_qck((void **)*tab, llu->size, !g_r ?
 					file_mtime_cmp : file_r_mtime_cmp);
+	if (g_u)
+		ft_sort_qck((void **)*tab, llu->size, !g_r ?
+					file_atime_cmp : file_r_atime_cmp);
 }
 
 int			get_types(char *arg)
@@ -94,7 +97,7 @@ void		tab_init(t_argtab *tab, int argc)
 
 void		tab_distrib(t_argtab *tab, int get, char *argv)
 {
-	if (get == 1)
+	if (get == 1 && !g_d)
 	{
 		ft_strcpy(tab->dir.data[tab->dir.size].name, argv);
 		lstat(tab->dir.data[tab->dir.size].name,
@@ -103,7 +106,7 @@ void		tab_distrib(t_argtab *tab, int get, char *argv)
 		tab->dir.data[tab->dir.size].lnkname, MAXLEN)] = 0;
 		tab->dir.size++;
 	}
-	else if (get == 2)
+	else if (get == 2 || g_d)
 	{
 		ft_strcpy(tab->file.data[tab->file.size].name, argv);
 		lstat(tab->file.data[tab->file.size].name,

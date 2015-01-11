@@ -26,18 +26,16 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 {
 	char	c;
 
-	opt->optstr = "RSagloprt1u";
+	opt->optstr = "RSagloprt1ud";
 	opt->nb = 1;
 	while ((c = ft_get_opt(argc, argv, opt)) > 0)
 	{
 		if (c == '?')
-		{
 			ft_putstr_fd("ft_ls: illegal option -- ", 2),
 			ft_putchar_fd(opt->err, 2),
 			ft_putchar_fd('\n', 2),
 			usage(),
 			exit (2);
-		}
 		g_l = (c == 'l') ? 1 : g_l;
 		g_re = (c == 'R') ? 1 : g_re;
 		g_ss = (c == 'S') ? 1 : g_ss;
@@ -48,6 +46,7 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 		g_g = (c == 'g') ? 1 : g_g;
 		g_o = (c == 'o') ? 1 : g_o;
 		g_u = (c == 'u') ? 1 : g_u;
+		g_d = (c == 'd') ? 1 : g_d;
 	}
 }
 
@@ -71,7 +70,7 @@ int			main(int argc, char **argv)
 		get_opt_assi(argc, argv, &opt);
 		if (argc == opt.nb)
 		{
-			ls_l(".");
+			!g_d ? ls_l(".") : ft_putstr(".\n");
 			return (0);
 		}
 		arg_to_tab(argc - opt.nb, argv + opt.nb);
