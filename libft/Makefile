@@ -143,4 +143,5 @@ fclean: clean
 norme:
 	$(NORMINETTE) $(SRC_DIR)/ $(HEAD_DIR)/
 
-re: fclean all
+re: fclean
+	make
