@@ -22,6 +22,15 @@ int			arg_cmp(void *na1, void *na2)
 	return (ft_strcmp(na1, na2));
 }
 
+void		illegal_option(t_opt *opt)
+{
+	ft_putstr_fd("ft_ls: illegal option -- ", 2),
+	ft_putchar_fd(opt->err, 2),
+	ft_putchar_fd('\n', 2),
+	usage(),
+	exit (2);
+}
+
 void		get_opt_assi(int argc, char **argv, t_opt *opt)
 {
 	char	c;
@@ -31,11 +40,7 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 	while ((c = ft_get_opt(argc, argv, opt)) > 0)
 	{
 		if (c == '?')
-			ft_putstr_fd("ft_ls: illegal option -- ", 2),
-			ft_putchar_fd(opt->err, 2),
-			ft_putchar_fd('\n', 2),
-			usage(),
-			exit (2);
+			illegal_option(opt);
 		g_l = (c == 'l') ? 1 : g_l;
 		g_l = (c == '1') ? 0 : g_l;
 		g_re = (c == 'R') ? 1 : g_re;
@@ -48,6 +53,7 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 		g_o = (c == 'o') ? 1 : g_o;
 		g_u = (c == 'u') ? 1 : g_u;
 		g_d = (c == 'd') ? 1 : g_d;
+		g_l = (c == 'g' || c == 'o') ? 1 : g_l;
 	}
 }
 

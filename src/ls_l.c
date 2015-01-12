@@ -12,6 +12,16 @@
 
 #include "ft_ls.h"
 
+void		print_total(t_llu *llu)
+{
+	if (g_l && llu->size)
+	{
+		ft_putstr("total ");
+		ft_putnbr(llu->total);
+		ft_putchar('\n');
+	}
+}
+
 void		ls_l(char *arg)
 {
 	t_file			file;

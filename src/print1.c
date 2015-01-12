@@ -71,7 +71,6 @@ void		print(t_file **file, t_print *prt, int i, char *arg)
 	to_wedge_lli(file[i]->stats.st_nlink, prt->link_len);
 	ft_putchar(' ');
 	print_gr_ps(file[i], prt);
-	!prt->dev ? ft_putstr("  ") : ft_putstr("   ");
 	if (S_ISCHR(file[i]->stats.st_mode) || S_ISBLK(file[i]->stats.st_mode))
 	{
 		to_wedge_lli(major(file[i]->stats.st_rdev), prt->maj_len);
@@ -94,6 +93,11 @@ void		print(t_file **file, t_print *prt, int i, char *arg)
 
 void		print_gr_ps(t_file *file, t_print *prt)
 {
+	if (g_o && g_g)
+	{
+		ft_putstr("  ");
+		return ;
+	}
 	if (!g_g)
 	{
 		if (prt->ps)
@@ -108,5 +112,6 @@ void		print_gr_ps(t_file *file, t_print *prt)
 			to_wedge2(prt->gp->gr_name, prt->gp_len);
 		else
 			to_wedge_lli2(file->stats.st_gid, prt->gp_len);
+		!prt->dev ? ft_putstr("  ") : ft_putstr("   ");
 	}
 }

@@ -41,16 +41,6 @@ void		printfilelist(t_file **file, int size, char *arg)
 	}
 }
 
-void		print_total(t_llu *llu)
-{
-	if (g_l && llu->size)
-	{
-		ft_putstr("total ");
-		ft_putnbr(llu->total);
-		ft_putchar('\n');
-	}
-}
-
 void		print_error(t_argtab tab)
 {
 	int			i;
