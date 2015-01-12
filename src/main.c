@@ -37,6 +37,7 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 			usage(),
 			exit (2);
 		g_l = (c == 'l') ? 1 : g_l;
+		g_l = (c == '1') ? 0 : g_l;
 		g_re = (c == 'R') ? 1 : g_re;
 		g_ss = (c == 'S') ? 1 : g_ss;
 		g_a = (c == 'a') ? 1 : g_a;
@@ -70,7 +71,7 @@ int			main(int argc, char **argv)
 		get_opt_assi(argc, argv, &opt);
 		if (argc == opt.nb)
 		{
-			!g_d ? ls_l(".") : ft_putstr(".\n");
+			(g_d && !g_l) ? ft_putstr(".\n") : ls_l(".");
 			return (0);
 		}
 		arg_to_tab(argc - opt.nb, argv + opt.nb);

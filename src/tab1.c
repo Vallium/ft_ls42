@@ -32,7 +32,7 @@ int			fill_tab(t_file ***tab, char *arg, t_llu *llu)
 		lstat(ft_burger(arg, '/', entree->d_name), &(file.stats));
 		file.lnkname[readlink(ft_burger(arg, '/', entree->d_name),
 		file.lnkname, MAXLEN)] = 0;
-		if (g_a || *(file.name) != '.')
+		if (g_d || g_a || *(file.name) != '.')
 			ft_lstsmartpushback(&lst, ft_lstnew(&file, sizeof(t_file))),
 			llu->total += file.stats.st_blocks;
 	}
@@ -47,12 +47,15 @@ void		sort_tab(t_file ***tab, t_llu *llu)
 	if (g_ss)
 		ft_sort_qck((void **)*tab, llu->size, !g_r ?
 					file_size_cmp : file_r_size_cmp);
-	if (g_t)
-		ft_sort_qck((void **)*tab, llu->size, !g_r ?
-					file_mtime_cmp : file_r_mtime_cmp);
-	if (g_u)
-		ft_sort_qck((void **)*tab, llu->size, !g_r ?
-					file_atime_cmp : file_r_atime_cmp);
+	else if (g_t)
+	{
+		if (g_u)
+			ft_sort_qck((void **)*tab, llu->size, !g_r ?
+						file_atime_cmp : file_r_atime_cmp);
+		else
+			ft_sort_qck((void **)*tab, llu->size, !g_r ?
+						file_mtime_cmp : file_r_mtime_cmp);
+	}
 }
 
 int			get_types(char *arg)

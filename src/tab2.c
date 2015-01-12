@@ -43,12 +43,12 @@ void		s_df(t_argtab *tab, int (*f)(void *, void *))
 void		tab_sort(t_argtab *tab)
 {
 	!g_r ? s_df(tab, file_name_cmp) : s_df(tab, file_r_name_cmp);
-	if (g_t)
-		!g_r ? s_df(tab, file_mtime_cmp) : s_df(tab, file_r_mtime_cmp);
-	if (g_u)
-		!g_r ? s_df(tab, file_atime_cmp) : s_df(tab, file_r_atime_cmp);
 	if (g_ss)
 		!g_r ? s_df(tab, file_size_cmp) : s_df(tab, file_r_size_cmp);
+	else if (g_u)
+		!g_r ? s_df(tab, file_atime_cmp) : s_df(tab, file_r_atime_cmp);
+	else if (g_t)
+		!g_r ? s_df(tab, file_mtime_cmp) : s_df(tab, file_r_mtime_cmp);
 }
 
 void		tab_free(t_argtab *tab)

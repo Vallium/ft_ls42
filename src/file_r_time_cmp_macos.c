@@ -22,10 +22,10 @@ int			file_r_mtime_cmp(void *ptr1, void *ptr2)
 	if (f1->stats.st_mtimespec.tv_sec == f2->stats.st_mtimespec.tv_sec)
 		return (f1->stats.st_mtimespec.tv_nsec - f2->stats.st_mtimespec.tv_nsec
 		? f1->stats.st_mtimespec.tv_nsec - f2->stats.st_mtimespec.tv_nsec :
-		file_name_cmp(ptr1, ptr2));
+		file_r_name_cmp(ptr1, ptr2));
 	return (f1->stats.st_mtimespec.tv_sec - f2->stats.st_mtimespec.tv_sec ?
 	f1->stats.st_mtimespec.tv_sec - f2->stats.st_mtimespec.tv_sec :
-	file_name_cmp(ptr1, ptr2));
+	file_r_name_cmp(ptr1, ptr2));
 }
 
 int			file_r_atime_cmp(void *ptr1, void *ptr2)
@@ -38,10 +38,10 @@ int			file_r_atime_cmp(void *ptr1, void *ptr2)
 	if (f1->stats.st_atimespec.tv_sec == f2->stats.st_atimespec.tv_sec)
 		return (f1->stats.st_atimespec.tv_nsec - f2->stats.st_atimespec.tv_nsec
 		? f1->stats.st_atimespec.tv_nsec - f2->stats.st_atimespec.tv_nsec :
-		file_name_cmp(ptr1, ptr2));
+		file_r_name_cmp(ptr1, ptr2));
 	return (f1->stats.st_atimespec.tv_sec - f2->stats.st_atimespec.tv_sec ?
 	f1->stats.st_atimespec.tv_sec - f2->stats.st_atimespec.tv_sec :
-	file_name_cmp(ptr1, ptr2));
+	file_r_name_cmp(ptr1, ptr2));
 }
 
 int			file_r_ctime_cmp(void *ptr1, void *ptr2)
@@ -54,8 +54,8 @@ int			file_r_ctime_cmp(void *ptr1, void *ptr2)
 	if (f1->stats.st_ctimespec.tv_sec == f2->stats.st_ctimespec.tv_sec)
 		return (f1->stats.st_ctimespec.tv_nsec - f2->stats.st_ctimespec.tv_nsec
 		? f1->stats.st_ctimespec.tv_nsec - f2->stats.st_ctimespec.tv_nsec :
-		file_name_cmp(ptr1, ptr2));
+		file_r_name_cmp(ptr1, ptr2));
 	return (f1->stats.st_ctimespec.tv_sec - f2->stats.st_ctimespec.tv_sec ?
 	f1->stats.st_ctimespec.tv_sec - f2->stats.st_ctimespec.tv_sec :
-	file_name_cmp(ptr1, ptr2));
+	file_r_name_cmp(ptr1, ptr2));
 }

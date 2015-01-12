@@ -22,7 +22,8 @@ void		ls_l(char *arg)
 	if (!(fill_tab(&tab, arg, &llu)))
 		return ;
 	sort_tab(&tab, &llu);
-	print_total(&llu);
+	if (!g_d)
+		print_total(&llu);
 	printfilelist(tab, llu.size, arg);
 	llu.i = 0;
 	while (llu.i < llu.size)
@@ -78,6 +79,8 @@ t_file		**lst2tab(t_list **lst, int *size)
 		tab[(*size)++] = (t_file *)tmp->content;
 		tmp = tmp->next;
 	}
+	if (g_d)
+		*size = 1;
 	ft_lstsimpledel(lst);
 	return (tab);
 }
