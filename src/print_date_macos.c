@@ -14,8 +14,8 @@
 
 void		print_adate(t_file *file)
 {
-	if (file->stats.st_atimespec.tv_sec > time(0) - 15778463 &&
-		file->stats.st_atimespec.tv_sec < time(0) + 15778463)
+	if (file->stats.st_atimespec.tv_sec > time(0) - (365 / 2  * 86400) &&
+		file->stats.st_atimespec.tv_sec < time(0) + (365 / 2  * 86400))
 		ft_putstr_sub(ctime(&file->stats.st_atimespec.tv_sec), 4, 12);
 	else
 		ft_putstr_sub(ctime(&file->stats.st_atimespec.tv_sec), 4, 7),
@@ -25,8 +25,8 @@ void		print_adate(t_file *file)
 
 void		print_mdate(t_file *file)
 {
-	if (file->stats.st_mtimespec.tv_sec > time(0) - 15778463 &&
-		file->stats.st_mtimespec.tv_sec < time(0) + 15778463)
+	if (file->stats.st_mtimespec.tv_sec > time(0) - (365 / 2  * 86400) &&
+		file->stats.st_mtimespec.tv_sec < time(0) + (365 / 2  * 86400))
 		ft_putstr_sub(ctime(&file->stats.st_mtimespec.tv_sec), 4, 12);
 	else
 		ft_putstr_sub(ctime(&file->stats.st_mtimespec.tv_sec), 4, 7),
@@ -36,8 +36,8 @@ void		print_mdate(t_file *file)
 
 void		print_cdate(t_file *file)
 {
-	if (file->stats.st_ctimespec.tv_sec > time(0) - 15778463 &&
-		file->stats.st_ctimespec.tv_sec < time(0) + 15778463)
+	if (file->stats.st_ctimespec.tv_sec > time(0) - (365 / 2  * 86400) &&
+		file->stats.st_ctimespec.tv_sec < time(0) + (365 / 2  * 86400))
 		ft_putstr_sub(ctime(&file->stats.st_ctimespec.tv_sec), 4, 12);
 	else
 		ft_putstr_sub(ctime(&file->stats.st_ctimespec.tv_sec), 4, 7),

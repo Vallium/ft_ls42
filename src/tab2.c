@@ -42,6 +42,7 @@ void		s_df(t_argtab *tab, int (*f)(void *, void *))
 
 void		tab_sort(t_argtab *tab)
 {
+	ft_sort_qck((void**)tab->error.data, tab->error.size, file_name_cmp);
 	!g_r ? s_df(tab, file_name_cmp) : s_df(tab, file_r_name_cmp);
 	if (g_ss)
 		!g_r ? s_df(tab, file_size_cmp) : s_df(tab, file_r_size_cmp);
@@ -71,9 +72,9 @@ void		arg_to_tab(int argc, char *argv[])
 	printfilelist(tab.file.ptr, tab.file.size, "");
 	if (!tab.dir.size)
 		return ;
-	if (tab.error.size || tab.file.size)
+	if (tab.file.size)
 		ft_putchar('\n');
-	if (tab.dir.size != 1)
+	if (tab.dir.size != 1 || (tab.error.size && !tab.file.size))
 		ft_putstr(tab.dir.ptr[0]->name),
 		ft_putendl(":");
 	i = 0;
