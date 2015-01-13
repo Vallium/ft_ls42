@@ -19,9 +19,6 @@ int			file_size_cmp(void *ptr1, void *ptr2)
 
 	f1 = (t_file *)ptr1;
 	f2 = (t_file *)ptr2;
-	if (f1->stats.st_size < f2->stats.st_size)
-		return (1);
-	else if (f1->stats.st_size > f2->stats.st_size)
-		return (-1);
-	return (0);
+	return (f2->stats.st_size - f1->stats.st_size ?
+	f2->stats.st_size - f1->stats.st_size : file_name_cmp(ptr1, ptr2));
 }
