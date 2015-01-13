@@ -14,8 +14,8 @@
 
 void		print_date(t_file *file)
 {
-	if (file->stats.st_mtime > time(0) - (365 / 2  * 86400) &&
-		file->stats.st_mtime < time(0) + (365 / 2  * 86400))
+	if (file->stats.st_mtime > time(0) - (365 / 2 * 86400) &&
+		file->stats.st_mtime < time(0) + (365 / 2 * 86400))
 		ft_putstr_sub(ctime(&file->stats.st_mtime), 4, 12);
 	else
 		ft_putstr_sub(ctime(&file->stats.st_mtime), 4, 7),
