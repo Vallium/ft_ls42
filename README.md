@@ -15,7 +15,7 @@ Description :
 >List one file per line.
 
 `./ft_ls -a`
->Do not ignore entries starting with ".".
+>Do not ignore entries starting with '.'.
 
 `./ft_ls -d`
 >List directory entries instead of contents, and do not  dereference symbolic links.
