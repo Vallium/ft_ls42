@@ -11,28 +11,32 @@ Options : RSadgloprtu1
 
 Description :
 
--1     list one file per line
+`./ft_ls -1`
+>List one file per line.
 
 `./ft_ls -a`
->do not ignore entries starting with "."
+>Do not ignore entries starting with ".".
 
 `./ft_ls -d`
->list directory entries instead of contents, and do not  dereference symbolic links
+>List directory entries instead of contents, and do not  dereference symbolic links.
 
 `./ft_ls -g`
->like -l, but do not list owner
+>Like -l, but do not list owner.
 
--l     use a long listing format
+`./ft_ls -l`
+>Use a long listing format.
 
--o     like -l, but do not list group information
+`./ft_ls -o`
+>Like -l, but do not list group information.
 
--p, --indicator-style=slash
-	      append / indicator to directories
-	      
--r, --reverse
-        reverse order while sorting
+`./ft_ls -p`
+>Append / indicator to directories.
 
--t     sort by modification time
+`./ft_ls -r`
+>Reverse order while sorting.
 
--u     with -lt: sort by, and show, access time with  -l:  show	access
-	      time and sort by name otherwise: sort by access time
+`./ft_ls -t`
+>Sort by modification time.
+
+`./ft_ls -u`
+>With -lt: Use time of last access, instead of last modification of the file for sorting (-t) or long printing (-l).
