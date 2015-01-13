@@ -5,9 +5,11 @@ ft_ls
 
 Man
 --------
-*Synopsis :* ./ft_ls [OPTION]... [FILE]...
+*Synopsis :*
+* ./ft_ls [OPTION]... [FILE]...
 
-*Options :* RSadgloprtu1
+*Options :*
+* RSadgloprtu1
 
 *Description :*
 
