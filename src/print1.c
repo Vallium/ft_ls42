@@ -52,17 +52,6 @@ void		print_rights(int mode)
 		ft_putchar((mode & 01) ? 'x' : '-');
 }
 
-void		print_acl_attr(t_file **file, int i, char *arg)
-{
-	if (listxattr(ft_burger(arg, '/', file[i]->name), NULL, 256, 1) > 0)
-		ft_putstr("@ ");
-	else if (acl_get_link_np(ft_burger(arg, '/', file[i]->name),
-										ACL_TYPE_EXTENDED))
-		ft_putstr("+ ");
-	else
-		ft_putstr("  ");
-}
-
 void		print(t_file **file, t_print *prt, int i, char *arg)
 {
 	print_type(file[i]->stats.st_mode);

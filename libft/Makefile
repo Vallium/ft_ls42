@@ -99,15 +99,15 @@ STATIC_DIR	= static
 DYNAMIC_DIR	= dynamic
 
 CC			= gcc
-FLAGS		= -Wall -Wextra -Werror
 NORMINETTE	= ~/project/colorminette/colorminette
 
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S),Linux)
 	FLAGS	= -Wall -Wextra #-Werror
+else
+	FLAGS	= -Wall -Wextra -Werror
 endif
-
 $(shell mkdir -p $(STATIC_DIR) $(DYNAMIC_DIR) $(DEBUG_DIR))
 
 all: $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)

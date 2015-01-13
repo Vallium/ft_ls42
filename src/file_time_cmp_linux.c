@@ -43,7 +43,7 @@ int			file_ctime_cmp(void *ptr1, void *ptr2)
 
 	f1 = (t_file *)ptr1;
 	f2 = (t_file *)ptr2;
-	return (f2->stats.st_ctime - f1->stats.ct_mtime ?
+	return (f2->stats.st_ctime - f1->stats.st_ctime ?
 	f2->stats.st_ctime - f1->stats.st_ctime :
 	file_name_cmp(ptr1, ptr2));
 }

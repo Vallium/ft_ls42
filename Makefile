@@ -34,6 +34,7 @@ ifeq ($(UNAME_S),Linux)
 SRC	+= 							\
 		file_r_time_cmp_linux.c	\
 		file_time_cmp_linux.c	\
+		printacl_linux.c		\
 		print_date_linux.c
 
 endif
@@ -41,6 +42,7 @@ ifeq ($(UNAME_S),Darwin)
 SRC	+=							\
 		file_r_time_cmp_macos.c	\
 		file_time_cmp_macos.c	\
+		printacl_macos.c		\
 		print_date_macos.c
 endif
 
