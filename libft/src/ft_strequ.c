@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strequ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/06 17:28:17 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 13:11:13 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/06 17:40:17 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/07 14:00:49 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strequ(const char *s1, const char *s2)
+int			ft_strequ(const char *s1, const char *s2)
 {
 	if (s1 && s2)
 	{

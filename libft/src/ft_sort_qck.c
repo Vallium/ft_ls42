@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sort_qck.c                                      :+:      :+:    :+:   */
+/*   ft_q_sort.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/02 17:37:13 by adoussau          #+#    #+#             */
-/*   Updated: 2015/01/02 17:37:17 by adoussau         ###   ########.fr       */
+/*   Created: 2014/12/16 12:17:19 by aalliot           #+#    #+#             */
+/*   Updated: 2014/12/16 20:45:20 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		sort(void **tab, int bg, int ed, int (*f)(void *, void *))
+void			sort(void **tab, int bg, int ed, int (*f)(void *, void *))
 {
 	void		*pvt;
 	int			lft;

@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/06 15:50:57 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 12:41:09 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/06 15:50:05 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/07 13:35:24 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char *))
+void				ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
 	unsigned int	i;
 
+	i = 0;
 	if (s && f)
-	{
-		i = 0;
 		while (*s)
 			(*f)(i++, s++);
-	}
 }

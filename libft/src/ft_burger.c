@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_burger.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/02 15:40:28 by adoussau          #+#    #+#             */
-/*   Updated: 2015/01/02 15:40:31 by adoussau         ###   ########.fr       */
+/*   Created: 2015/01/02 14:24:10 by aalliot           #+#    #+#             */
+/*   Updated: 2015/01/02 14:24:16 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-char	*ft_burger(const char *s1, char c, const char *s2)
+char		*ft_burger(const char *s1, char c, const char *s2)
 {
-	char *ret;
-	char *tmp;
+	char	*ret;
+	char	*tmp;
 
 	ret = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
 	tmp = ret;

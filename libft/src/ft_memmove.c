@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/05 08:01:34 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/05 08:15:09 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/05 17:29:21 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/06 10:35:41 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void						*ft_memmove(void *dst, const void *src, size_t len)
 {
-	unsigned char		*ptrdst;
-	const unsigned char	*ptrsrc;
+	unsigned char			*strdst;
+	const unsigned char		*strsrc;
 
+	strdst = (unsigned char*)dst;
+	strsrc = (const unsigned char*)src;
 	if (!len)
 		return (dst);
-	ptrdst = (unsigned char *)dst;
-	ptrsrc = (const unsigned char *)src;
-	if (ptrsrc < ptrdst)
+	if (strsrc < strdst)
 	{
-		ptrdst += len;
-		ptrsrc += len;
+		strdst += len;
+		strsrc += len;
 		while (len--)
-			*--ptrdst = *--ptrsrc;
+			*--strdst = *--strsrc;
 	}
 	else
 		while (len--)
-			*ptrdst++ = *ptrsrc++;
+			*strdst++ = *strsrc++;
 	return (dst);
 }

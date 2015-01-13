@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/02 15:38:56 by adoussau          #+#    #+#             */
-/*   Updated: 2015/01/02 15:39:00 by adoussau         ###   ########.fr       */
+/*   Created: 2015/01/02 14:25:05 by aalliot           #+#    #+#             */
+/*   Updated: 2015/01/02 14:25:46 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-void	*ft_malloc(size_t n)
+void		*ft_malloc(size_t n)
 {
 	void	*ret;
 
 	if (!(ret = malloc(n)))
 	{
 		ft_putstr_fd("Malloc error: Program quited.", 2);
-		exit (EXIT_FAILURE);
+		exit (2);
 	}
 	return (ret);
 }

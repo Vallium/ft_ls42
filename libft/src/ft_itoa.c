@@ -3,49 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/07 14:50:44 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 17:07:41 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/11 14:02:55 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/11 15:32:07 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-static int		count(int i)
+static int		size(int i)
 {
-	int			j;
+	size_t		sz;
 
-	j = 0;
+	sz = 0;
 	while (i /= 10)
-		j++;
-	return (j + 1);
+		sz++;
+	return (sz + 1);
 }
 
-char			*ft_itoa(int i)
+char			*ft_itoa(int n)
 {
-	size_t		size;
+	size_t		sz;
+	char		*dst;
 	char		*ret;
-	char		*str;
 
-	size = count(i);
-	ret = (char *)malloc(sizeof(char) * (size + (i < 0 ? 1 : 0) + 1));
-	if (!ret)
+	sz = size(n);
+	dst = (char*)malloc(sizeof(char) * sz + (n < 0 ? 1 : 0) + 1);
+	if (!dst)
 		return (NULL);
-	str = ret;
-	if (i == -2147483648)
-		return (ft_strcpy(str, "-2147483648"));
-	if (i < 0)
+	ret = dst;
+	if (n == -2147483648)
+		return (ft_strcpy(dst, "-2147483648"));
+	if (n < 0)
 	{
-		*str++ = '-';
-		i = -i;
+		*dst++ = '-';
+		n = -n;
 	}
-	str += size - 1;
-	*(str + 1) = 0;
-	while (size--)
+	dst += sz - 1;
+	*(dst + 1) = 0;
+	while (sz--)
 	{
-		*str-- = (char)(i % 10 + '0');
-		i /= 10;
+		*dst-- = (char)(n % 10 + '0');
+		n /= 10;
 	}
 	return (ret);
 }

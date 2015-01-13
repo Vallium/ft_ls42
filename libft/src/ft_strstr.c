@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 19:46:05 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/05 14:23:45 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/05 10:17:32 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/05 14:31:10 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	scan(char *str, const char *to_find)
+static int		ft_scan(const char *s1, const char *s2)
 {
 	int		i;
 
 	i = 0;
-	while (to_find[i])
+	while (s2[i])
 	{
-		if (str[i] != to_find[i])
+		if (s1[i] != s2[i])
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-char		*ft_strstr(const char *str, const char *to_find)
+char			*ft_strstr(const char *s1, const char *s2)
 {
 	int		i;
-	char	*ptrstr;
+	char	*str;
 
-	ptrstr = (char *)str;
-	if (!*to_find)
-		return (ptrstr);
+	str = (char*)s1;
+	if (!*s2)
+		return (str);
 	i = 0;
-	while (ptrstr[i])
+	while (str[i])
 	{
-		if (ptrstr[i] == to_find[0])
-			if (scan(&ptrstr[i], to_find))
-				return (&ptrstr[i]);
+		if (str[i] == s2[0])
+			if (ft_scan(&str[i], s2))
+				return (&str[i]);
 		i++;
 	}
 	return (NULL);

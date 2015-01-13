@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/06 16:53:32 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/08 15:11:39 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/06 16:51:09 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/07 13:38:24 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-char	*ft_strmap(const char *s, char (*f)(char))
+char			*ft_strmap(const char *s, char (*f)(char))
 {
-	char *str;
-	char *ret;
+	char		*ret;
+	char		*str;
 
 	if (s && f)
 	{
-		str = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+		str = (char*)malloc(sizeof(char) * ft_strlen(s) + 1);
 		if (!str)
 			return (NULL);
 		ret = str;
-		while (*s)
+		while (*s && f && s)
 		{
 			*str = (*f)(*s);
 			str++;

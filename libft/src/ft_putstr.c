@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/07 17:24:42 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 17:29:22 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/07 17:03:30 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/07 17:11:22 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void	ft_putstr(const char *s)
+void		ft_putstr(const char *s)
 {
-	while (*s && write(1, s++, 1))
-		;
+	while (*s)
+		write (1, s++, 1);
 }

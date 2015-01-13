@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/16 12:05:36 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/27 19:23:03 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/13 12:44:13 by aalliot           #+#    #+#             */
+/*   Updated: 2014/12/10 10:37:34 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
+
 # define GET_NEXT_LINE_H
+# define BUFF_SIZE 1000
 
 # include "libft.h"
 # include <unistd.h>
 # include <fcntl.h>
+# include <stdlib.h>
 
-# define BUFF_SIZE 65
-
-int		get_next_line(int fd, char **line);
+int			get_next_line(int fd, char **line);
 
 #endif

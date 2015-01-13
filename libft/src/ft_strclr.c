@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/06 15:02:18 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/07 12:27:40 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/06 14:58:35 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/07 12:29:15 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_strclr(char *s)
+#include "libft.h"
+
+void			ft_strclr(char *s)
 {
+	size_t		i;
+
 	if (s)
-		while (*s)
-			*s++ = 0;
+	{
+		i = ft_strlen(s);
+		ft_bzero(s, i);
+	}
 }

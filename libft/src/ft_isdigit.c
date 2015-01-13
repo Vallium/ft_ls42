@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 09:41:51 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/05 14:07:37 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/04 10:28:51 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/04 10:43:37 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isdigit(int c)
+int			ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }

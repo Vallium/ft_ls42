@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/06 18:35:32 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/10 18:24:38 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/07 11:57:43 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/10 16:36:28 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-static unsigned int	ft_sp(char c)
+static unsigned int		ft_sp(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n');
 }
 
-char				*ft_strtrim(const char *s)
+char					*ft_strtrim(const char *s)
 {
-	char			*dst;
-	size_t			i;
-	size_t			e;
+	char				*dst;
+	size_t				i;
+	size_t				e;
 
 	if (!s)
 		return (NULL);

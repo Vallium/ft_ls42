@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/08 18:46:39 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/08 19:04:54 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/14 12:43:53 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/14 13:14:30 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+void			ft_lstdel(t_list **alst, void (*del)(void*, size_t))
 {
 	if (*alst && del)
 	{

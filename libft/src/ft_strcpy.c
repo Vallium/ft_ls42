@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 13:27:18 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 15:13:49 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/04 13:18:44 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/05 14:22:19 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcpy(char *dst, const char *src)
+char		*ft_strcpy(char *dst, const char *src)
 {
-	unsigned int	i;
+	int		i;
 
 	i = 0;
 	while (src[i])

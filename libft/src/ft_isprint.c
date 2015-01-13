@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 10:43:28 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 10:51:45 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/04 10:52:42 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/04 10:58:52 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isprint(int c)
+int			ft_isprint(int c)
 {
-	return (c >= 040 && c <= 0176);
+	return (c >= ' ' && c <= '~');
 }

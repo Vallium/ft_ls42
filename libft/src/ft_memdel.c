@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/06 13:56:34 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/09 12:15:59 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/06 13:55:59 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/09 16:55:50 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-void	ft_memdel(void **ap)
+void		ft_memdel(void **ap)
 {
 	if (ap && *ap)
 	{

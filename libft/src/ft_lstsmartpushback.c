@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsmartpushback.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/16 11:04:25 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/16 11:07:07 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/16 11:04:25 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/16 11:07:07 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

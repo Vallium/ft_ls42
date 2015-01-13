@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 10:32:15 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 13:09:40 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/04 10:46:08 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/04 10:47:27 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isascii(int c)
+int			ft_isascii(int c)
 {
 	return (c >= 0 && c <= 127);
 }

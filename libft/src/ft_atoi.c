@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 19:27:09 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/04 19:30:55 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/05 10:48:00 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/05 14:37:51 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,21 @@
 int			ft_atoi(const char *str)
 {
 	int		ret;
-	char	sign;
+	char	si;
 
-	sign = 1;
 	ret = 0;
-	while (ft_isspace(*str))
+	si = 1;
+	while (*str == ' ' || *str == '\t' || *str == '\r'
+			|| *str == '\v' || *str == '\n' || *str == '\f')
 		str++;
 	if (*str == '-' || *str == '+')
 	{
-		sign = (*str == '-' ? -1 : 1);
+		si = (*str == '-' ? -1 : 1);
 		str++;
 	}
 	while (ft_isdigit(*str))
 	{
-		ret = ret * 10 + sign * (*str - '0');
+		ret = ret * 10 + si * (*str - '0');
 		str++;
 	}
 	return (ret);

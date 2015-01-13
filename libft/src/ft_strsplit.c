@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/07 10:23:10 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/10 18:23:16 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/10 13:56:26 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/11 12:56:13 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
 static int	wc(const char *s, char c)
 {

@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoussau <antoine@doussaud.org>            +#+  +:+       +#+        */
+/*   By: aalliot <aalliot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/05 07:41:29 by adoussau          #+#    #+#             */
-/*   Updated: 2014/11/10 14:31:23 by adoussau         ###   ########.fr       */
+/*   Created: 2014/11/05 16:56:34 by aalliot           #+#    #+#             */
+/*   Updated: 2014/11/05 17:47:43 by aalliot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+void				*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	unsigned char		*ptrdst;
-	const unsigned char	*ptrsrc;
-	unsigned char		cara;
+	unsigned char		*strdst;
+	const unsigned char	*strsrc;
+	unsigned char		car;
 
-	if (!src || !dst)
-		return (NULL);
-	ptrdst = (unsigned char *)dst;
-	ptrsrc = (const unsigned char *)src;
-	cara = (unsigned char)c;
+	strdst = (unsigned char*)dst;
+	strsrc = (const unsigned char*)src;
+	car = (unsigned char)c;
 	while (n--)
-		if ((*ptrdst++ = *ptrsrc++) == cara)
-			return (ptrdst);
+	{
+		if ((*strdst++ = *strsrc++) == car)
+			return (strdst);
+	}
 	return (NULL);
 }
