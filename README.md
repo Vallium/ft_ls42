@@ -14,7 +14,8 @@ Description :
 `./ft_ls -a`
 >do not ignore entries starting with "."
 
--d, --directory
-	      list directory entries instead of contents, and do not  dereference symbolic links.
+`./ft_ls -d`
+>list directory entries instead of contents, and do not  dereference symbolic links
 
--g     like -l, but do not list owner.
+`./ft_ls -g`
+>like -l, but do not list owner
