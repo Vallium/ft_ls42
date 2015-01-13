@@ -12,8 +12,7 @@ Options : RSadgloprtu1
 Description :
 
 `./ft_ls -a`
-	
-        do not ignore entries starting with.
+>do not ignore entries starting with.
 
 -d, --directory
 	      list directory entries instead of contents, and do not  dereference symbolic links.
