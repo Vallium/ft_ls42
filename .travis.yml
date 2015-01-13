@@ -4,7 +4,7 @@ compiler:
     - gcc
 
 install:
-    - apt-get install libacl1-dev
+    - sudo apt-get install libacl1-dev
 script:
     - make -C libft libft.a -j
     - make -C libft libft_debug.a -j
