@@ -85,12 +85,12 @@ $(LIBFT_DEBUG):
 .PHONY: clean fclean re debug norme normeLibft
 
 clean:
-	make -C libft clean
-	rm -f $(STATIC_OBJ) $(DEBUG_OBJ)
+	@make -C libft clean
+	@rm -f $(STATIC_OBJ) $(DEBUG_OBJ)
 
 fclean: clean
-	make -C libft fclean
-	rm -f $(STATIC_EXE) $(DEBUG_EXE)
+	@make -C libft fclean
+	@rm -f $(STATIC_EXE) $(DEBUG_EXE)
 
 normeLibft:
 		@make -C libft norme
