@@ -10,11 +10,12 @@ Synopsis : ./ft_ls [OPTION]... [FILE]...
 Options : RSadgloprtu1
 
 Description :
-
--a, --all
-	      do not ignore entries starting with .
+```shell
+./ft_ls -a
+```
+	do not ignore entries starting with.
 
 -d, --directory
-	      list directory entries instead of contents, and do not  dereference symbolic links
+	      list directory entries instead of contents, and do not  dereference symbolic links.
 
--g     like -l, but do not list owner
+-g     like -l, but do not list owner.
