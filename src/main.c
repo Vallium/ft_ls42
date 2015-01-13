@@ -14,7 +14,7 @@
 
 void		usage(void)
 {
-	ft_putstr_fd("usage: ft_ls [-RSalprt1] [file ...]\n", 2);
+	ft_putstr_fd("usage: ft_ls [-RSadgloprtu1] [file ...]\n", 2);
 }
 
 int			arg_cmp(void *na1, void *na2)
@@ -35,7 +35,7 @@ void		get_opt_assi(int argc, char **argv, t_opt *opt)
 {
 	char	c;
 
-	opt->optstr = "RSagloprt1ud";
+	opt->optstr = "RSadgloprtu1";
 	opt->nb = 1;
 	while ((c = ft_get_opt(argc, argv, opt)) > 0)
 	{
