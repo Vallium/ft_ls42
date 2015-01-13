@@ -13,6 +13,12 @@ Man
 
 *Description :*
 
+`./ft_ls -R`
+* Recursively list subdirectories encountered.
+
+`./ft_ls -S`
+* Sort files by size.
+
 `./ft_ls -1`
 * List one file per line.
 
