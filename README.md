@@ -5,38 +5,38 @@ ft_ls
 
 Man
 --------
-Synopsis : ./ft_ls [OPTION]... [FILE]...
+*Synopsis :* ./ft_ls [OPTION]... [FILE]...
 
-Options : RSadgloprtu1
+*Options :* RSadgloprtu1
 
-Description :
+*Description :*
 
 `./ft_ls -1`
->List one file per line.
+* List one file per line.
 
 `./ft_ls -a`
->Do not ignore entries starting with '.'.
+* Do not ignore entries starting with '.'.
 
 `./ft_ls -d`
->List directory entries instead of contents, and do not  dereference symbolic links.
+* List directory entries instead of contents, and do not  dereference symbolic links.
 
 `./ft_ls -g`
->Like -l, but do not list owner.
+* Like -l, but do not list owner.
 
 `./ft_ls -l`
->Use a long listing format.
+* Use a long listing format.
 
 `./ft_ls -o`
->Like -l, but do not list group information.
+* Like -l, but do not list group information.
 
 `./ft_ls -p`
->Append / indicator to directories.
+* Append / indicator to directories.
 
 `./ft_ls -r`
->Reverse order while sorting.
+* Reverse order while sorting.
 
 `./ft_ls -t`
->Sort by modification time.
+* Sort by modification time.
 
 `./ft_ls -u`
->With -lt: Use time of last access, instead of last modification of the file for sorting (-t) or long printing (-l).
+* With -lt: Use time of last access, instead of last modification of the file for sorting (-t) or long printing (-l).
