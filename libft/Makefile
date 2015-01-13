@@ -100,6 +100,15 @@ DYNAMIC_DIR	= dynamic
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 
+NORMINETTE	= ~/project/colorminette/colorminette
+
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Linux)
+	FLAGS	= -Wall -Wextra #-Werror
+else
+	FLAGS	= -Wall -Wextra -Werror
+endif
 $(shell mkdir -p $(STATIC_DIR) $(DYNAMIC_DIR) $(DEBUG_DIR))
 
 all: $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)
@@ -124,10 +133,10 @@ $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
 $(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -fPIC -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
 
-.PHONY: clean fclean re norm
+.PHONY: clean fclean re norme
 
-norm:
-	@norminette $(patsubst %,$(SRC_DIR)/%,$(SRC)) $(HEAD_DIR)/libft.h $(HEAD_DIR)/get_next_line.h
+norme:
+	@$(NORMINETTE) $(SRC_DIR)/ $(HEAD_DIR)/
 
 clean:
 	@rm -f $(STATIC_OBJ) $(DYNAMIC_OBJ) $(DEBUG_OBJ)
