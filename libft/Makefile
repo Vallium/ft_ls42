@@ -90,6 +90,7 @@ SRC		=	ft_bzero.c				\
 DYNAMIC_OBJ	= $(patsubst %.c,$(DYNAMIC_DIR)/%.o,$(SRC))
 STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
 DEBUG_OBJ	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
+STATIC_DEPS	= $(STATIC_OBJ:.o=.d)
 
 HEAD_DIR	= includes
 SRC_DIR		= src
@@ -123,7 +124,7 @@ $(DYNAMIC_LIB): $(DYNAMIC_OBJ)
 	$(CC) -shared -o $@ $(DYNAMIC_OBJ)
 
 $(STATIC_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
+	$(CC) -MMD -MP -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -I $(HEAD_DIR) -o $@ -c $< $(FLAGS) -g
@@ -131,13 +132,15 @@ $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
 $(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -fPIC -I $(HEAD_DIR) -o $@ -c $< $(FLAGS)
 
+-include $(STATIC_DEPS)
+
 .PHONY: clean fclean re norme
 
 norme:
 	@$(NORMINETTE) $(SRC_DIR)/ $(HEAD_DIR)/
 
 clean:
-	@rm -f $(STATIC_OBJ) $(DYNAMIC_OBJ) $(DEBUG_OBJ)
+	@rm -f $(STATIC_OBJ) $(DYNAMIC_OBJ) $(DEBUG_OBJ) $(STATIC_DEPS)
 
 fclean: clean
 	@rm -f $(STATIC_LIB) $(DYNAMIC_LIB) $(DEBUG_LIB)

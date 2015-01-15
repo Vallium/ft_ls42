@@ -47,6 +47,7 @@ endif
 
 STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
 DEBUG_OBJ	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
+STATIC_DEPS	= $(STATIC_OBJ:.o=.d)
 
 HEAD_DIR	= includes
 SRC_DIR		= src
@@ -73,10 +74,10 @@ $(STATIC_EXE): $(STATIC_OBJ) $(LIBFT_STATIC)
 	$(CC) -O3 -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(STATIC_OBJ) $(LIBFT_STATIC) $(FLAGS)
 
 $(STATIC_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
-	$(CC) -O3 -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS)
+	$(CC) -O3 -MMD -MP -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c $(LIBFT)
-	$(CC) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS) -g
+	$(CC) -O3 -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS) -g
 
 $(LIBFT_STATIC):
 	make -C libft/ libft.a
@@ -84,11 +85,13 @@ $(LIBFT_STATIC):
 $(LIBFT_DEBUG):
 	make -C libft/ libft_debug.a
 
+-include $(STATIC_DEPS)
+
 .PHONY: clean fclean re debug norme normeLibft
 
 clean:
 	@make -C libft clean
-	@rm -f $(STATIC_OBJ) $(DEBUG_OBJ)
+	@rm -f $(STATIC_OBJ) $(DEBUG_OBJ) $(STATIC_DEPS)
 
 fclean: clean
 	@make -C libft fclean
