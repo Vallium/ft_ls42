@@ -1,7 +1,7 @@
 ft_ls
 =======
 
-[![Build Status](https://travis-ci.org/Vallium/ft_ls.svg)](https://travis-ci.org/Vallium/ft_ls)
+[![Build Status](https://travis-ci.org/Vallium/ft_ls42.svg?branch=Makefile)](https://travis-ci.org/Vallium/ft_ls42)
 
 Man
 --------
